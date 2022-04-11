@@ -74,12 +74,14 @@ public class GuiLauncher extends Application {
         request.setEntity(new StringEntity(myJason.toString()));
 
         CloseableHttpResponse response = client.execute(request);
-
+        client.close();
 
         System.out.println(response.getStatusLine().getStatusCode());
         if (response.getStatusLine().getStatusCode() !=200) {
+            response.close();
             return false;
         }else{
+            response.close();
             return true;
         }
 
@@ -105,36 +107,32 @@ public class GuiLauncher extends Application {
     private List<Person> getAllPersons() throws IOException {
         List<Person> myList = new ArrayList<>();
 
-        /*CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(url);
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet request = new HttpGet(url+"/persons/select");
         request.setHeader("accept","application/json");
         CloseableHttpResponse response = client.execute(request);
+        String result = EntityUtils.toString(response.getEntity());
+        JSONArray myJsonArray = new JSONArray(result);
+        for(int i = 0; i<myJsonArray.length();i++){
 
-        JSONObject myJason = new JSONObject(response.getEntity());
+            JSONObject loopJson = myJsonArray.getJSONObject(i);
+            String tempID = Integer.toString(loopJson.getInt("personId"));
+            String tempName = loopJson.getString("name");
+            String tempSurname = loopJson.getString("surname");
 
-        return myList;*/
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/persons/select"))
-                .GET()
-                .build();
-
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String myStringList = response.body().toString();
-
-            System.out.println(myStringList);
-
-        }catch(IOException | InterruptedException e){
-            throw new RuntimeException(e.getMessage());
+            myList.add(new Person(tempID, tempName, tempSurname));
         }
+        client.close();
+        response.close();
+        return myList;
+
+
 
 
 
         //TODO create HTTP-Get Request that retrieves all persons from endpoint "<url>/persons/select"
 
-    return myList;
+
     }
 
     /**
