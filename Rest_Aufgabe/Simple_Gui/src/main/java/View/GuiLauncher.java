@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -32,6 +31,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,22 +105,36 @@ public class GuiLauncher extends Application {
     private List<Person> getAllPersons() throws IOException {
         List<Person> myList = new ArrayList<>();
 
-        CloseableHttpClient client = HttpClients.createDefault();
+        /*CloseableHttpClient client = HttpClients.createDefault();
         HttpGet request = new HttpGet(url);
         request.setHeader("accept","application/json");
         CloseableHttpResponse response = client.execute(request);
 
         JSONObject myJason = new JSONObject(response.getEntity());
 
+        return myList;*/
 
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/persons/select"))
+                .GET()
+                .build();
 
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String myStringList = response.body().toString();
 
+            System.out.println(myStringList);
+
+        }catch(IOException | InterruptedException e){
+            throw new RuntimeException(e.getMessage());
+        }
 
 
 
         //TODO create HTTP-Get Request that retrieves all persons from endpoint "<url>/persons/select"
 
-        return myList;
+    return myList;
     }
 
     /**
