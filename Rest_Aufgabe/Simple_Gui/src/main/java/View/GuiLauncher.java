@@ -139,11 +139,24 @@ public class GuiLauncher extends Application {
      *
      * @return a List that might be empty but should never be null
      */
-    private List<Person> searchPersons(String searchInput) {
+    private List<Person> searchPersons(String searchInput) throws IOException {
+        ArrayList<Person> myList = new ArrayList<>();
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet request = new HttpGet(url+"/persons/select?search=<"+searchInput+">");
+        request.setHeader("accept","application/json");
+        CloseableHttpResponse response = client.execute(request);
+        JSONArray myJsonArray = new JSONArray(response.getEntity().toString());
 
+        for(int i = 0; i < myJsonArray.length(); i++ ){
+            JSONObject jsonObject = new JSONObject(myJsonArray.getJSONObject(i));
+            String tempId = Integer.toString(jsonObject.getInt("personId"));
+            String tempName = jsonObject.getString("name");
+            String tempSurname = jsonObject.getString("surname");
+            myList.add(new Person(tempId,tempName,tempSurname));
+        }
         //TODO create HTTP-Get Request that retrieves all persons from endpoint "<url>/persons/select?search=<searchInput>"
 
-        return null;
+        return myList;
     }
 
     private VBox createInitScene(Stage stage) throws IOException {
@@ -175,7 +188,12 @@ public class GuiLauncher extends Application {
         Button searchBttn = new Button("search");
         searchBttn.setDisable(true);
         searchBttn.setOnAction(actionEvent -> {
-            List<Person> p = searchPersons(search_input.getText());
+            List<Person> p = null;
+            try {
+                p = searchPersons(search_input.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             table.getItems().clear();
             table.getItems().addAll(p);
         });
