@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.Objects;
+
 
 public class MainApp extends Application {
     private static Stage curr;
@@ -13,11 +16,16 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         curr = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         curr.setScene(new Scene(root));
         curr.setTitle("Login");
         curr.show();
+    }
+
+    public void changeScene (String fxml) throws IOException {
+        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
+        curr.getScene().setRoot(pane);
     }
 
     public static void main(String[] args) {
