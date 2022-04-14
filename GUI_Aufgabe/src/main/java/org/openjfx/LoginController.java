@@ -39,7 +39,7 @@ public class LoginController extends SceneController implements Initializable {
 
 
     // Wird ausgeführt wenn der login Button gedrückt wird
-    public void loginPressed() throws IOException {
+    public void loginbuttonPressed() throws IOException {
 
     }
 
@@ -63,7 +63,7 @@ public class LoginController extends SceneController implements Initializable {
     }
 
     //Wird ausgeführt wenn der register Button gedrückt wird
-    public void registerPressed() {
+    public void registerbuttonPressed() {
         switchToSceneWithStage("/fxml/RegisterStudent.fxml");
     }
 

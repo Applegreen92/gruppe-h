@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class MainApp extends Application {
@@ -17,7 +16,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         curr = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../../../resources/fxml/login.fxml"));
         curr.setScene(new Scene(root));
         curr.setTitle("Login");
         curr.show();

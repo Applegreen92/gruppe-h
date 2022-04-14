@@ -12,7 +12,7 @@
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#3c84bf" layoutX="38.0" layoutY="89.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Matrikelnummer">
+            <Text fill="#3c84bf" layoutX="27.0" layoutY="100.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Matrikelnummer">
                <font>
                   <Font size="22.0" />
                </font>
@@ -20,7 +20,7 @@
                   <DropShadow />
                </effect>
             </Text>
-            <Text fill="#3c84bf" layoutX="38.0" layoutY="180.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorname">
+            <Text fill="#3c84bf" layoutX="33.0" layoutY="182.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorname">
                <font>
                   <Font size="22.0" />
                </font>
@@ -58,7 +58,7 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#3c84bf" layoutY="87.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwort">
+            <Text fill="#3c84bf" layoutX="5.0" layoutY="87.0" stroke="#f5f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwort">
                <font>
                   <Font size="22.0" />
                </font>
