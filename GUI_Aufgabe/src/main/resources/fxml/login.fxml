@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #171717;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.LoginController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="24.0" layoutY="82.0" text="Matrikelnummer" textFill="#1d8ce1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="matrikelnr" layoutX="200.0" layoutY="85.0" promptText="Matrikelnummer" />
+            <PasswordField fx:id="passwort" layoutX="200.0" layoutY="132.0" promptText="Passwort" />
+            <Button fx:id="loginbutton" layoutX="240.0" layoutY="200.0" mnemonicParsing="false" onAction="#userlogin" text="Einloggen" />
+            <Label fx:id="wronglogin" layoutX="200.0" layoutY="183.0" prefHeight="17.0" prefWidth="232.0" textFill="#eb0d0d" />
+            <Text fill="#fcfcfc" layoutX="171.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WILLKOMMEN" wrappingWidth="261.521484375">
+               <font>
+                  <Font size="38.0" />
+               </font>
+            </Text>
+            <Text fill="#fffefe" layoutX="118.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noch keinen Account? Hier registrieren:" />
+            <Button fx:id="registerbutton" layoutX="183.0" layoutY="283.0" mnemonicParsing="false" text="Registrieren" />
+            <Text fill="#f5f0f0" layoutX="209.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwort vergessen?" underline="true" />
+            <Label layoutX="24.0" layoutY="130.0" text="Passwort" textFill="#1d8ce1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="162.0" fitWidth="170.0" layoutX="15.0" layoutY="49.0">
+               <image>
+                  <Image url="@../../../../../../Downloads/access-authorization-authorized-blue-lock-logged-in-login-935669.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
