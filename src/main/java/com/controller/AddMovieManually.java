@@ -4,7 +4,7 @@ import com.model.Movie;
 
 import java.util.Scanner;
 
-public class addMovieManually {
+public class AddMovieManually {
     Scanner scanner = new Scanner(System.in);
 
     private String title = scanner.next();
@@ -20,7 +20,7 @@ public class addMovieManually {
     private String regisseur = scanner.next();
 
     private String author = scanner.next();
-    
+
     private String cast = scanner.next();
 
     public Movie addMovieButton(){
