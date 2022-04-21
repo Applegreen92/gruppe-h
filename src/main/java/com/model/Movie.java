@@ -40,7 +40,7 @@ public class Movie {
         return releaseDate;
     }
     public int getLength() { return length; }
-    public String getRegisseur() {return regisseur;}
-    public String getAuthor() {return author;}
-    public String getCast() {return cast;}
+    public String getRegisseur() { return regisseur; }
+    public String getAuthor() { return author; }
+    public String getCast() { return cast; }
 }
