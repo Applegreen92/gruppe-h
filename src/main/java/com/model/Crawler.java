@@ -23,17 +23,19 @@ public class Crawler {
             if(!body.isEmpty()) {
 
                 //lister.item is the list with the movie entries.
-                for (Element movie : body.select("div, .lister.item")) {
+                for (Element movie : body.select("div, lister.item mode advanced")) {
 
                     //scans for the movie poster and saves them as a link. They are found under lister-item-image and
-                    // marked with a 'src' tag ,which specifies the location of an external resource.
-
-
-                    String img = movie.select("img, .loadlate").attr("src");
+                    // marked with a 'src' tag ,which specifies the location of an external resource.f
+                    //WORKING!!!
+                    String img = movie.select("img, .loadlate").attr("loadlate");
                     //System.out.println(img);
 
-                    String title = movie.select("a, lister-item-header").text().strip();
-                    System.out.println(title);
+                    String title = movie.select("a, [href*=title]").text();
+
+                    String title2 = movie.select("h3, p:first-child").text();
+
+                    System.out.println(title2);
 
 
 
