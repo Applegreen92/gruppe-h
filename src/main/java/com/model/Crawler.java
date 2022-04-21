@@ -10,10 +10,13 @@ import org.jsoup.select.Elements;
 import java.lang.String;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Crawler {
 
-    public void getMovies(String genre) throws IOException{
+    ArrayList<Movie> MovieList = new ArrayList<Movie>();
+
+    public void getMoviesByGenre(String genre) throws IOException{
 
         try {
             //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
@@ -24,21 +27,27 @@ public class Crawler {
             if(!body.isEmpty()) {
 
                 //lister.item is the list with the movie entries.
-                for (Element movie : body.select("div, lister.item")) {
+                for (Element movie : body.select("h3, lister-item-header")) {
 
                     //scans for the movie poster and saves them as a link. They are found under lister-item-image and
-                    // marked with a 'src' tag ,which specifies the location of an external resource.f
+                    // marked with a 'src' tag ,which specifies the location of an external resource.
                     //WORKING!!!
-                    String img = movie.select("img, .loadlate").attr("loadlate");
+                    String img = movie.select("img, .load-late").attr("loadlate");
 
+                    //retrieves the movie titles from body
+                    String title = movie.select("a[href^=/title/]").text();
 
-                    String title2 = movie.select("h3, h3:nth-child(2)").text();
+                    //retrieves release year of the movie by selecting the span element with the class name lister-item-year
+                    //TODO format the String to remove parenthesis so it can be parsed to String -->  Stringbuilder or Regex
+                    String releaseYear = (movie.select("span[class^=lister-item-year]").text());
 
+                    //TODO do this the proper way !
+                    String cheapSolutionForGenre = genre;
 
+                    //TODO make this work somehow
+                    String runtime = movie.select("p[class^=text-muted]").text();
 
-                    String genreLengthAge = movie.select("h3, h3:first-child").next().text();
-
-                    System.out.println(title2);
+                    System.out.println(runtime);
 
 
 
