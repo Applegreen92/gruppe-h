@@ -1,8 +1,33 @@
 package com.model;
 
-import java.util.Date;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable(tableName = "movie")
 public class Movie {
+
+    @DatabaseField(id = true)
+    private int movieId;
+    @DatabaseField(canBeNull = false)
+    private String title;
+    @DatabaseField(canBeNull = false)
+    private String posterSrc;
+    @DatabaseField(canBeNull = false)
+    private String genre;
+    @DatabaseField(canBeNull = false)
+    private int releaseDate;
+    @DatabaseField(canBeNull = false)
+    private int length;
+    @DatabaseField(canBeNull = false)
+    private String regisseur;
+    @DatabaseField(canBeNull = false)
+    private String author;
+    @DatabaseField(canBeNull = false)
+    private String cast;
+
+    public Movie(){
+
+    }
 
     public Movie(String title, String genre,String posterSrc, int date, int length,String regisseur,String author,String cast){
         this.title = title;
@@ -14,17 +39,7 @@ public class Movie {
         this.author = author;
         this.cast = cast;
 
-     }
-
-
-    private String title;
-    private String posterSrc;
-    private String genre;
-    private int releaseDate;
-    private int length;
-    private String regisseur;
-    private String author;
-    private String cast;
+    }
 
 
     public String getTitle(){
