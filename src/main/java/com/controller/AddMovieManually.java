@@ -1,8 +1,9 @@
 package com.controller;
 
 import com.model.Movie;
-
+import javafx.*;
 import java.util.Scanner;
+
 
 public class AddMovieManually {
     Scanner scanner = new Scanner(System.in);
@@ -27,3 +28,5 @@ public class AddMovieManually {
         return new Movie(title,posterSrc,genre,releaseDate,length,regisseur,author,cast);
     }
 }
+
+
