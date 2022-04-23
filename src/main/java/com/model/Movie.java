@@ -58,4 +58,10 @@ public class Movie {
     public String getRegisseur() { return regisseur; }
     public String getAuthor() { return author; }
     public String getCast() { return cast; }
+
+
+    @Override
+    public String toString() {
+      return title+", "+genre+", "+String.valueOf(releaseDate)+", "+String.valueOf(length)+", "+regisseur+", "+author+", "+cast+", "+posterSrc;
+    };
 }
