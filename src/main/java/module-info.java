@@ -9,4 +9,5 @@ module com.example.gruppeh {
 
     opens com.example.gruppeh to javafx.fxml;
     exports com.example.gruppeh;
+    exports com.controller;
 }
