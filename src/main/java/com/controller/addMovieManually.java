@@ -1,16 +1,10 @@
 package com.controller;
 
-import com.example.gruppeh.HelloApplication;
 import com.model.Movie;
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-public class addMovieManually extends Application {
+public class addMovieManually  {
 
     @FXML
     public TextField textTitle;
@@ -55,14 +49,5 @@ public class addMovieManually extends Application {
     }
 
 
-    public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("addFilmGUI.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Here you can manually put in movies");
-        stage.setScene(scene);
-        stage.show();
 
-
-    }
-    public static void main(String[] args) {launch(args);}
 }

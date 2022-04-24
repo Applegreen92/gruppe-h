@@ -1,4 +1,4 @@
-package com.example.gruppeh;
+package com.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

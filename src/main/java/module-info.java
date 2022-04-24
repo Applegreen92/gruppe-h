@@ -1,4 +1,4 @@
-module com.example.gruppeh {
+module com.view {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,7 +7,7 @@ module com.example.gruppeh {
     requires ormlite.core;
     requires org.jsoup;
 
-    opens com.example.gruppeh to javafx.fxml;
-    exports com.example.gruppeh;
+    opens com.view to javafx.fxml;
+    exports com.view;
     exports com.controller;
 }
