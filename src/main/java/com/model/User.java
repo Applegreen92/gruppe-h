@@ -1,5 +1,12 @@
 package com.model;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+
 public class User {
 
     public User (String givenName, String familyName, String eMail, String password,boolean isSystemAdmin){
@@ -21,6 +28,27 @@ public class User {
     public String geteMail() { return eMail; }
     public String getPassword() { return password; }
     public boolean isSystemAdmin() { return isSystemAdmin; }
+
+
+
+    //Server Connection stuff
+    InetSocketAddress socketAddress = new InetSocketAddress(8000);
+    public void sendMessage (String message)  {
+
+        Socket socket = new Socket();
+        try {
+            socket.connect(socketAddress,10000);
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            pw.println(message);
+            pw.flush();
+
+            pw.close();
+            socket.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -7,21 +7,23 @@ import javafx.scene.control.TextField;
 public class AddMovieManually {
 
     @FXML
-    private TextField textTitle;
+    public TextField textTitle;
     @FXML
-    private TextField textGenre;
+    public TextField textGenre;
     @FXML
-    private TextField textPosterSrc;
+    public TextField textPosterSrc;
     @FXML
-    private TextField textReleaseDate;
+    public TextField textReleaseDate;
     @FXML
-    private TextField textMovieLength;
+    public TextField textMovieLength;
     @FXML
-    private TextField textRegisseur;
+    public TextField textRegisseur;
     @FXML
-    private TextField textAuthor;
+    public TextField textAuthor;
     @FXML
-    private TextField textCast;
+    public TextField textCast;
+
+
 
 
     @FXML
