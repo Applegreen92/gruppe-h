@@ -4,7 +4,7 @@ import com.model.Movie;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class addMovieManually  {
+public class AddMovieManually {
 
     @FXML
     public TextField textTitle;
@@ -15,7 +15,7 @@ public class addMovieManually  {
     @FXML
     public TextField textReleaseDate;
     @FXML
-    public TextField textMovielength;
+    public TextField textMovieLength;
     @FXML
     public TextField textRegisseur;
     @FXML
@@ -33,7 +33,7 @@ public class addMovieManually  {
         String genre = textGenre.getText().toString();
         String posterSrc = textPosterSrc.getText().toString();
         int releaseDate = Integer.parseInt(textReleaseDate.getText());
-        int movieLength = Integer.parseInt(textMovielength.getText());
+        int movieLength = Integer.parseInt(textMovieLength.getText());
         String regisseur = textRegisseur.getText();
         String author = textAuthor.getText();
         String cast = textCast.getText();
