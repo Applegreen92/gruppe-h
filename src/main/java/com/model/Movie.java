@@ -32,11 +32,11 @@ public class Movie {
     public Movie(String title, String genre,String posterSrc, int date, int length,String regisseur,String author,String cast){
         this.title = title;
         this.posterSrc = posterSrc;
-        this.genre = genre;
         this.releaseDate = date;
         this.length = length;
         this.regisseur = regisseur;
         this.author = author;
+        this.genre = genre;
         this.cast = cast;
 
     }

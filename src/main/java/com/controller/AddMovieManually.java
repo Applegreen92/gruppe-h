@@ -7,21 +7,21 @@ import javafx.scene.control.TextField;
 public class AddMovieManually {
 
     @FXML
-    public TextField textTitle;
+    private TextField textTitle;
     @FXML
-    public TextField textGenre;
+    private TextField textGenre;
     @FXML
-    public TextField textPosterSrc;
+    private TextField textPosterSrc;
     @FXML
-    public TextField textReleaseDate;
+    private TextField textReleaseDate;
     @FXML
-    public TextField textMovieLength;
+    private TextField textMovieLength;
     @FXML
-    public TextField textRegisseur;
+    private TextField textRegisseur;
     @FXML
-    public TextField textAuthor;
+    private TextField textAuthor;
     @FXML
-    public TextField textCast;
+    private TextField textCast;
 
 
     @FXML
@@ -40,6 +40,10 @@ public class AddMovieManually {
 
 
         Movie movie = new Movie(title,genre,posterSrc,releaseDate,movieLength,regisseur,author,cast);
+
+
+
+
         System.out.println(movie.toString());
         return false;
     }
