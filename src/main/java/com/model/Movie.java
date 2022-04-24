@@ -42,18 +42,10 @@ public class Movie {
     }
 
 
-    public String getTitle(){
-        return title;
-    }
-    public String getGenre(){
-        return genre;
-    }
-    public String getPosterSrc(){
-        return posterSrc;
-    }
-    public int getReleaseDate(){
-        return releaseDate;
-    }
+    public String getTitle(){ return title; }
+    public String getGenre(){ return genre; }
+    public String getPosterSrc(){ return posterSrc; }
+    public int getReleaseDate(){ return releaseDate; }
     public int getLength() { return length; }
     public String getRegisseur() { return regisseur; }
     public String getAuthor() { return author; }
@@ -64,4 +56,27 @@ public class Movie {
     public String toString() {
       return title+", "+genre+", "+String.valueOf(releaseDate)+", "+String.valueOf(length)+", "+regisseur+", "+author+", "+cast+", "+posterSrc;
     };
+
+    // Equals the Parameters inside of the movie object with another movie object.
+    public boolean equals(Movie movie) {
+        if(this.author != movie.getAuthor()){
+            return false;
+        }else if (this.cast != movie.getCast()){
+            return false;
+        }else if (this.title != movie.getTitle()){
+            return false;
+        }else if (this.genre != movie.getGenre()){
+            return false;
+        }else if (this.posterSrc != movie.getPosterSrc()){
+            return false;
+        }else if (this.releaseDate != movie.getReleaseDate()){
+            return false;
+        }else if (this.length != movie.getLength()){
+            return false;
+        }else if (this.regisseur != movie.getRegisseur()){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
