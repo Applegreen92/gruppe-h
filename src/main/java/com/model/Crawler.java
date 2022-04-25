@@ -26,17 +26,22 @@ public class Crawler {
                 Document movies = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
                 Elements body = movies.select("div.lister-list");
                 start += 50;
-                System.out.println(body);
+                //System.out.println(body);
 
                 if (!body.isEmpty()) {
 
                     //lister.item is the list with the movie entries.
                     for (Element movie : body.select("h3, lister-item-header")) {
+                        String movieLink = String.valueOf(movie.select( "a[href^=/title/tt]"));
+                        System.out.println(movieLink);
 
+                        Document movies2 = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
+                        Elements body2 = movies.select("div.lister-list");
                         //scans for the movie poster and saves them as a link. They are found under lister-item-image and
                         // marked with a 'src' tag ,which specifies the location of an external resource.
                         //WORKING!!!
                         String img = movie.select("img, .load-late").attr("loadlate");
+                        System.out.println(img);
 
                         //retrieves the movie titles from body
                         String title = movie.select("a[href^=/title/]").text();
