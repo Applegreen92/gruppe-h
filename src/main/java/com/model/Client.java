@@ -1,27 +1,39 @@
+
 package com.model;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
-
-// A client sends messages to the server, the server spawns a thread to communicate with the client
-// Each communication with a client is added to an array list so any message sent gets sent to every other client by looping through it
+import java.net.SocketAddress;
 
 public class Client {
 
-    // A client has a socket to connect to the server and a reader and writer to receive and send messages respectively
-    private final InetSocketAddress socket = new InetSocketAddress(8000);
+    Socket clientSocket;
+    User user = new User("Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
 
-    //private BufferedReader bufferedReader;
-    //private BufferedWriter bufferedWriter;
-
-    // public Client() {
-       // try {
-           // this.socket = socket;
-
-       // } catch (IOException e) {
-         //  e.printStackTrace();
-
-        //}
+    public Client() {
+        try {
+            this.clientSocket= new Socket("127.0.0.1",8000);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+    public void sendUser (){
+        try {
+
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new BufferedOutputStream(clientSocket.getOutputStream())));
+            writer.write("Hi");
+            writer.flush();
+            writer.close();
+
+            //oWriter.writeObject(user);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        }
+    }
+
+
+
+

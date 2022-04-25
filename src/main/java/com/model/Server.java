@@ -1,8 +1,6 @@
 package com.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -20,11 +18,11 @@ public class Server {
                     Socket userSocket = serverSocket.accept();
 
                     Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(userSocket.getInputStream())));
-                    if (scanner.hasNextLine()){
-                        System.out.println("[Server] Message from Client: "+scanner.nextLine());
-                    }
+                    String a = scanner.nextLine();
+
+
                     //Verbindungen schliesen
-                    scanner.close();
+
                     userSocket.close();
                     serverSocket.close();
 

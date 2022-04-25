@@ -31,24 +31,7 @@ public class User {
 
 
 
-    //Server Connection stuff
-    InetSocketAddress socketAddress = new InetSocketAddress(8000);
-    public void sendMessage (String message)  {
 
-        Socket socket = new Socket();
-        try {
-            socket.connect(socketAddress,10000);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            pw.println(message);
-            pw.flush();
-
-            pw.close();
-            socket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
-}
