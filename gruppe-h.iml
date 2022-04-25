@@ -16,6 +16,7 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.3" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" level="project" />
@@ -51,7 +52,6 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.4.45.v20220203" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-common:9.4.45.v20220203" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.websocket:websocket-api:9.4.45.v20220203" level="project" />
-    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.3" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.28" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-jdbc:5.0" level="project" />
