@@ -9,20 +9,23 @@ import java.net.SocketAddress;
 
 public class User {
 
-    public User (String givenName, String familyName, String eMail, String password,boolean isSystemAdmin){
+    public User (String userName,String givenName, String familyName, String eMail, String password,boolean isSystemAdmin){
     this.givenName = givenName;
     this.familyName = familyName;
     this.eMail = eMail;
     this.password = password;
     this.isSystemAdmin = isSystemAdmin;
+    this.userName = userName;
     }
 
+    private String userName;
     private String givenName;
     private String familyName;
     private String eMail;
     private String password;
     private boolean isSystemAdmin;
 
+    public String getUserName() { return userName; }
     public String getGivenName() { return givenName; }
     public String getFamilyName() { return familyName; }
     public String geteMail() { return eMail; }

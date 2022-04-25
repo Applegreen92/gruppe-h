@@ -9,7 +9,7 @@ import java.net.SocketAddress;
 public class Client {
 
     Socket clientSocket;
-    User user = new User("Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
+    User user = new User("HANSI123","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
 
     public Client() {
         try {
