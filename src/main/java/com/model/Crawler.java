@@ -23,7 +23,8 @@ public class Crawler {
         try {
             //while (MovieList.size() < 3000) {
                 //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
-                Document movies = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
+                Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
+
                 Elements body = movies.select("div.lister-list");
                 start += 50;
                 //System.out.println(body);
@@ -32,7 +33,8 @@ public class Crawler {
 
                     //lister.item is the list with the movie entries.
                     for (Element movie : body.select("h3, lister-item-header")) {
-                        String movieLink = String.valueOf(movie.select( "a[href^=/title/tt]"));
+                        Elements movieLink = movie.select( "a[href^=/title/tt]");
+                        //String movieHref = String.valueOf(movieLink.select("id:href"));
                         System.out.println(movieLink);
 
                         Document movies2 = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
