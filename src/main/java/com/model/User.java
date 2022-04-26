@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 public class User {
+    public User(){
+        super();
+    }
 
     public User (String userName,String givenName, String familyName, String eMail, String password,boolean isSystemAdmin){
     this.givenName = givenName;
@@ -32,9 +35,22 @@ public class User {
     public String getPassword() { return password; }
     public boolean isSystemAdmin() { return isSystemAdmin; }
 
+    public void setUserName(String userName) { this.userName = userName; }
+    public void setGivenName(String givenName) { this.givenName = givenName; }
+    public void setFamilyName(String familyName) { this.familyName = familyName; }
+    public void seteMail(String eMail) { this.eMail = eMail; }
+    public void setPassword(String password) { this.password = password; }
+    public void setSystemAdmin(boolean systemAdmin) { isSystemAdmin = systemAdmin; }
 
-
-
+    @Override
+    public String toString() {
+        return "userName='" + userName + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", eMail='" + eMail + '\'' +
+                ", password='" + password + '\'' +
+                ", isSystemAdmin=" + isSystemAdmin;
     }
+}
 
 
