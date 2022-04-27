@@ -10,11 +10,14 @@ public class Main {
     public static void main(String[] args) throws IOException, SQLException {
 
 
-        Server server = new Server();
-        server.startListening();
-        //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
-        Client client = new Client();
-        client.sendUser();
+
+
+
+//        Server server = new Server();
+//        server.startListening();
+//        //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
+//        Client client = new Client();
+//        client.sendUser();
 
 
 

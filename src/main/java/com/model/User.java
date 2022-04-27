@@ -51,6 +51,10 @@ public class User {
                 ", password='" + password + '\'' +
                 ", isSystemAdmin=" + isSystemAdmin;
     }
+
+    public static void main(String[] args) {
+
+    }
 }
 
 
