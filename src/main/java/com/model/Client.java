@@ -10,11 +10,7 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.RawRowObjectMapper;
-/**  @author raphaelkruska
- *  Folgendes klappt jetzt mit diesem Code: Der Client sendet ne Message und wird als User mit dem Usernamen aus der Userklasse angezeigt.
- Wenn du "BYE" schreibst beendest du automatisch die Connection.
- Probier es mal aus und guck ob es bei dir auch funktioniert! Habe deinen Code mal auskommentiert, da ich beim Ausführen immer ne Exception bekommen habe.
- */
+
 
 
 public class Client {
@@ -37,9 +33,13 @@ public class Client {
         try {
 
             String userJsonString = new ObjectMapper().writeValueAsString(this.user);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new BufferedOutputStream(clientSocket.getOutputStream())));
-            pw.write(userJsonString);
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            pw.println(userJsonString);
             pw.flush();
+
+            Scanner sc = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
+            String answer = sc.nextLine();
+            System.out.println(answer);
             pw.close();
 
         }catch (IOException e) {
