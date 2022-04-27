@@ -1,4 +1,6 @@
-package com.model;
+package com.testPackage;
+
+import com.model.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

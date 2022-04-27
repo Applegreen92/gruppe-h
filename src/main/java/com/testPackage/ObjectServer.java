@@ -1,4 +1,4 @@
-package com.model;
+package com.testPackage;
 
 import java.io.IOException;
 import java.io.InputStream;

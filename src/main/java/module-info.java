@@ -14,4 +14,6 @@ module com.view {
     exports com.view;
     exports com.controller;
     exports com.model;
+    exports com.testPackage;
+    opens com.testPackage to javafx.fxml;
 }

@@ -45,7 +45,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "userName='" + userName + '\'' +
+        return  "userName='" + userName + '\'' +
                 ", givenName='" + givenName + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", eMail='" + eMail + '\'' +
@@ -53,9 +53,7 @@ public class User implements Serializable {
                 ", isSystemAdmin=" + isSystemAdmin;
     }
 
-    public static void main(String[] args) {
 
-    }
 }
 
 
