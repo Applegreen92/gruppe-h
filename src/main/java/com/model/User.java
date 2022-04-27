@@ -3,11 +3,12 @@ package com.model;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
-public class User {
+public class User implements Serializable {
     public User(){
         super();
     }
