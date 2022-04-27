@@ -1,7 +1,5 @@
 package com.model;
 
-
-
 import com.model.Movie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +15,7 @@ import java.util.ArrayList;
 public class Crawler {
 
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
+    ArrayList hreflink = new ArrayList();
 
     public void getMoviesByGenre(String genre, int start) throws IOException {
 
@@ -35,7 +34,9 @@ public class Crawler {
                     for (Element movie : body.select("h3, lister-item-header")) {
                         Elements movieLink = movie.select( "a[href^=/title/tt]");
                         //String movieHref = String.valueOf(movieLink.select("id:href"));
-                        System.out.println(movieLink);
+                        //System.out.println(movieLink);
+                        String linkHref = movieLink.attr("href");
+                        hreflink.add(linkHref);
 
                         Document movies2 = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
                         Elements body2 = movies.select("div.lister-list");
@@ -43,7 +44,7 @@ public class Crawler {
                         // marked with a 'src' tag ,which specifies the location of an external resource.
                         //WORKING!!!
                         String img = movie.select("img, .load-late").attr("loadlate");
-                        System.out.println(img);
+                        //System.out.println(img);
 
                         //retrieves the movie titles from body
                         String title = movie.select("a[href^=/title/]").text();
@@ -60,6 +61,45 @@ public class Crawler {
 
                         //System.out.println(runtime);
 
+
+                    }
+
+                    for(int x = 0;x < hreflink.size(); x++){
+                        //Creating the new Document foreach movie
+                        String movieUrl = "https://www.imdb.com" + hreflink.get(x);
+                        Document focusMovie = Jsoup.connect(movieUrl).get();
+
+                        //getting the Header Element f the Movies contains title, length, release
+                        Elements movieHeader = focusMovie.select("div.sc-94726ce4-1");
+
+                        Elements movieHeaderList = movieHeader.select("ul.ipc-inline-list");
+                        int countLiElement = 1;
+                        String length = "";
+                        //looping for the Length
+                        for (Element movieHeaderListItem : movieHeaderList.select("li.ipc-inline-list__item")) {
+                            if(countLiElement >= 3){
+                                //selects the length
+                                System.out.println("length");
+                                length = movieHeaderListItem.text();
+                                System.out.println(length);
+                                countLiElement = 1;
+                            }else {
+                                countLiElement+= countLiElement;
+                            }
+                        }
+                        //Selects the Title
+                        String title = movieHeader.select("h1").text();
+                        //selects the release and age
+                        String release = movieHeader.select("span.sc-8c396aa2-2").text();
+                        //cutting the age off
+                        if(release.length() > 4){
+                            release = release.substring(0,4);
+                        }
+
+
+                        System.out.println(title);
+                        System.out.println(length);
+                        System.out.println(release);
 
                     }
                 }
