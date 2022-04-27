@@ -38,31 +38,6 @@ public class Crawler {
                         //System.out.println(movieLink);
                         String linkHref = movieLink.attr("href");
                         hreflink.add(linkHref);
-
-                        Document movies2 = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
-                        Elements body2 = movies.select("div.lister-list");
-                        //scans for the movie poster and saves them as a link. They are found under lister-item-image and
-                        // marked with a 'src' tag ,which specifies the location of an external resource.
-                        //WORKING!!!
-                        String img = movie.select("img, .load-late").attr("loadlate");
-                        //System.out.println(img);
-
-                        //retrieves the movie titles from body
-                        String title = movie.select("a[href^=/title/]").text();
-
-                        //retrieves release year of the movie by selecting the span element with the class name lister-item-year
-                        //TODO format the String to remove parenthesis so it can be parsed to String -->  Stringbuilder or Regex
-                        String releaseYear = (movie.select("span[class^=lister-item-year]").text());
-
-                        //TODO do this the proper way !
-                        String cheapSolutionForGenre = genre;
-
-                        //TODO make this work somehow
-                        String runtime = movie.select("p[class^=text-muted]").text();
-
-                        //System.out.println(runtime);
-
-
                     }
 
                     for(int x = 0;x < hreflink.size(); x++){
