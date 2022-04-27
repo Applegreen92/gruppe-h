@@ -16,6 +16,7 @@ public class Crawler {
 
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
+    ArrayList movieGenreArray = new ArrayList();
 
     public void getMoviesByGenre(String genre, int start) throws IOException {
 
@@ -37,31 +38,6 @@ public class Crawler {
                         //System.out.println(movieLink);
                         String linkHref = movieLink.attr("href");
                         hreflink.add(linkHref);
-
-                        Document movies2 = Jsoup.connect("https://www.imdb.com/search/title/?genres=" + genre + "&start=" + start + "&explore=title_type,genres&ref_=adv_nxt").get();
-                        Elements body2 = movies.select("div.lister-list");
-                        //scans for the movie poster and saves them as a link. They are found under lister-item-image and
-                        // marked with a 'src' tag ,which specifies the location of an external resource.
-                        //WORKING!!!
-                        String img = movie.select("img, .load-late").attr("loadlate");
-                        //System.out.println(img);
-
-                        //retrieves the movie titles from body
-                        String title = movie.select("a[href^=/title/]").text();
-
-                        //retrieves release year of the movie by selecting the span element with the class name lister-item-year
-                        //TODO format the String to remove parenthesis so it can be parsed to String -->  Stringbuilder or Regex
-                        String releaseYear = (movie.select("span[class^=lister-item-year]").text());
-
-                        //TODO do this the proper way !
-                        String cheapSolutionForGenre = genre;
-
-                        //TODO make this work somehow
-                        String runtime = movie.select("p[class^=text-muted]").text();
-
-                        //System.out.println(runtime);
-
-
                     }
 
                     for(int x = 0;x < hreflink.size(); x++){
@@ -79,9 +55,9 @@ public class Crawler {
                         for (Element movieHeaderListItem : movieHeaderList.select("li.ipc-inline-list__item")) {
                             if(countLiElement >= 3){
                                 //selects the length
-                                System.out.println("length");
+                                //System.out.println("length");
                                 length = movieHeaderListItem.text();
-                                System.out.println(length);
+                                //System.out.println(length);
                                 countLiElement = 1;
                             }else {
                                 countLiElement+= countLiElement;
@@ -96,10 +72,24 @@ public class Crawler {
                             release = release.substring(0,4);
                         }
 
+                        //what we still need (Regisseur,Drehbuchautor,Cast,Filmbanner)
 
-                        System.out.println(title);
-                        System.out.println(length);
-                        System.out.println(release);
+                        //getting Genres
+                        Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
+                        for (Element movieGenreList : movieGenres.select("a.sc-16ede01-3")) {
+                                String movieGenre = movieGenreList.text();
+                                movieGenreArray.add(movieGenre);
+                        }
+
+                        //getting Regisseur,Drehbuchautor,Cast
+
+                        Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
+                        System.out.println(moviePersons);
+                        //System.out.println(title);
+                        //System.out.println(length);
+                        //System.out.println(release);
+                        //System.out.println(movieGenreArray.toString());
+
 
                     }
                 }
