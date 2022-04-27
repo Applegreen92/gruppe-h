@@ -16,6 +16,7 @@ public class Crawler {
 
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
+    ArrayList movieGenreArray = new ArrayList();
 
     public void getMoviesByGenre(String genre, int start) throws IOException {
 
@@ -79,9 +80,9 @@ public class Crawler {
                         for (Element movieHeaderListItem : movieHeaderList.select("li.ipc-inline-list__item")) {
                             if(countLiElement >= 3){
                                 //selects the length
-                                System.out.println("length");
+                                //System.out.println("length");
                                 length = movieHeaderListItem.text();
-                                System.out.println(length);
+                                //System.out.println(length);
                                 countLiElement = 1;
                             }else {
                                 countLiElement+= countLiElement;
@@ -96,10 +97,24 @@ public class Crawler {
                             release = release.substring(0,4);
                         }
 
+                        //what we still need (Regisseur,Drehbuchautor,Cast,Filmbanner)
 
-                        System.out.println(title);
-                        System.out.println(length);
-                        System.out.println(release);
+                        //getting Genres
+                        Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
+                        for (Element movieGenreList : movieGenres.select("a.sc-16ede01-3")) {
+                                String movieGenre = movieGenreList.text();
+                                movieGenreArray.add(movieGenre);
+                        }
+
+                        //getting Regisseur,Drehbuchautor,Cast
+
+                        Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
+                        System.out.println(moviePersons);
+                        //System.out.println(title);
+                        //System.out.println(length);
+                        //System.out.println(release);
+                        //System.out.println(movieGenreArray.toString());
+
 
                     }
                 }
