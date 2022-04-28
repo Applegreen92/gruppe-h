@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Server {
 
 
-    private final int port = 8000;
+    private final int port = 7779;
 
 
 

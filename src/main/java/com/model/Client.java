@@ -18,7 +18,7 @@ import com.j256.ormlite.dao.RawRowObjectMapper;
 
 public class Client {
 
-    private final int port = 8000;
+    private final int port = 7779;
 
 
     User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
@@ -27,7 +27,7 @@ public class Client {
     public Client() {
         try {
 
-            this.clientSocket= new Socket("127.0.0.1",8000);
+            this.clientSocket= new Socket("127.0.0.1",port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
