@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class Crawler {
 
+    String[] genre = new String[]{"Action", "Adventure","Animation","Biography","Comedy","Crime","Documentary","Drama","Family","Fantasy","Film Noir","History",
+            "Horror","Music", "Musical","Mystery","Romance","Sci-Fi","Short Film","Sport","Superhero","Thriller","War","Western"};
+
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
@@ -123,8 +126,6 @@ public class Crawler {
                         //System.out.println(length);
                         //System.out.println(release);
                         //System.out.println(movieGenreArray.toString());
-
-
                     }
                 }
             }
