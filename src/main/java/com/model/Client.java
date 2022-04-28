@@ -8,7 +8,10 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Scanner;
 
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.j256.ormlite.dao.RawRowObjectMapper;
 
 
@@ -29,6 +32,18 @@ public class Client {
             throw new RuntimeException(e);
         }
     }
+
+    public void loginGetUserData(String userName, String password) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        
+
+
+
+    }
+
+
+
+
     public void sendUser (){
         try {
 
@@ -39,7 +54,7 @@ public class Client {
 
             Scanner sc = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
             String answer = sc.nextLine();
-            System.out.println(answer);
+            System.out.println("incoming answer from [server] : "+answer);
             pw.close();
 
         }catch (IOException e) {
@@ -48,6 +63,8 @@ public class Client {
 
         }
     }
+
+
 
 
 

@@ -13,9 +13,9 @@ public class Main {
 
         Server server = new Server();
         server.startListening();
-        User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
+        //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
         Client client = new Client();
-        client.sendUser();
+        client.loginGetUserData("Aladin","13546");
 
 
 
