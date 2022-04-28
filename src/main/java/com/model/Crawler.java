@@ -17,6 +17,7 @@ public class Crawler {
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
+    ArrayList posterLink = new ArrayList();
 
     public void getMoviesByGenre(String genre, int start) throws IOException {
 
@@ -24,7 +25,6 @@ public class Crawler {
             //while (MovieList.size() < 3000) {
                 //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
                 Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
-
                 Elements body = movies.select("div.lister-list");
                 start += 50;
                 //System.out.println(body);
@@ -34,8 +34,6 @@ public class Crawler {
                     //lister.item is the list with the movie entries.
                     for (Element movie : body.select("h3, lister-item-header")) {
                         Elements movieLink = movie.select( "a[href^=/title/tt]");
-                        //String movieHref = String.valueOf(movieLink.select("id:href"));
-                        //System.out.println(movieLink);
                         String linkHref = movieLink.attr("href");
                         hreflink.add(linkHref);
                     }
@@ -51,6 +49,7 @@ public class Crawler {
                         Elements movieHeaderList = movieHeader.select("ul.ipc-inline-list");
                         int countLiElement = 1;
                         String length = "";
+
                         //looping for the Length
                         for (Element movieHeaderListItem : movieHeaderList.select("li.ipc-inline-list__item")) {
                             if(countLiElement >= 3){
@@ -72,7 +71,7 @@ public class Crawler {
                             release = release.substring(0,4);
                         }
 
-                        //what we still need (Regisseur,Drehbuchautor,Cast,Filmbanner)
+                        //TODO (Regisseur,Drehbuchautor,Cast,Filmbanner)
 
                         //getting Genres
                         Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
@@ -101,6 +100,30 @@ public class Crawler {
 
         }
     //}
+
+
+
+    public void getPosterByGenre(String genre, int start) throws IOException {
+        try {
+            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
+            Elements body = movies.select("div.lister-list");
+
+            for(Element movieImage: movies.select("img.loadlate")){
+                String moviePoster = movieImage.attr("loadlate");
+                posterLink.add(moviePoster);
+                System.out.println(moviePoster);
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+            System.out.println("Error code 503 - service unavailable");
+        }
+
+
+
+
+
+    }
 
 
 
