@@ -20,8 +20,8 @@ public class Main {
 
 
 
-        //Crawler insertMovies = new Crawler();
-        //insertMovies.getMoviesByGenre("action", 1);
+        Crawler insertMovies = new Crawler();
+        insertMovies.getMoviesByGenre("action", 1, 0,0);
 
        //DatabaseLauncher createTable = new DatabaseLauncher();
        //createTable.insertMovie();

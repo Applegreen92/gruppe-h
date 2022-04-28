@@ -19,16 +19,20 @@ public class Crawler {
     ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
 
-
-    public void getMoviesByGenre(String genre, int start) throws IOException {
+    public void getMoviesByGenre(String genre, int start, int startDate, int endDate) throws IOException {
 
         try {
             //while (MovieList.size() < 3000) {
-                //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
-                Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
-                Elements body = movies.select("div.lister-list");
-                start += 50;
-                //System.out.println(body);
+            //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
+
+            //https://www.imdb.com/search/title/?title_type=feature&release_date=2000-01-01,2001-01-01&count=250&start=251&ref_=adv_nxt
+            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date="2000-01-01","2001-01-01"&count=250&start="start"&ref_=adv_nxt").get();
+            Elements body = movies.select("div.lister-list");
+
+            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
+            Elements body = movies.select("div.lister-list");
+            start += 50;
+            //System.out.println(body);
 
 
 
@@ -131,7 +135,6 @@ public class Crawler {
 
         }
     //}
-
 
 
     public void getPosterByGenre(String genre, int start) throws IOException {
