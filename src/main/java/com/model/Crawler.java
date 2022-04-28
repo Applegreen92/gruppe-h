@@ -1,5 +1,6 @@
 package com.model;
 
+import com.gargoylesoftware.htmlunit.DownloadedContent;
 import com.model.Movie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,18 +24,37 @@ public class Crawler {
     ArrayList movieGenreArray = new ArrayList();
 
     public void getMoviesByGenre(String genre, int start, int startDate, int endDate) throws IOException {
-
+        Elements body = null;
+        Document movies = null;
         try {
-            //while (MovieList.size() < 3000) {
+            int diff = 0;
+            while (MovieList.size() < 3000) {
             //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
+                if(startDate > 1 && endDate > 1){
+                    if(endDate < startDate) {
+                        System.out.println("Ob du behindert bist habe ich dich gefragt!");
+                    }else {
+                        diff = endDate-startDate;
+                    }
+                }
 
-            //https://www.imdb.com/search/title/?title_type=feature&release_date=2000-01-01,2001-01-01&count=250&start=251&ref_=adv_nxt
-            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date="2000-01-01","2001-01-01"&count=250&start="start"&ref_=adv_nxt").get();
-            Elements body = movies.select("div.lister-list");
+            if((genre == "" || genre == null) && (startDate > 1 && endDate > 1)) {
+                movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + endDate + "-12-31&count=250&start=" + start + "&ref_=adv_nxt").get();
+                body = movies.select("div.lister-list");
+            }else if(startDate < 1 && endDate < 1){
+                movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&count=250&explore=genres&ref_=adv_nxt").get();
+                body = movies.select("div.lister-list");
+            }else if(startDate > 1 && endDate < 1){
+                movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01,2022-12-31&count=250&start=" + start + "&ref_=adv_nxt").get();
+                body = movies.select("div.lister-list");
+            }else{
+                movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + endDate + "-12-31&count=137&start=1&ref_=adv_nxt").get();
+                body = movies.select("div.lister-list");
+            }
 
-            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
-            Elements body = movies.select("div.lister-list");
-            start += 50;
+
+
+            start += 250;
             //System.out.println(body);
 
 
@@ -128,14 +148,14 @@ public class Crawler {
                         //System.out.println(movieGenreArray.toString());
                     }
                 }
+                if(diff > 0){
+                    startDate+= startDate;
+                }
             }
-        catch(IOException e){
-                e.printStackTrace();
-            }
-
-
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    //}
+    }
 
 
     public void getPosterByGenre(String genre, int start) throws IOException {
