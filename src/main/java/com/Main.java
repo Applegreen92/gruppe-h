@@ -21,14 +21,14 @@ public class Main {
 
 
         Crawler insertMovies = new Crawler();
-        insertMovies.getMoviesByGenre("action", 1, 0,0);
+        insertMovies.getMoviesByGenre("action", 1, 2000,2006);
 
        //DatabaseLauncher createTable = new DatabaseLauncher();
        //createTable.insertMovie();
 
 
         //Test for poster by genre: appears to be fully functional
-        Crawler posterGetter = new Crawler();
-        posterGetter.getPosterByGenre("action", 1);
+
+
     }
 }

@@ -15,13 +15,12 @@ import java.util.ArrayList;
 
 public class Crawler {
 
-    String[] genre = new String[]{"Action", "Adventure","Animation","Biography","Comedy","Crime","Documentary","Drama","Family","Fantasy","Film Noir","History",
-            "Horror","Music", "Musical","Mystery","Romance","Sci-Fi","Short Film","Sport","Superhero","Thriller","War","Western"};
-
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
+
+
 
     public void getMoviesByGenre(String genre, int start, int startDate, int endDate) throws IOException {
         Elements body = null;
@@ -32,8 +31,6 @@ public class Crawler {
             if(diff>=12) {
                 count = 3000 / diff;
             }else{
-                count = 3000 / diff;
-
                 count = 250;
             }
             while(MovieList.size() < 3000){
@@ -72,6 +69,8 @@ public class Crawler {
 
 
                     if (!body.isEmpty()) {
+                        getPoster(body);
+                        System.out.println(posterLink.toString());
 
                         //Elements movieImage = movies.select("img.loadlate");
 
@@ -172,26 +171,11 @@ public class Crawler {
     }
 
 
-    public void getPosterByGenre(String genre, int start) throws IOException {
-        try {
-            Document movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&explore=genres&ref_=adv_nxt").get();
-            Elements body = movies.select("div.lister-list");
-
-            for(Element movieImage: movies.select("img.loadlate")){
-                String moviePoster = movieImage.attr("loadlate");
-                posterLink.add(moviePoster);
-                System.out.println(moviePoster);
-            }
-        }
-        catch(IOException e){
-            e.printStackTrace();
-            System.out.println("Error code 503 - service unavailable");
+    public void getPoster(Elements body)  {
+        for(Element movieImage: body.select("img.loadlate")){
+            String moviePoster = movieImage.attr("loadlate");
+            posterLink.add(moviePoster);
+            System.out.println(moviePoster);
         }
     }
-
-    public void getPoster(){
-
-        
-    }
-
 }
