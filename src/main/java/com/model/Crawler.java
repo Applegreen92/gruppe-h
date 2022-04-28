@@ -18,7 +18,7 @@ public class Crawler {
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
-    ArrayList posterLink = new ArrayList();
+
 
     public void getMoviesByGenre(String genre, int start) throws IOException {
 
@@ -149,13 +149,11 @@ public class Crawler {
             e.printStackTrace();
             System.out.println("Error code 503 - service unavailable");
         }
-
-
-
-
-
     }
 
+    public void getPoster(){
 
+        
+    }
 
 }
