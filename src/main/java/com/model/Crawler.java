@@ -16,6 +16,7 @@ public class Crawler {
 
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
+    ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
     ArrayList posterLink = new ArrayList();
 
@@ -29,7 +30,18 @@ public class Crawler {
                 start += 50;
                 //System.out.println(body);
 
+
+
                 if (!body.isEmpty()) {
+
+                    //Elements movieImage = movies.select("img.loadlate");
+
+                    //Loading the Image links into an ArrayList
+                    for(Element movieImage: movies.select("img.loadlate")){
+                        String moviePoster = movieImage.attr("loadlate");
+                        posterLink.add(moviePoster);
+                        //System.out.println(moviePoster);
+                    }
 
                     //lister.item is the list with the movie entries.
                     for (Element movie : body.select("h3, lister-item-header")) {
@@ -83,7 +95,26 @@ public class Crawler {
                         //getting Regisseur,Drehbuchautor,Cast
 
                         Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
-                        System.out.println(moviePersons);
+                        //System.out.println(moviePersons);
+
+                        Elements movieDirector = moviePersons.select("li, href.cast");
+                        System.out.println(movieDirector);
+                        //Elements movieDirector = moviePersons.select("span.ipc-metadata-list-item__label");
+                        //Elements test = moviePersons.select(movieDirector.text()).parents();
+                        //Elements test = moviePersons.select(movieDirector.text()).parents();
+
+
+
+                        //Elements moviePersonLink = moviePersons.select( "a[href^=/title/]");
+                        //String linkHref = moviePersonLink.attr("href");
+                        //String moviePersonUrl = "https://www.imdb.com" + linkHref;
+                        //Document moviePerson = Jsoup.connect(moviePersonUrl).get();
+                        //Elements moviePersonTable = moviePerson.select("div.header");
+
+                        //System.out.println(moviePersonTable);
+
+
+
                         //System.out.println(title);
                         //System.out.println(length);
                         //System.out.println(release);
