@@ -16,6 +16,7 @@ public class Main {
         //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
         Client client = new Client();
         client.sendUser();
+        client.loginGetUserData("Aladin","12345");
 
 
 

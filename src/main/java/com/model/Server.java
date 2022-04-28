@@ -31,7 +31,7 @@ public class Server {
 
 
                     PrintWriter pw = new PrintWriter(new OutputStreamWriter(userSocket.getOutputStream()));
-                    pw.println("User Object received");
+                    pw.println("User Object received: " );
                     pw.flush();
                     pw.close();
 
