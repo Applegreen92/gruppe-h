@@ -9,12 +9,6 @@ import java.util.Scanner;
 
 public class Server {
 
-    /**  @author raphaelkruska
-     *  Folgendes klappt jetzt mit diesem Code: Der Client sendet ne Message und wird als User mit dem Usernamen aus der Userklasse angezeigt.
-    Wenn du "BYE" schreibst beendest du automatisch die Connection.
-    Probier es mal aus und guck ob es bei dir auch funktioniert! Habe deinen Code mal auskommentiert, da ich beim Ausführen immer ne Exception bekommen habe.
-     */
-
 
     private final int port = 8000;
 
@@ -29,19 +23,21 @@ public class Server {
                     System.out.println("Waiting for connection ...");
                     Socket userSocket = serverSocket.accept();
 
-                    Scanner input = new Scanner(new BufferedReader(new InputStreamReader(userSocket.getInputStream())));
-                    String userString = input.nextLine();
+                    Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(userSocket.getInputStream())));
+                    String userString = input.next();
+                    System.out.println(userString);
                     ObjectMapper om = new ObjectMapper();
                     User user = om.readValue(userString,User.class);
 
 
-                    // This is the the fruit of my work i tell ya !
-                    System.out.println(user.toString());
+                    PrintWriter pw = new PrintWriter(new OutputStreamWriter(userSocket.getOutputStream()));
+                    pw.println("User Object received");
+                    pw.flush();
+                    pw.close();
 
                     //Verbindungen schliesen
 
-                    userSocket.close();
-                    serverSocket.close();
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
