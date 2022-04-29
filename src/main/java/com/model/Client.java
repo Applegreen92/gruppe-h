@@ -22,37 +22,19 @@ public class Client {
     private final int port = 7779;
 
 
-    User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
+    User user = new User("Aladin", "Hans", "Jürgen", "Hans-Jürgen@web.de", "12345", false);
     Socket clientSocket;
 
     public Client() {
         try {
 
-            this.clientSocket= new Socket("127.0.0.1",port);
+            this.clientSocket = new Socket("127.0.0.1", port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-//    public void loginGetUserData(String userName, String password) throws IOException {
-//        JSONObject json = new JSONObject();
-//        json.put("userName",userName);
-//        json.put("password",password);
-//
-//        String jsonString = json.toString();
-//        Socket socket = new Socket("localhost",7999);
-
-
-        
-
-
-
-    
-
-
-
-
-    public void sendUser (){
+    public void sendUser() {
         try {
 
             String userJsonString = new ObjectMapper().writeValueAsString(this.user);
@@ -60,17 +42,62 @@ public class Client {
             pw.println(userJsonString);
             pw.flush();
 
-            Scanner sc = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
-            String answer = sc.nextLine();
-            System.out.println("Incoming answer from [server] : "+answer);
+            Scanner scanner = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
+            String answer = scanner.nextLine();
+            System.out.println("Incoming answer from [server] : " + answer);
             pw.close();
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        }
+//            public void loginGetUserData(String userNameLabel.getText, String password) throws IOException {
+//        JSONObject json = new JSONObject();
+//        json.put("userName", userName);
+//        json.put("password", password);
+//
+//        String jsonString = json.toString();
+//        Socket socket = new Socket("localhost", 7999);
+//    }
+//}
     }
+
+ /*  The following code contains a few methods to extract Data from the LOGIN GUI and create JSONObjects to give it to the client
+     of course they have to be implemented in the LOGIN/GUI Class not in the Client, this is just preworked for the team
+     hopefully some of these will work!! peace out, Rapha
+     Will have to wait for the GUI code from Lorenz and Saiyan to see if it works...
+
+     extracts the Strings from the LOGIN GUI and saves it in variables
+     these variables need to be in GUI CLASS
+     String userName;
+     String password;
+
+    public void extractLoginUserData() {
+        String this.userName = userNameField.getText();
+        String this.password = passwordField.getText();
+
+
+
+    // creates a JSONObject with String username and String password we created above
+    public void createUserJSON(String userName, String password) {
+        JSONObject user = new JSONObject();
+        user.put("userName", this.userName);
+        user.put("password", this.password)
+
+    }
+
+    // extracts the Strings from the LOGIN GUI and creates a JSONObject with the values - 2in1
+
+    public void extractLoginDataAndCreateUserJSON(String userNameField.getText(), String passwordField.getText()) {
+        JSONObject user = new JSONObject();
+        user.put("userName", userNameField.getText());
+        user.put("password", passwordField.getText());
+    }
+}*/
+
+}
+
+
 
 
 

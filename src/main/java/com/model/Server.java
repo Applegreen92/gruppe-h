@@ -35,7 +35,7 @@ public class Server {
                     pw.flush();
                     pw.close();
 
-                    //Verbindungen schliesen
+
 
 
 

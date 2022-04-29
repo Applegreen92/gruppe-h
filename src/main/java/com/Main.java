@@ -10,18 +10,18 @@ public class Main {
     public static void main(String[] args) throws IOException, SQLException {
 
 
-/*
+
         Server server = new Server();
         server.startListening();
         //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
         Client client = new Client();
         client.sendUser();
-        client.loginGetUserData("Aladin","12345");*/
+        //client.loginGetUserData("Aladin","12345");
 
 
 
-        Crawler insertMovies = new Crawler();
-        insertMovies.getMoviesByGenre("action", 1, 2000,2006);
+        // Crawler insertMovies = new Crawler();
+        // insertMovies.getMoviesByGenre("action", 1, 2000,2006);
 
        //DatabaseLauncher createTable = new DatabaseLauncher();
        //createTable.insertMovie();
