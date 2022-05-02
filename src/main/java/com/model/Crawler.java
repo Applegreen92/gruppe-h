@@ -70,7 +70,7 @@ public class Crawler {
 
                     if (!body.isEmpty()) {
                         getPoster(body);
-                        System.out.println(posterLink.toString());
+                        //System.out.println(posterLink.toString());
 
                         //Elements movieImage = movies.select("img.loadlate");
 
@@ -136,20 +136,10 @@ public class Crawler {
                             //System.out.println(moviePersons);
 
                             Elements movieDirector = moviePersons.select("li, href.cast");
-                            System.out.println(movieDirector);
-                            //Elements movieDirector = moviePersons.select("span.ipc-metadata-list-item__label");
-                            //Elements test = moviePersons.select(movieDirector.text()).parents();
-                            //Elements test = moviePersons.select(movieDirector.text()).parents();
 
-
-
-                            //Elements moviePersonLink = moviePersons.select( "a[href^=/title/]");
-                            //String linkHref = moviePersonLink.attr("href");
-                            //String moviePersonUrl = "https://www.imdb.com" + linkHref;
-                            //Document moviePerson = Jsoup.connect(moviePersonUrl).get();
-                            //Elements moviePersonTable = moviePerson.select("div.header");
-
-                            //System.out.println(moviePersonTable);
+                            for(Element persons : movieDirector.select("ul, li")){
+                                System.out.println(persons.text());
+                            }
 
 
 
@@ -175,7 +165,7 @@ public class Crawler {
         for(Element movieImage: body.select("img.loadlate")){
             String moviePoster = movieImage.attr("loadlate");
             posterLink.add(moviePoster);
-            System.out.println(moviePoster);
+            //System.out.println(moviePoster);
         }
     }
 }
