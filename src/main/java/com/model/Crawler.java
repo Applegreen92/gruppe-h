@@ -19,6 +19,7 @@ public class Crawler {
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
+    ArrayList stars = new ArrayList();
 
 
 
@@ -34,8 +35,6 @@ public class Crawler {
                 count = 250;
             }
             while(MovieList.size() < 3000){
-
-
 
                 while (MovieList.size() < count*diff) {
                 //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
@@ -70,7 +69,7 @@ public class Crawler {
 
                     if (!body.isEmpty()) {
                         getPoster(body);
-                        System.out.println(posterLink.toString());
+                        //System.out.println(posterLink.toString());
 
                         //Elements movieImage = movies.select("img.loadlate");
 
@@ -121,42 +120,32 @@ public class Crawler {
                                 release = release.substring(0,4);
                             }
 
-                            //TODO (Regisseur,Drehbuchautor,Cast,Filmbanner)
-
-                            //getting Genres
+                            //WORKING getting Genres
                             Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
                             for (Element movieGenreList : movieGenres.select("a.sc-16ede01-3")) {
                                     String movieGenre = movieGenreList.text();
                                     movieGenreArray.add(movieGenre);
                             }
 
-                            //getting Regisseur,Drehbuchautor,Cast
 
+                            //TODO (Regisseur,Drehbuchautor,Cast,Filmbanner)
+
+
+                            //3rd website
                             Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
-                            //System.out.println(moviePersons);
-
                             Elements movieDirector = moviePersons.select("li, href.cast");
-                            System.out.println(movieDirector);
-                            //Elements movieDirector = moviePersons.select("span.ipc-metadata-list-item__label");
-                            //Elements test = moviePersons.select(movieDirector.text()).parents();
-                            //Elements test = moviePersons.select(movieDirector.text()).parents();
+                            //Kinda works, duplicate data
+                            for(Element person : moviePersons.select("li, ipc-metadata-list-item__label")){
+                                if(!person.text().contains("(")){
+                                    System.out.println(person.text());
+                                }
+                                else if(person.text().contains("Stars")){
+                                    stars.add(person);
+                                    //System.out.println(person);
+                                }
 
+                            }
 
-
-                            //Elements moviePersonLink = moviePersons.select( "a[href^=/title/]");
-                            //String linkHref = moviePersonLink.attr("href");
-                            //String moviePersonUrl = "https://www.imdb.com" + linkHref;
-                            //Document moviePerson = Jsoup.connect(moviePersonUrl).get();
-                            //Elements moviePersonTable = moviePerson.select("div.header");
-
-                            //System.out.println(moviePersonTable);
-
-
-
-                            //System.out.println(title);
-                            //System.out.println(length);
-                            //System.out.println(release);
-                            //System.out.println(movieGenreArray.toString());
                         }
                     }
                     if(diff > 0){
@@ -175,7 +164,7 @@ public class Crawler {
         for(Element movieImage: body.select("img.loadlate")){
             String moviePoster = movieImage.attr("loadlate");
             posterLink.add(moviePoster);
-            System.out.println(moviePoster);
+            //System.out.println(moviePoster);
         }
     }
 }
