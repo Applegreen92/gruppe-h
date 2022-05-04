@@ -21,7 +21,7 @@ public class LoginController extends SceneController implements Initializable {
     @FXML
     public PasswordField passwordField;
 
-    Client client = new Client(); // Line von Rapha hinzugefügt
+   // Client client = new Client(); // Line von Rapha hinzugefügt
   /*  public void loginPressed() throws IOException {
         int matr = Integer.parseInt(usernameField.getText());
         String password = passwordField.getText();

@@ -1,15 +1,19 @@
 package com.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
-class ServiceThread extends Thread {
-    Socket socket;
 
-    public ServiceThread(Socket socket) {
+/*class ServiceThread extends Thread {
+    Socket socket;*/
+
+   /* public ServiceThread(Socket socket) {
         this.socket = socket;
     }
 
@@ -48,13 +52,13 @@ class ServiceThread extends Thread {
 
     public class Server {
 
-    /*DatabaseLauncher db = new DatabaseLauncher();
+    *//*DatabaseLauncher db = new DatabaseLauncher();
 
     User user = new User("Aladin", "Hans", "Jürgen", "Hans-Jürgen@web.de", "12345", false);
 
     public void sendToDatabase() {
         db.insertUser(user);
-    }*/
+    }*//*
 
 
         User user = new User("Hans" ,"Hans-Peter","Meier", "Hans-Peter@web.de", "Peter", false);
@@ -83,38 +87,74 @@ class ServiceThread extends Thread {
             }
 
         }
+    }*/
+
+public class Server {
+
+    User user1 = new User("Pema", "Peter", "Maffay", "Peter-Maffay@web.de", "maffy321", false);
+    User user2 = new User("Gema", "Gerald", "Maffay", "Gerald-Maffay@web.de", "Gaffy321", false);
+    User user3 = new User("Olli123", "Oliver", "Kahn", "Oliver-Kahn@web.de", "wirbraucheneier", false);
+
+    ArrayList<User> users = new ArrayList<>();
+
+    public void fillArrayList() {
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
     }
 
+    private static int port = 7779;
 
-//    public void startListening(){
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ServerSocket serverSocket = new ServerSocket(port);
-//                    System.out.println("Waiting for connection ...");
-//                    Socket userSocket = serverSocket.accept();
-//
-//                    Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(userSocket.getInputStream())));
-//                    String userString = input.next();
-//                    System.out.println(userString);
-//                    ObjectMapper om = new ObjectMapper();
-//                    User user = om.readValue(userString,User.class);
-//
-//
-//                    PrintWriter pw = new PrintWriter(new OutputStreamWriter(userSocket.getOutputStream()));
-//                    pw.println("User Object received: " );
-//                    pw.flush();
-//                    pw.close();
-//
-//
-//
-//
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }).start();
-//    }
+    public void startListening() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ServerSocket serverSocket = new ServerSocket(port);
+                    System.out.println("Waiting for connection ...");
+                    Socket userSocket = serverSocket.accept();
+
+                    Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(userSocket.getInputStream())));
+                    String userString = input.next();
+                    System.out.println(userString);
+                    ObjectMapper om = new ObjectMapper();
+                    User userReg = om.readValue(userString, User.class);
+
+                    PrintWriter pw = new PrintWriter(new OutputStreamWriter(userSocket.getOutputStream()));
+                    //pw.write("Test");
+                    fillArrayList();
+                    if (checkArrayList(userReg.getUserName())) {
+                        pw.write("[Server] Username already in use!");
+                        pw.flush();
+                    } else {
+                        pw.write("[Server] User registration was successful! " + userReg.getUserName());
+                        pw.flush();
+                    }
+                   /* if (checkArrayList(userReg.getUserName()) == true) {
+                        pw.println("Error: Username already exists!");
+                        pw.flush();
+                    }
+                    else {
+                        pw.println("User registration was successfull. You can now log in!");
+                        pw.flush();
+                    }*/
+                    pw.close();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+
+    public boolean checkArrayList(String userName) {
+        for (User user : users) {
+            if (user.getUserName().equals(userName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

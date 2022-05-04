@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.sql.Array;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     public User(){
@@ -23,6 +25,8 @@ public class User implements Serializable {
         this.isSystemAdmin = isSystemAdmin;
         this.userName = userName;
     }
+
+
 
     @DatabaseField(id = true)
     private int userID;
@@ -65,7 +69,6 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", isSystemAdmin=" + isSystemAdmin;
     }
-
 }
 
 

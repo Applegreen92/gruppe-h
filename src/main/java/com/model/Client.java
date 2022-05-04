@@ -2,6 +2,7 @@
 package com.model;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.lang.runtime.ObjectMethods;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -19,13 +20,13 @@ import org.json.JSONObject;
 public class Client {
 
     private final int port = 7779;
+    Socket clientSocket;
+
     private String userName;
     private String password;
 
 
-
     User user = new User("Aladin", "Hans", "Jürgen", "Hans-Jürgen@web.de", "12345", false);
-    Socket clientSocket;
 
     public Client() {
         try {
@@ -128,10 +129,13 @@ public class Client {
     }
 
 
+
+
     public static void main(String[] args) throws IOException {
         Client client = new Client();
         //client.sendUser();
         client.loginDummy();
+
     }
 
  /*  The following code contains a few methods to extract Data from the LOGIN GUI and create JSONObjects to give it to the client
