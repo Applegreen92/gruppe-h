@@ -22,19 +22,23 @@ public class User implements Serializable {
     this.userName = userName;
     }
 
-    private String userName;
-    private String givenName;
-    private String familyName;
-    private String eMail;
-    private String password;
+    private String userName, givenName, familyName, eMail, password;
     private boolean isSystemAdmin;
+
+    // Testing Flagging system for sending stuff around to know what is what (David)
+    private boolean loginFlag = false, registerFlag = false, databaseCheck = false;
+
+
 
     public String getUserName() { return userName; }
     public String getGivenName() { return givenName; }
     public String getFamilyName() { return familyName; }
     public String geteMail() { return eMail; }
     public String getPassword() { return password; }
-    public boolean isSystemAdmin() { return isSystemAdmin; }
+    public boolean getSystemAdmin() { return isSystemAdmin; }
+    public boolean getLoginFlag() { return loginFlag; }
+    public boolean getRegisterFlag() { return registerFlag; }
+    public boolean getDatabaseCheck() { return databaseCheck; }
 
     public void setUserName(String userName) { this.userName = userName; }
     public void setGivenName(String givenName) { this.givenName = givenName; }
@@ -42,6 +46,9 @@ public class User implements Serializable {
     public void seteMail(String eMail) { this.eMail = eMail; }
     public void setPassword(String password) { this.password = password; }
     public void setSystemAdmin(boolean systemAdmin) { isSystemAdmin = systemAdmin; }
+    public void setLoginFlag(boolean loginFlag) { this.loginFlag = loginFlag; }
+    public void setRegisterFlag(boolean registerFlag) { this.registerFlag = registerFlag; }
+    public void setDatabaseCheck(boolean databaseCheck) { this.databaseCheck = databaseCheck; }
 
     @Override
     public String toString() {
