@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import com.model.DatabaseLauncher;
 
 import java.io.*;
 import java.net.Socket;
