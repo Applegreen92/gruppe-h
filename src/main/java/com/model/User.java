@@ -1,5 +1,7 @@
 package com.model;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -14,15 +16,19 @@ public class User implements Serializable {
     }
 
     public User (String userName,String givenName, String familyName, String eMail, String password,boolean isSystemAdmin){
-    this.givenName = givenName;
-    this.familyName = familyName;
-    this.eMail = eMail;
-    this.password = password;
-    this.isSystemAdmin = isSystemAdmin;
-    this.userName = userName;
+        this.givenName = givenName;
+        this.familyName = familyName;
+        this.eMail = eMail;
+        this.password = password;
+        this.isSystemAdmin = isSystemAdmin;
+        this.userName = userName;
     }
 
+    @DatabaseField(id = true)
+    private int userID;
+    @DatabaseField(canBeNull = false)
     private String userName, givenName, familyName, eMail, password;
+    @DatabaseField(canBeNull = false)
     private boolean isSystemAdmin;
 
     // Testing Flagging system for sending stuff around to know what is what (David)
