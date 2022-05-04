@@ -8,6 +8,7 @@ import com.controller.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.model.DatabaseLauncher;
@@ -24,6 +25,9 @@ public class RegisterController extends SceneController implements Initializable
 
     @FXML
     public PasswordField passwort;
+
+    @FXML
+    public Label registererror;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
