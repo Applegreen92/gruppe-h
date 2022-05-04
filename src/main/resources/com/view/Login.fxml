@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right,aqua, blue);" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right,aqua, green);" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.LoginController">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="189.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="202.0" fitWidth="175.0" layoutX="7.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../access-authorization-authorized-blue-lock-logged-in-login-935669.png" />
+                  <Image url="@access-authorization-authorized-blue-lock-logged-in-login-935669.png" />
                </image>
             </ImageView>
          </children>
@@ -50,7 +50,7 @@
             <Button fx:id="registerbutton" layoutX="287.0" layoutY="298.0" mnemonicParsing="false" onMouseClicked="#registerPressed" style="-fx-background-color: black;" text="Registrieren" textFill="#eeecec" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="187.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../login-page.png" />
+                  <Image url="@login-page.png" />
                </image>
             </ImageView>
          </children>

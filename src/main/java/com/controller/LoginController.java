@@ -16,10 +16,10 @@ import java.util.ResourceBundle;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
-    TextField usernameField;
+    public TextField usernameField;
 
     @FXML
-    PasswordField passwordField;
+    public PasswordField passwordField;
 
     Client client = new Client(); // Line von Rapha hinzugefügt
   /*  public void loginPressed() throws IOException {
@@ -49,7 +49,7 @@ public class LoginController extends SceneController implements Initializable {
 
 
     public void registerPressed() {
-        switchToSceneWithStage("Register.fxml");
+        switchToSceneWithStage("/Register.fxml");
     }
 
     @Override
