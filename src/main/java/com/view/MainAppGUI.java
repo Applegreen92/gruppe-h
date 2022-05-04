@@ -2,6 +2,7 @@ package com.view;
 
 
 import com.model.User;
+import com.model.Server;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,8 +42,8 @@ public class MainAppGUI extends Application {
 
     public static void main(String[] args) {
       // ummuenzen auf server
-       // ServerTest server = new ServerTest();
-       // server.startListening();
+        Server server = new Server();
+        server.startListening();
         launch();
     }
 }
