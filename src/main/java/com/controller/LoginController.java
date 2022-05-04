@@ -1,13 +1,16 @@
 package com.controller;
 
 
+import com.model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.json.JSONObject;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -18,6 +21,7 @@ public class LoginController extends SceneController implements Initializable {
     @FXML
     PasswordField passwordField;
 
+    Client client = new Client(); // Line von Rapha hinzugefügt
   /*  public void loginPressed() throws IOException {
         int matr = Integer.parseInt(usernameField.getText());
         String password = passwordField.getText();
@@ -54,6 +58,7 @@ public class LoginController extends SceneController implements Initializable {
     }
 
 
-    public void loginPressed(ActionEvent actionEvent) {
+    public void loginPressed(ActionEvent actionEvent) throws IOException {
+//        client.login(usernameField.getText(),passwordField.getText()); // Line von Rapha hinzugefügt
     }
 }

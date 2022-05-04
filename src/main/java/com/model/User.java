@@ -53,7 +53,6 @@ public class User implements Serializable {
                 ", isSystemAdmin=" + isSystemAdmin;
     }
 
-
 }
 
 
