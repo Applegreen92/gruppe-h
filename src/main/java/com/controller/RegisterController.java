@@ -1,7 +1,7 @@
-package com.example.guiproject;
+package com.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import com.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -11,16 +11,13 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.Socket;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class RegisterController extends SceneController implements Initializable {
     @FXML
-    TextField vorname, nachname, matrnr, email;
+    TextField username, vorname, nachname, email;
 
     @FXML
     PasswordField passwort;
@@ -31,8 +28,7 @@ public class RegisterController extends SceneController implements Initializable
     }
 
     public void registerNow() throws IOException {
-        int tempMatr = Integer.parseInt(matrnr.getText());
-        User user = new User(vorname.getText(), nachname.getText(), email.getText(), passwort.getText(), tempMatr);
+        User user = new User(username.getText(), vorname.getText(), nachname.getText(), email.getText(), passwort.getText(), false);
         ObjectMapper mapper = new ObjectMapper();
         String userstring = mapper.writeValueAsString(user);
         try {
@@ -44,6 +40,6 @@ public class RegisterController extends SceneController implements Initializable
             throw new RuntimeException();
         }
 
-        switchToSceneWithStage("Login.fxml");
+        switchToSceneWithStage("com/view/Login.fxml");
     }
 }

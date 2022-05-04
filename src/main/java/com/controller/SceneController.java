@@ -1,7 +1,8 @@
-package com.example.guiproject;
+package com.controller;
 
 
 
+import com.view.MainAppGUI;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 

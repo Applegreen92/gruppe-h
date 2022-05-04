@@ -1,19 +1,14 @@
-package com.example.guiproject;
+package com.controller;
 
-import com.google.gson.Gson;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class LoginController extends SceneController implements Initializable {
@@ -23,7 +18,7 @@ public class LoginController extends SceneController implements Initializable {
     @FXML
     PasswordField passwordField;
 
-    public void loginPressed() throws IOException {
+  /*  public void loginPressed() throws IOException {
         int matr = Integer.parseInt(usernameField.getText());
         String password = passwordField.getText();
         File f = new File(String.valueOf(Paths.get(matr + ".json")));
@@ -46,9 +41,8 @@ public class LoginController extends SceneController implements Initializable {
             usernameField.clear();
             passwordField.clear();
         }
+*/
 
-
-    }
 
     public void registerPressed() {
         switchToSceneWithStage("Register.fxml");
@@ -60,4 +54,6 @@ public class LoginController extends SceneController implements Initializable {
     }
 
 
+    public void loginPressed(ActionEvent actionEvent) {
+    }
 }

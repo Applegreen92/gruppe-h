@@ -1,6 +1,7 @@
-package com.example.guiproject;
+package com.view;
 
 
+import com.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,15 +31,18 @@ public class MainAppGUI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         current = stage;
-        Parent root =  FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root =  FXMLLoader.load(getClass().getResource("/Login.fxml"));
+       // FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
+        Scene scene = new Scene(root);
         current.setTitle("Login");
-        current.setScene(new Scene(root));
+        current.setScene(scene);
         current.show();
     }
 
     public static void main(String[] args) {
-        ServerTest server = new ServerTest();
-        server.startListening();
-        launch();
+      // ummuenzen auf server
+       // ServerTest server = new ServerTest();
+       // server.startListening();
+        launch(args);
     }
 }

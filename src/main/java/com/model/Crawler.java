@@ -1,12 +1,9 @@
 package com.model;
 
-import com.gargoylesoftware.htmlunit.DownloadedContent;
-import com.model.Movie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 
 import java.lang.String;
 
@@ -21,51 +18,69 @@ public class Crawler {
     ArrayList movieGenreArray = new ArrayList();
     ArrayList stars = new ArrayList();
 
+    int numTotalMovies = 0;
+
+
+    Elements body = null;
+    Document movies = null;
+    int pass = 1;
 
 
     public void getMoviesByGenre(String genre, int start, int startDate, int endDate) throws IOException {
-        Elements body = null;
-        Document movies = null;
         try {
-            int diff = endDate-startDate;
+            int totalDiff = endDate-startDate + 1;
+            int diff = endDate-startDate + 1;
             int count= 0;
             if(diff>=12) {
                 count = 3000 / diff;
             }else{
                 count = 250;
             }
-            while(MovieList.size() < 3000){
 
-                while (MovieList.size() < count*diff) {
+            //getting the total summ of movies
+            for(int x = 0; x < diff; x++){
+                int startDateForTotalAmountMovies = startDate+x;
+
+                //getting the Movies Elements
+                getMovies(startDateForTotalAmountMovies,endDate,genre,count,start);
+
+                //filter on the total amount of movies
+                Elements numOfMoviesElement = movies.select("div.desc");
+                Elements numOfMoviesSpan = numOfMoviesElement.select("span");
+                Element firstElmenetOfNumOfMoviesSpan = numOfMoviesSpan.first();
+
+                //getting the number of the String
+                if(firstElmenetOfNumOfMoviesSpan.text().length() <= 11){
+                    numTotalMovies += Integer.parseInt((firstElmenetOfNumOfMoviesSpan.text().split(" ")[0]).replaceAll("[^a-zA-Z0-9]", ""));
+                    //System.out.println(numTotalMoviesPerYear);
+                }else{
+                    numTotalMovies += Integer.parseInt((firstElmenetOfNumOfMoviesSpan.text().split(" ")[2]).replaceAll("[^a-zA-Z0-9]", ""));
+                    //System.out.println(numTotalMoviesPerYear);
+                }
+            }
+            //Looping until you get the num of total movies or you have at least 3000
+            while((MovieList.size() < 3000) && (MovieList.size() < numTotalMovies)){
+
+                //Reset the StartDate for Loop & link creation
+                int startDateForLoop = startDate;
+                int countMovies = 0;
+                //TODO müssen wir hier noch exakt für das Jahr schauen?
+                while ((countMovies < 3000) && (countMovies < numTotalMovies)) {
                 //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
                     if(startDate > 1 && endDate > 1){
                         if(endDate < startDate) {
-                            System.out.println("Ob du behindert bist habe ich dich gefragt!");
+                            System.out.println("Error! endDate is greater then startDate!");
                         }else {
-                            diff = endDate-startDate;
+                            diff = endDate-startDateForLoop;
                         }
                     }
-
-                if((genre == "" || genre == null) && (startDate > 1 && endDate > 1)) {
-                    movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + endDate + "-12-31&count=250&start=" + start + "&ref_=adv_nxt").get();
-                    body = movies.select("div.lister-list");
-                }else if(startDate < 1 && endDate < 1){
-                    movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&count=250&explore=genres&ref_=adv_nxt").get();
-                    body = movies.select("div.lister-list");
-                }else if(startDate > 1 && endDate < 1){
-                    movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01,2022-12-31&count=250&start=" + start + "&ref_=adv_nxt").get();
-                    body = movies.select("div.lister-list");
-                }else{
-                    movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + endDate + "-12-31&count=137&start=1&ref_=adv_nxt").get();
-                    body = movies.select("div.lister-list");
+                if(count > 250){
+                    count = 250;
                 }
+                getMovies(startDateForLoop,endDate,genre,count,start);
 
-
-
-                start += 250;
+                body = movies.select("div.lister-list");
                 //System.out.println(body);
-
-
 
                     if (!body.isEmpty()) {
                         getPoster(body);
@@ -74,20 +89,22 @@ public class Crawler {
                         //Elements movieImage = movies.select("img.loadlate");
 
                         //Loading the Image links into an ArrayList
-                        for(Element movieImage: movies.select("img.loadlate")){
-                            String moviePoster = movieImage.attr("loadlate");
-                            posterLink.add(moviePoster);
-                            //System.out.println(moviePoster);
-                        }
+                        //for(Element movieImage: movies.select("img.loadlate")){
+                        //    String moviePoster = movieImage.attr("loadlate");
+                        //    posterLink.add(moviePoster);
+                        //    //System.out.println(moviePoster);
+                        //}
 
                         //lister.item is the list with the movie entries.
                         for (Element movie : body.select("h3, lister-item-header")) {
-                            Elements movieLink = movie.select( "a[href^=/title/tt]");
+                            Elements movieLink = movie.select("a[href^=/title/tt]");
                             String linkHref = movieLink.attr("href");
                             hreflink.add(linkHref);
                         }
 
-                        for(int x = 0;x < hreflink.size(); x++){
+                        for (int x = 0; x < hreflink.size(); x++) {
+                            System.out.println("Movies: " + hreflink.size());
+                            System.out.println("Movie: " + x);
                             //Creating the new Document foreach movie
                             String movieUrl = "https://www.imdb.com" + hreflink.get(x);
                             Document focusMovie = Jsoup.connect(movieUrl).get();
@@ -101,14 +118,14 @@ public class Crawler {
 
                             //looping for the Length
                             for (Element movieHeaderListItem : movieHeaderList.select("li.ipc-inline-list__item")) {
-                                if(countLiElement >= 3){
+                                if (countLiElement >= 3) {
                                     //selects the length
                                     //System.out.println("length");
                                     length = movieHeaderListItem.text();
                                     //System.out.println(length);
                                     countLiElement = 1;
-                                }else {
-                                    countLiElement+= countLiElement;
+                                } else {
+                                    countLiElement += countLiElement;
                                 }
                             }
                             //Selects the Title
@@ -116,15 +133,15 @@ public class Crawler {
                             //selects the release and age
                             String release = movieHeader.select("span.sc-8c396aa2-2").text();
                             //cutting the age off
-                            if(release.length() > 4){
-                                release = release.substring(0,4);
+                            if (release.length() > 4) {
+                                release = release.substring(0, 4);
                             }
 
                             //WORKING getting Genres
                             Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
                             for (Element movieGenreList : movieGenres.select("a.sc-16ede01-3")) {
-                                    String movieGenre = movieGenreList.text();
-                                    movieGenreArray.add(movieGenre);
+                                String movieGenre = movieGenreList.text();
+                                movieGenreArray.add(movieGenre);
                             }
 
 
@@ -134,25 +151,32 @@ public class Crawler {
                             //3rd website
                             Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
                             Elements movieDirector = moviePersons.select("li, href.cast");
-                            //Kinda works, duplicate data
-                            for(Element person : moviePersons.select("li, ipc-metadata-list-item__label")){
-                                if(!person.text().contains("(")){
-                                    System.out.println(person.text());
-                                }
-                                else if(person.text().contains("Stars")){
-                                    stars.add(person);
-                                    //System.out.println(person);
-                                }
 
+                            for (Element persons : movieDirector.select("ul, li")) {
+                                //System.out.println(persons.text());
                             }
 
+
+                            //System.out.println(title);
+                            //System.out.println(length);
+                            //System.out.println(release);
+                            //System.out.println(movieGenreArray.toString());
+                            Movie movie = new Movie(title, movieGenres.toString(), posterLink.get(x).toString(), Integer.parseInt(release), 1, "", "", "");
+                            System.out.println(movie.getTitle());
+                            MovieList.add(movie);
                         }
+                        countMovies+= hreflink.size();
                     }
                     if(diff > 0){
-                        startDate+= startDate;
+                        startDateForLoop+= 1;
+                    }else if(diff == 0){
+                        start += 250;
                     }
-                    count = (3000-(count*diff))/diff;
+                    hreflink.clear();
                 }
+                countMovies = 0;
+                count = (3000-(count*totalDiff*pass))/totalDiff;
+                pass = pass +1;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -165,6 +189,20 @@ public class Crawler {
             String moviePoster = movieImage.attr("loadlate");
             posterLink.add(moviePoster);
             //System.out.println(moviePoster);
+        }
+    }
+
+    public void getMovies(int startDate, int endDate, String genre, int count, int start) throws IOException {
+        if((genre == "" || genre == null) && (startDate > 1 && endDate > 1)) {
+            movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + startDate + "-12-31&count="+ count +"&start=" + start + "&ref_=adv_nxt").get();
+        }else if(startDate < 1 && endDate < 1){
+            movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&start=" + start + "&count="+ count +"&explore=genres&ref_=adv_nxt").get();
+        }else if(startDate == 2000 && endDate == 2022){
+            movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + startDate + "-12-31&count=137&start=1&ref_=adv_nxt").get();
+        }else if((startDate > 1 && endDate >= startDate) && genre != "" || genre == null){
+            movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&genres=" + genre + "&release_date=" + startDate + "-01-01," + startDate + "-12-31&count="+ count +"&start=" + start + "&ref_=adv_nxt").get();
+        }else if(startDate > 1 && endDate >= startDate){
+            movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + startDate + "-12-31&count="+ count +"&start=" + start + "&ref_=adv_nxt").get();
         }
     }
 }
