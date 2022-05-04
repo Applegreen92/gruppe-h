@@ -20,12 +20,16 @@ public class Main {
 
 
 
+        //Crawler insertMovies = new Crawler();
+        //insertMovies.getMoviesByGenre("action", 1, 2000,2001);
 
-         Crawler insertMovies = new Crawler();
-         insertMovies.getMoviesByGenre("action", 1, 2000,2006);
+         //Crawler insertMovies = new Crawler();
+         //insertMovies.getMoviesByGenre("action", 1, 2000,2006);
 
-       //DatabaseLauncher createTable = new DatabaseLauncher();
-       //createTable.insertMovie();
+       DatabaseLauncher createTable = new DatabaseLauncher();
+       //Movie movie = new Movie("Test","TestBild", 2000, 1);
+
+       createTable.createUserTable();
 
 
         //Test for poster by genre: appears to be fully functional
