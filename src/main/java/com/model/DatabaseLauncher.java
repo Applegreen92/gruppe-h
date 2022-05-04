@@ -24,29 +24,41 @@ public class DatabaseLauncher {
         }
     }
 
-    public void insertUser(User user){
+    public boolean insertUser(User user){
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)){
             //Create Movie Table if not exists
             createUserTable();
-            Statement stmt = con.createStatement();
+            String email = "";
 
-            ResultSet rs;
-            rs = stmt.executeQuery("SELECT * FROM USER WHERE email = "+ user.geteMail() + " AND password = "+ user.getPassword());
+            String query = "SELECT * FROM USER WHERE email = '"+ user.geteMail() +"'";
+            Statement getData = con.prepareStatement(query);
+            ResultSet result = getData.executeQuery(query);
+            if(result != null) {
+                while(result.next()) {
+                    email = result.getString("EMAIL");
+                }
+            }
+            getData.close();
 
             int isAdminNum = 0;
             if(user.getSystemAdmin() == true){
                 isAdminNum = 1;
             }
             // insert the data
-            if(rs == null) {
-                stmt.executeUpdate("INSERT INTO USER (firstname, lastname, isAdmin, userName)" +
-                        "VALUES (" + user.getGivenName() + ", " + user.getFamilyName() + ", " + isAdminNum + ", " + user.getUserName() + ")");
+            if(email.equals(user.geteMail())) {
+                return false;
+            }else{
+                Statement stmt = con.createStatement();
+                stmt.execute("INSERT INTO USER (firstname, lastname, isAdmin, userName, password, email)" +
+                        "VALUES ('" + user.getGivenName() + "', '" + user.getFamilyName() + "', " + isAdminNum + ", '" + user.getUserName() + "','" + user.getPassword() + "', '"+ user.geteMail() +"')");
+                stmt.close();
+                return true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void getUser(User user){
+    public boolean getUser(User user){
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)){
             //Create Movie Table if not exists
             createUserTable();
@@ -56,9 +68,9 @@ public class DatabaseLauncher {
             rs = stmt.executeQuery("SELECT * FROM USER WHERE email = "+ user.geteMail() + " AND password = "+ user.getPassword());
 
             if(rs == null) {
-                return;
+                return false;
             }else{
-                System.out.println("Passt!");
+                return true;
             }
 
         } catch (SQLException e) {
@@ -71,13 +83,13 @@ public class DatabaseLauncher {
             //Create Movie Table if not exists
             Statement stmt = con.createStatement();
             String sqlCreateUser = "CREATE TABLE IF NOT EXISTS USER " +
-                    "(id INTEGER not NULL, " +
+                    "(id INTEGER PRIMARY KEY AUTO_INCREMENT, " +
                     " firstname VARCHAR(255), " +
                     " lastname VARCHAR(255), " +
                     " email VARCHAR(255), " +
                     " isAdmin INTEGER," +
                     " userName VARCHAR(255), " +
-                    " PRIMARY KEY ( id ))";
+                    " password VARCHAR(255))";
             System.out.println(sqlCreateUser);
             stmt.executeUpdate(sqlCreateUser);
 

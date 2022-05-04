@@ -27,9 +27,12 @@ public class Main {
          //insertMovies.getMoviesByGenre("action", 1, 2000,2006);
 
        DatabaseLauncher createTable = new DatabaseLauncher();
-       //Movie movie = new Movie("Test","TestBild", 2000, 1);
 
-       createTable.createUserTable();
+       //Movie movie = new Movie("Test","TestBild", 2000, 1);
+        createTable.createUserTable();
+        User user = new User("Felix", "Bernardi", true, "test","Felix.Bernardi@web.de", "Test123");
+        createTable.insertUser(user);
+
 
 
         //Test for poster by genre: appears to be fully functional
