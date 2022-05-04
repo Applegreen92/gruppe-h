@@ -12,10 +12,14 @@ module com.view {
     requires org.json;
     requires htmlunit;
 
+
     opens com.view to javafx.fxml;
     exports com.view;
     exports com.controller;
     exports com.model;
     exports com.testPackage;
     opens com.testPackage to javafx.fxml;
+
+    opens com.controller to javafx.fxml;
+
 }

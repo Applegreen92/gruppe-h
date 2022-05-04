@@ -13,10 +13,10 @@ import java.util.ResourceBundle;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
-    TextField usernameField;
+    public TextField usernameField;
 
     @FXML
-    PasswordField passwordField;
+    public PasswordField passwordField;
 
   /*  public void loginPressed() throws IOException {
         int matr = Integer.parseInt(usernameField.getText());
@@ -45,7 +45,7 @@ public class LoginController extends SceneController implements Initializable {
 
 
     public void registerPressed() {
-        switchToSceneWithStage("Register.fxml");
+        switchToSceneWithStage("/Register.fxml");
     }
 
     @Override

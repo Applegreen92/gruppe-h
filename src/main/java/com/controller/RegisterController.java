@@ -2,6 +2,7 @@ package com.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.User;
+import com.controller.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -17,10 +18,10 @@ import java.util.ResourceBundle;
 
 public class RegisterController extends SceneController implements Initializable {
     @FXML
-    TextField username, vorname, nachname, email;
+    public TextField username, vorname, nachname, email;
 
     @FXML
-    PasswordField passwort;
+    public PasswordField passwort;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,6 +41,6 @@ public class RegisterController extends SceneController implements Initializable
             throw new RuntimeException();
         }
 
-        switchToSceneWithStage("com/view/Login.fxml");
+        switchToSceneWithStage("Login.fxml");
     }
 }

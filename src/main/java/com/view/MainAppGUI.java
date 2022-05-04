@@ -31,7 +31,7 @@ public class MainAppGUI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         current = stage;
-        Parent root =  FXMLLoader.load(getClass().getResource("/Login.fxml"));
+        Parent root =  FXMLLoader.load(getClass().getResource("Login.fxml"));
        // FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
         Scene scene = new Scene(root);
         current.setTitle("Login");
@@ -43,6 +43,6 @@ public class MainAppGUI extends Application {
       // ummuenzen auf server
        // ServerTest server = new ServerTest();
        // server.startListening();
-        launch(args);
+        launch();
     }
 }
