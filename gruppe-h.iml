@@ -63,5 +63,6 @@
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-core:6.1" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-jdbc:6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:23.0.0" level="project" />
   </component>
 </module>

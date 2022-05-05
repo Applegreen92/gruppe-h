@@ -1,5 +1,6 @@
 package com;
 
+import com.controller.DatabaseController;
 import com.model.*;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class Main {
          //Crawler insertMovies = new Crawler();
          //insertMovies.getMoviesByGenre("action", 1, 2000,2006);
 
-       DatabaseLauncher createTable = new DatabaseLauncher();
+        DatabaseController createTable = new DatabaseController();
 
        //Movie movie = new Movie("Test","TestBild", 2000, 1);
         createTable.createUserTable();

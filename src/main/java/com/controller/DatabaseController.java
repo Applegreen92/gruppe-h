@@ -1,12 +1,12 @@
-package com.model;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
+package com.controller;
+
+import com.model.Movie;
+import com.model.User;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 
-public class DatabaseLauncher {
+public class DatabaseController {
     private String db_url = "jdbc:mysql://localhost/IMDBClone";
     private String user_name = "root";
     private String password = "";
@@ -24,7 +24,7 @@ public class DatabaseLauncher {
         }
     }
 
-    public boolean insertUser(User user){
+    public boolean insertUser(@NotNull User user){
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)){
             //Create Movie Table if not exists
             createUserTable();
@@ -58,7 +58,7 @@ public class DatabaseLauncher {
             throw new RuntimeException(e);
         }
     }
-    public boolean getUser(User user){
+    public boolean getUser(@NotNull User user){
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)){
             //Create Movie Table if not exists
             createUserTable();
@@ -92,7 +92,7 @@ public class DatabaseLauncher {
                     " password VARCHAR(255))";
             System.out.println(sqlCreateUser);
             stmt.executeUpdate(sqlCreateUser);
-
+            stmt.close();
 
 
         } catch (SQLException e) {

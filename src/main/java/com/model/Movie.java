@@ -12,17 +12,17 @@ public class Movie {
     private String title;
     @DatabaseField(canBeNull = false)
     private String posterSrc;
-    @DatabaseField(canBeNull = false)
+
     private String genre;
     @DatabaseField(canBeNull = false)
     private int releaseDate;
     @DatabaseField(canBeNull = false)
     private int length;
-    @DatabaseField(canBeNull = false)
+
     private String regisseur;
-    @DatabaseField(canBeNull = false)
+
     private String author;
-    @DatabaseField(canBeNull = false)
+
     private String cast;
 
     public Movie(){
@@ -39,6 +39,9 @@ public class Movie {
         this.genre = genre;
         this.cast = cast;
 
+    }
+
+    public Movie(String title, String posterSrc, int date, int length) {
     }
 
 

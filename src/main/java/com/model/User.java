@@ -24,11 +24,8 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    @DatabaseField(id = true)
     private int userID;
-    @DatabaseField(canBeNull = false)
     private String userName, givenName, familyName, eMail, password;
-    @DatabaseField(canBeNull = false)
     private boolean isSystemAdmin;
 
     // Testing Flagging system for sending stuff around to know what is what (David)

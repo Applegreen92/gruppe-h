@@ -4,13 +4,14 @@ module com.view {
 
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-    requires ormlite.core;
     requires org.jsoup;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.databind;
     requires org.json;
     requires htmlunit;
+    requires ormlite.core;
+    requires org.jetbrains.annotations;
 
 
     opens com.view to javafx.fxml;
