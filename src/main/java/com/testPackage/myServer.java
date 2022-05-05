@@ -14,7 +14,7 @@ public class myServer {
     public static void main(String[] args) throws IOException {
 
 
-        final int databasePort = 3000;
+        final int databasePort = 1000;
         final int loginScreenPort = 1100;
         final int addNewMovieScreenPort = 1200;
         int requestPort = 4999;

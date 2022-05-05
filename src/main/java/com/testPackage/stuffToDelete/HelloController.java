@@ -1,4 +1,4 @@
-package com.testPackage;
+package com.testPackage.stuffToDelete;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

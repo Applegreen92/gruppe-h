@@ -1,4 +1,4 @@
-package com.testPackage;
+package com.testPackage.stuffToDelete;
 
 import com.model.Server;
 import com.model.User;

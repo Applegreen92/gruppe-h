@@ -22,5 +22,7 @@ module com.view {
     opens com.testPackage to javafx.fxml;
 
     opens com.controller to javafx.fxml;
+    exports com.testPackage.stuffToDelete;
+    opens com.testPackage.stuffToDelete to javafx.fxml;
 
 }

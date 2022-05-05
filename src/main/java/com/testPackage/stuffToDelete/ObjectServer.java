@@ -1,4 +1,4 @@
-package com.testPackage;
+package com.testPackage.stuffToDelete;
 
 import java.io.*;
 import java.net.ServerSocket;

@@ -1,4 +1,4 @@
-package com.view;
+package com.testPackage.stuffToDelete;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
