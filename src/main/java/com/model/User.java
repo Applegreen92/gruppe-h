@@ -38,6 +38,14 @@ public class User implements Serializable {
     // Testing Flagging system for sending stuff around to know what is what (David)
     private boolean loginFlag = false, registerFlag = false, databaseCheck = false;
 
+    public User(String givenName, String familyName, boolean isSystemAdmin, String userName, String eMail,String password) {
+        this.givenName = givenName;
+        this.familyName = familyName;
+        this.eMail = eMail;
+        this.password = password;
+        this.isSystemAdmin = isSystemAdmin;
+        this.userName = userName;
+    }
 
 
     public String getUserName() { return userName; }
