@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import com.controller.SceneController;
 
-public class AddMovieManually {
+public class AddMovieManually extends SceneController {
 
     @FXML
     public TextField textTitle;
@@ -49,6 +50,7 @@ public class AddMovieManually {
 
 
         Movie movie = new Movie(title,genre,posterSrc,releaseDate,movieLength,regisseur,author,cast);
+        System.out.println(movie.toString());
         try {
             String jsonMovie = new ObjectMapper().writeValueAsString(movie);
             Socket socket = new Socket("localhost", 10);
@@ -66,6 +68,7 @@ public class AddMovieManually {
     @FXML
     //Goes back to the last page without doing anything
     public void abort(){
+        switchToSceneWithStage("Login.fxml");
     }
 
 

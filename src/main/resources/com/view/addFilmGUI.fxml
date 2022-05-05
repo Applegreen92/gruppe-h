@@ -14,7 +14,7 @@
       <TextField fx:id="textAuthor" layoutX="223.0" layoutY="293.0" prefHeight="26.0" prefWidth="311.0" />
       <TextField fx:id="textRegisseur" layoutX="223.0" layoutY="251.0" prefHeight="26.0" prefWidth="311.0" />
       <TextField fx:id="textReleaseDate" layoutX="223.0" layoutY="210.0" prefHeight="26.0" prefWidth="311.0" promptText="year" />
-      <TextField fx:id="textMovielength" layoutX="223.0" layoutY="166.0" prefHeight="26.0" prefWidth="311.0" promptText="input in minutes" />
+      <TextField fx:id="textMovieLength" layoutX="223.0" layoutY="166.0" prefHeight="26.0" prefWidth="311.0" promptText="input in minutes" />
       <TextField fx:id="textGenre" layoutX="223.0" layoutY="123.0" prefHeight="26.0" prefWidth="311.0" />
       <TextField fx:id="textTitle" layoutX="223.0" layoutY="76.0" prefHeight="26.0" prefWidth="311.0" />
       <Label layoutX="49.0" layoutY="77.0" text="Moviecover :" />

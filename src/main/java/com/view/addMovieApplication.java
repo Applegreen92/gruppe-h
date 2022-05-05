@@ -8,10 +8,11 @@ import javafx.stage.Stage;
 public class addMovieApplication extends Application {
 
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(addMovieApplication.class.getResource("addFilmGUI.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene newScene = new Scene(FXMLLoader.load(getClass().getResource("addFilmGUI.fxml")));
+        //FXMLLoader fxmlLoader = new FXMLLoader(addMovieApplication.class.getResource("addFilmGUI.fxml"));
+        //Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Here you can manually put in movies");
-        stage.setScene(scene);
+        stage.setScene(newScene);
         stage.show();
 
 
