@@ -17,6 +17,7 @@ public class MainAppGUI extends Application {
 
     public static Stage current;
     public static User currentUser;
+
     public static Stage getCurr() {
         return current;
     }
@@ -25,14 +26,15 @@ public class MainAppGUI extends Application {
         MainAppGUI.currentUser = loginUser;
     }
 
-    public static User getCurrUser() { return currentUser;
+    public static User getCurrUser() {
+        return currentUser;
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         current = stage;
-        Parent root =  FXMLLoader.load(getClass().getResource("Login.fxml"));
-       // FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        // FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
         Scene scene = new Scene(root);
         current.setTitle("Login");
         current.setScene(scene);
@@ -40,7 +42,7 @@ public class MainAppGUI extends Application {
     }
 
     public static void main(String[] args) {
-      // ummuenzen auf server
+        // ummuenzen auf server
         Server server = new Server();
         server.startListening();
         launch();

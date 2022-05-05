@@ -1,7 +1,9 @@
 package com.controller;
 
+import com.view.MainAppGUI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.User;
+import com.model.Server;
 import com.controller.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.controller.DatabaseController;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class RegisterController extends SceneController implements Initializable {
     @FXML
@@ -31,16 +33,29 @@ public class RegisterController extends SceneController implements Initializable
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+    Server server = new Server();
 
     public void registerNow() throws IOException {
         User user = new User(username.getText(), name.getText(),surname.getText(), mail.getText(), passwort.getText(), false);
         ObjectMapper mapper = new ObjectMapper();
         String userstring = mapper.writeValueAsString(user);
         try {
-            Socket socket = new Socket("localhost", 7779);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            pw.println(userstring);
-            pw.flush();
+            /*if(server.checkArrayList(user.getUserName())) {
+                System.out.println("Username already in use!");
+            }
+            else {
+                System.out.println("User registration successfull, you can now log in!");*/
+                Socket socket = new Socket("localhost", 7779);
+                PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                pw.println(userstring);
+                pw.flush();
+
+                Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(socket.getInputStream())));
+                String userString = input.nextLine();
+                System.out.println(userString);
+                input.close();
+            //}
+
         } catch(Exception i) {
             throw new RuntimeException();
         }
