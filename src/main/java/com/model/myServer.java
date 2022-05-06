@@ -1,6 +1,4 @@
-package com.testPackage;
-
-import com.model.Client;
+package com.model;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -14,9 +12,7 @@ public class myServer {
     public static void main(String[] args) throws IOException {
 
 
-        final int databasePort = 1000;
-        final int loginScreenPort = 1100;
-        final int addNewMovieScreenPort = 1200;
+
         int requestPort = 4999;
         int newClientPort = 5001;
 
@@ -42,9 +38,10 @@ public class myServer {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    System.out.println("[Server] : waiting for input ...");
                     while(stableConnectionSocket.isConnected()) {
 
-                    System.out.println("[Server] : waiting for input ...");
+
 
                         try {
 

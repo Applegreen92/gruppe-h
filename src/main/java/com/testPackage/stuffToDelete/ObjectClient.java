@@ -1,10 +1,8 @@
 package com.testPackage.stuffToDelete;
 
-import com.model.Server;
 import com.model.User;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 

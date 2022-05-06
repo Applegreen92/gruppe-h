@@ -1,19 +1,12 @@
 
-package com.model;
+package com.testPackage;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.lang.runtime.ObjectMethods;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.j256.ormlite.dao.RawRowObjectMapper;
+import com.model.User;
 import org.json.JSONObject;
 
 

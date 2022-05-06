@@ -1,6 +1,7 @@
-package com.model;
+package com.testPackage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.User;
 
 import java.io.*;
 import java.net.ServerSocket;

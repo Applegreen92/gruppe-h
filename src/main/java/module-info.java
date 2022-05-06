@@ -14,15 +14,16 @@ module com.view {
     requires org.jetbrains.annotations;
 
 
-    opens com.view to javafx.fxml;
     exports com.view;
     exports com.controller;
     exports com.model;
-    exports com.testPackage;
-    opens com.testPackage to javafx.fxml;
-
-    opens com.controller to javafx.fxml;
     exports com.testPackage.stuffToDelete;
+
+    opens com.view to javafx.fxml;
+    opens com.testPackage to javafx.fxml;
+    opens com.controller to javafx.fxml;
     opens com.testPackage.stuffToDelete to javafx.fxml;
+    opens com.model to javafx.fxml;
+    exports com.testPackage;
 
 }

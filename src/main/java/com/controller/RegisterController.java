@@ -1,17 +1,14 @@
 package com.controller;
 
-import com.view.MainAppGUI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.User;
-import com.model.Server;
-import com.controller.SceneController;
+import com.testPackage.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import com.controller.DatabaseController;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,8 +1,9 @@
 package com;
 
-import com.controller.RegisterController;
 import com.controller.DatabaseController;
 import com.model.*;
+import com.testPackage.Client;
+import com.testPackage.Server;
 
 import java.io.IOException;
 import java.sql.SQLException;
