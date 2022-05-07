@@ -7,8 +7,10 @@ import org.jsoup.select.Elements;
 
 import java.lang.String;
 
+import java.util.Arrays;
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Crawler {
 
@@ -16,7 +18,10 @@ public class Crawler {
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
     ArrayList movieGenreArray = new ArrayList();
-    ArrayList stars = new ArrayList();
+
+    ArrayList cast = new ArrayList();
+    ArrayList writer = new ArrayList();
+    ArrayList director = new ArrayList();
 
     int numTotalMovies = 0;
 
@@ -144,16 +149,13 @@ public class Crawler {
                                 movieGenreArray.add(movieGenre);
                             }
 
-
-                            //TODO (Regisseur,Drehbuchautor,Cast,Filmbanner)
-
-
                             //3rd website
                             Elements moviePersons = focusMovie.select("div.sc-fa02f843-0");
                             Elements movieDirector = moviePersons.select("li, href.cast");
 
                             for (Element persons : movieDirector.select("ul, li")) {
-                                System.out.println(persons.text());
+                                String person = persons.text();
+                                sortPersons(person);
                             }
 
 
@@ -204,5 +206,97 @@ public class Crawler {
         }else if(startDate > 1 && endDate >= startDate){
             movies = Jsoup.connect("https://www.imdb.com/search/title/?title_type=feature&release_date=" + startDate + "-01-01," + startDate + "-12-31&count="+ count +"&start=" + start + "&ref_=adv_nxt").get();
         }
+    }
+
+    public void sortPersons(String person){
+        if(person.startsWith("Stars")){
+            person = cutOccupation(person);
+            //insertCast(person);
+        } else if (person.startsWith("Director")) {
+            cutOccupation(person);
+            director.add(person);
+        }
+        else if(person.startsWith("Writer")){
+            insertWriter(person);
+
+        }
+    }
+
+    public String cutOccupation(String employee){
+        String result = employee.substring(employee.indexOf(' ') + 1);
+        return result;
+    }
+
+    public void insertCast(String persons){
+
+        int count = 0;
+        int space = 0;
+        char[] cast = persons.toCharArray();
+        char[] member = new char[50];
+
+        for(int i = 0; i < cast.length; i++){
+            member[count] = cast[i];
+            count++;
+            if(cast[i] == ' '){space++;}
+            if(space == 2){
+                String person = new String(member);
+                member = new char[50];
+                this.cast.add(removeBrackets(person));
+                System.out.println(removeBrackets(person));
+                space = 0;
+                count = 0;
+            }
+            else if( i + 1 == cast.length){
+                member[count ] = ' ';
+                String person = new String(member);
+                this.cast.add(person);
+                System.out.println(removeBrackets(person));
+
+            }
+        }
+    }
+
+    public void insertWriter(String persons){
+
+       /* String personsRest = persons;
+        while(personsRest != null && personsRest != ""){
+            String personArr[] = personsRest.split(" ", 3);
+            this.writer.add(personArr[0]);
+            System.out.println(personArr[0]);
+            if(personArr[1] != null) {
+                personsRest = personArr[1];
+            }
+
+        }*/
+
+        int count = 0;
+        int space = 0;
+        char[] writer = persons.toCharArray();
+        char[] member = new char[50];
+
+        for(int i = 0; i < writer.length; i++){
+            member[count] = writer[i];
+            count++;
+            if(writer[i] == ' '){space++;}
+            if(space == 2){
+                String person = new String(member);
+                member = new char[50];
+                this.writer.add(removeBrackets(person));
+                space = 0;
+                count = 0;
+            }
+            else if( i + 1 == writer.length){
+                member[count ] = ' ';
+                String person = new String(member);
+                this.writer.add(removeBrackets(person));
+            }
+        }
+
+    }
+
+    public String removeBrackets(String person){
+        person = person.substring(person.indexOf(' '));
+        return person;
+
     }
 }
