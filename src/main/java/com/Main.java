@@ -7,6 +7,7 @@ import com.testPackage.Server;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class Main {
@@ -14,10 +15,10 @@ public class Main {
 
 
 
-        Server server = new Server();
-        server.startListening();
+        //Server server = new Server();
+        //server.startListening();
         //User user = new User("Aladin","Hans","Jürgen","Hans-Jürgen@web.de","12345",false);
-        Client client = new Client();
+        //Client client = new Client();
 
         //client.loginGetUserData("Aladin","12345");*/
 
@@ -31,10 +32,32 @@ public class Main {
 
         DatabaseController createTable = new DatabaseController();
 
+        //String title,String posterSrc, int date, int length,String regisseur,ArrayList genre,ArrayList author,ArrayList cast
+        ArrayList genre = new ArrayList();
+        genre.add("Test");
+        genre.add("Lappen");
+        genre.add("123");
+        genre.add("haha");
+        ArrayList author = new ArrayList();
+        author.add("TestAuthor2 2");
+        ArrayList cast = new ArrayList();
+        cast.add("TestCast2 TestCast2");
+        Movie movie = new Movie("Test2", "posterSrc2",2002,145,"regisseurfirst regisseurlast", genre,author,cast);
+        ArrayList testMovie = new ArrayList();
+        testMovie.add(movie);
+        createTable.insertMovie(testMovie);
+
        //Movie movie = new Movie("Test","TestBild", 2000, 1);
-        createTable.createUserTable();
-        User user = new User("Felix", "Bernardi", true, "test","Felix.Bernardi@web.de", "Test123");
-        createTable.insertUser(user);
+        //createTable.createUserTable();
+        //createTable.createMovieTable();
+        //createTable.createGenreTable();
+        //createTable.createMovieGenreTable();
+        //createTable.createPerson();
+        //createTable.createRolle();
+        //createTable.createMoviePersonRolle();
+        //User user = new User("Felix", "Bernardi", true, "test","Felixu.123@web.de", "Test123");
+        //createTable.insertUser(user);
+        //createTable.getUser(user);
 
 
 
