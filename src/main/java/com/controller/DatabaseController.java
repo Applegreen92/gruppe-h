@@ -111,10 +111,22 @@ public class DatabaseController {
 
                 //insert genre to movie
                 for(int z = 0; z < genreList.size(); z++) {
-                    Statement insertMovie = con.createStatement();
-                    insertMovie.execute("INSERT INTO MOVIEGENRE (GENREID, MOVIE_ID)" +
-                            "VALUES (" + genreList.get(z) + ", " + movieID + ")");
-                    insertMovie.close();
+                    int genreID = 0;
+                    String queryRegisseur = "SELECT * FROM moviegenre WHERE genreID = '" + genreList.get(z).toString() + "'";
+                    Statement getData = con.prepareStatement(queryRegisseur);
+                    ResultSet result = getData.executeQuery(queryRegisseur);
+                    if (result != null) {
+                        while (result.next()) {
+                            genreID = result.getInt("genreID");
+                        }
+                    }
+                    getData.close();
+                    if(genreID == 0) {
+                        Statement insertMovie = con.createStatement();
+                        insertMovie.execute("INSERT INTO MOVIEGENRE (GENREID, MOVIE_ID)" +
+                                "VALUES (" + genreList.get(z) + ", " + movieID + ")");
+                        insertMovie.close();
+                    }
                 }
 
                 //insert Person
@@ -131,22 +143,66 @@ public class DatabaseController {
 
                 //insert person into linking table
                 for(int z = 0; z < personIDRegisseur.size(); z++ ){
-                    Statement insertMovie = con.createStatement();
-                    insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                            "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 1)");
-                    insertMovie.close();
+                    int personID = 0;
+                    if(personIDRegisseur != null) {
+                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDRegisseur + "'";
+                        Statement getData = con.prepareStatement(queryRegisseur);
+                        ResultSet result = getData.executeQuery(queryRegisseur);
+                        if (result != null) {
+                            while (result.next()) {
+                                personID = result.getInt("PersonID");
+                            }
+                        }
+                        getData.close();
+                    }
+                    if(personID == 0) {
+                        Statement insertMovie = con.createStatement();
+                        insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
+                                "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 1)");
+                        insertMovie.close();
+                    }
                 }
                 for(int z = 0; z < personIDAuthor.size(); z++ ){
-                    Statement insertMovie = con.createStatement();
-                    insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                            "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 2)");
-                    insertMovie.close();
+
+                    int personID = 0;
+                    if(personIDAuthor != null) {
+                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDAuthor + "'";
+                        Statement getData = con.prepareStatement(queryRegisseur);
+                        ResultSet result = getData.executeQuery(queryRegisseur);
+                        if (result != null) {
+                            while (result.next()) {
+                                personID = result.getInt("PersonID");
+                            }
+                        }
+                        getData.close();
+                    }
+                    if(personID == 0) {
+                        Statement insertMovie = con.createStatement();
+                        insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
+                                "VALUES (" + movieID + ", " + personIDAuthor.get(z) + ", 2)");
+                        insertMovie.close();
+                    }
                 }
                 for(int z = 0; z < personIDCast.size(); z++ ){
-                    Statement insertMovie = con.createStatement();
-                    insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                            "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 3)");
-                    insertMovie.close();
+
+                    int personID = 0;
+                    if(personIDCast != null) {
+                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDCast + "'";
+                        Statement getData = con.prepareStatement(queryRegisseur);
+                        ResultSet result = getData.executeQuery(queryRegisseur);
+                        if (result != null) {
+                            while (result.next()) {
+                                personID = result.getInt("PersonID");
+                            }
+                        }
+                        getData.close();
+                    }
+                    if(personID == 0) {
+                        Statement insertMovie = con.createStatement();
+                        insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
+                                "VALUES (" + movieID + ", " + personIDCast.get(z) + ", 3)");
+                        insertMovie.close();
+                    }
                 }
 
             }
@@ -369,11 +425,13 @@ public class DatabaseController {
             //check if genre does exists
             int genreID = 0;
             for(int i = 0; i < movie.getGenreList().size(); i++) {
+                ResultSet resultGenre = null;
+                genreID = 0;
                 ArrayList genre = new ArrayList<>();
                 String queryGetGenre = "SELECT * FROM GENRE WHERE GENRE = '" + movie.getGenreList().get(i) + "'";
                 System.out.println(queryGetGenre);
                 Statement getGenre = con.prepareStatement(queryGetGenre);
-                ResultSet resultGenre = getGenre.executeQuery(queryGetGenre);
+                resultGenre = getGenre.executeQuery(queryGetGenre);
                 if (resultGenre != null) {
                     while (resultGenre.next()) {
                         genreID = (resultGenre.getInt("GENREID"));
@@ -490,6 +548,7 @@ public class DatabaseController {
             System.out.println(sqlCreateRolle);
             stmt.executeUpdate(sqlCreateRolle);
             stmt.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
