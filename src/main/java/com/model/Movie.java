@@ -5,20 +5,17 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
 
-@DatabaseTable(tableName = "movie")
+
 public class Movie {
 
-    @DatabaseField(id = true)
     private int movieId;
-    @DatabaseField(canBeNull = false)
     private String title;
-    @DatabaseField(canBeNull = false)
+
     private String posterSrc;
 
 
-    @DatabaseField(canBeNull = false)
     private int releaseDate;
-    @DatabaseField(canBeNull = false)
+
     private int length;
 
     private String regisseur;

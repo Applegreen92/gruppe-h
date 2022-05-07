@@ -63,7 +63,6 @@ public class Crawler {
                 //Reset the StartDate for Loop & link creation
                 int startDateForLoop = startDate;
                 int countMovies = 0;
-                //TODO müssen wir hier noch exakt für das Jahr schauen?
                 while ((countMovies < 3000) && (countMovies < numTotalMovies)) {
                 //Navigates to the IMDB website based on the passed genre and copy's html-code into the document 'movies'
                     if(startDate > 1 && endDate > 1){
@@ -121,7 +120,7 @@ public class Crawler {
                                     //selects the length
                                     //System.out.println("length");
                                     length = movieHeaderListItem.text();
-                                    //System.out.println(length);
+                                    System.out.println(length);
                                     countLiElement = 1;
                                 } else {
                                     countLiElement += countLiElement;
@@ -129,6 +128,7 @@ public class Crawler {
                             }
                             //Selects the Title
                             String title = movieHeader.select("h1").text();
+
                             //selects the release and age
                             String release = movieHeader.select("span.sc-8c396aa2-2").text();
                             //cutting the age off
@@ -153,17 +153,17 @@ public class Crawler {
                             Elements movieDirector = moviePersons.select("li, href.cast");
 
                             for (Element persons : movieDirector.select("ul, li")) {
-                                //System.out.println(persons.text());
+                                System.out.println(persons.text());
                             }
 
 
-                            //System.out.println(title);
-                            //System.out.println(length);
-                            //System.out.println(release);
+                            System.out.println(title);
+                            System.out.println(length);
+                            System.out.println(release);
                             //System.out.println(movieGenreArray.toString());
-                            Movie movie = new Movie(title, movieGenres.toString(), posterLink.get(x).toString(), Integer.parseInt(release), 1, "", "", "");
-                            System.out.println(movie.getTitle());
-                            MovieList.add(movie);
+                            //Movie movie = new Movie(title, movieGenres.toString(), posterLink.get(x).toString(), Integer.parseInt(release), 1, "", "", "");
+                            //System.out.println(posterLink.get(x).toString());
+                            //MovieList.add(movie);
                         }
                         countMovies+= hreflink.size();
                     }
