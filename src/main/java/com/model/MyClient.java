@@ -44,7 +44,7 @@ public class MyClient {
 
 
     public static void main(String[] args) throws IOException {
-        new MyClient();
+        MyClient client = new MyClient();
         MainAppGUI.main();
 
     }
