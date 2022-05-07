@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.sql.Array;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     public User(){
@@ -24,16 +26,21 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    @DatabaseField(id = true)
     private int userID;
-    @DatabaseField(canBeNull = false)
     private String userName, givenName, familyName, eMail, password;
-    @DatabaseField(canBeNull = false)
     private boolean isSystemAdmin;
 
     // Testing Flagging system for sending stuff around to know what is what (David)
     private boolean loginFlag = false, registerFlag = false, databaseCheck = false;
 
+    public User(String givenName, String familyName, boolean isSystemAdmin, String userName, String eMail,String password) {
+        this.givenName = givenName;
+        this.familyName = familyName;
+        this.eMail = eMail;
+        this.password = password;
+        this.isSystemAdmin = isSystemAdmin;
+        this.userName = userName;
+    }
 
 
     public String getUserName() { return userName; }
@@ -65,8 +72,6 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", isSystemAdmin=" + isSystemAdmin;
     }
-
-
 }
 
 

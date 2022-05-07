@@ -1,29 +1,25 @@
 
-package com.model;
+package com.testPackage;
 
 import java.io.*;
-import java.lang.runtime.ObjectMethods;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.util.Scanner;
 
-
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.j256.ormlite.dao.RawRowObjectMapper;
+import com.model.User;
 import org.json.JSONObject;
 
 
 public class Client {
 
     private final int port = 7779;
+    Socket clientSocket;
+
+    private String userName;
+    private String password;
 
 
     User user = new User("Aladin", "Hans", "Jürgen", "Hans-Jürgen@web.de", "12345", false);
-    Socket clientSocket;
 
     public Client() {
         try {
@@ -42,14 +38,27 @@ public class Client {
             pw.println(userJsonString);
             pw.flush();
 
-            Scanner scanner = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
-            String answer = scanner.nextLine();
-            System.out.println("Incoming answer from [server] : " + answer);
+            Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
+            String userString = input.next();
+
+            ObjectMapper om = new ObjectMapper();
+            User user = om.readValue(userString, User.class);
+
+            System.out.println("Json-Object from Server: " + user.toString());
+
+
+            pw.println("[Client] Json-Object successfully received.");
             pw.close();
 
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+    }
+    public void printUserEmail () {
+        System.out.println(user.geteMail());
+    }
+
 
 //            public void loginGetUserData(String userNameLabel.getText, String password) throws IOException {
 //        JSONObject json = new JSONObject();
@@ -60,6 +69,66 @@ public class Client {
 //        Socket socket = new Socket("localhost", 7999);
 //    }
 //}
+
+    // Diese Methode kann erst ausgeführt werden, wenn GUI und LoginController loginPressed funktioniert
+    // ich erstelle einen Dummy um zu teten ob die Funktionalität dieser Methode gegeben ist
+    /*public void login(String userName, String password) throws IOException {
+        JSONObject userLogin = new JSONObject();
+        userLogin.put("userName", userName);
+        userLogin.put("password", password);
+
+        try {
+            ObjectOutputStream loginObject = new ObjectOutputStream(clientSocket.getOutputStream());
+            loginObject.writeObject(userLogin);
+            loginObject.flush();
+            loginObject.close();
+
+            Scanner loginAnswer = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
+            System.out.println("[SERVER]: " + loginAnswer.nextLine());
+            loginAnswer.close();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public void loginDummy() throws IOException {
+       try {
+            String userName = "Hans";
+            String password = "Peter";
+            JSONObject userLogin = new JSONObject();
+            userLogin.put("userName", userName);
+            userLogin.put("password", password);
+
+            String userJsonString = userLogin.toString();
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            pw.println(userJsonString);
+            pw.flush();
+
+            Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(clientSocket.getInputStream())));
+            String userString = input.next();
+
+            System.out.println("Json-Object from Server: " + userString);
+
+            pw.println("[Client] Json-Object successfully received.");
+            pw.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    public static void main(String[] args) throws IOException {
+        Client client = new Client();
+        //client.sendUser();
+        client.loginDummy();
+
     }
 
  /*  The following code contains a few methods to extract Data from the LOGIN GUI and create JSONObjects to give it to the client

@@ -4,57 +4,84 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.RegisterController">
-      <children>
-         <Label layoutX="28.0" layoutY="25.0" style="-fx-font-weight: bold;" text="Neues Studentenkonto">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Label>
-         <Label layoutX="28.0" layoutY="62.0" text="Vorname">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-         <TextField fx:id="vorname" layoutX="103.0" layoutY="60.0" />
-         <Label layoutX="290.0" layoutY="62.0" text="Nachname">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-         <TextField fx:id="nachname" layoutX="398.0" layoutY="59.0" />
-         <Label layoutX="28.0" layoutY="108.0" prefHeight="25.0" prefWidth="75.0" text="MatrNr">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-         <Label layoutX="287.0" layoutY="108.0" text="Passwort">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-   <PasswordField fx:id="passwort" layoutX="398.0" layoutY="106.0" />
-         <Label layoutX="28.0" layoutY="157.0" text="Email">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Label>
-         <TextField fx:id="email" layoutX="103.0" layoutY="154.0" />
-         <ImageView fx:id="profilbild" fitHeight="95.0" fitWidth="91.0" layoutX="27.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" />
-         <Button fx:id="jetzt_registrieren" layoutX="247.0" layoutY="248.0" mnemonicParsing="false" onAction="#registerNow" style="-fx-background-color: lightgreen;" text="Jetzt Registrieren">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Button>
-      <Label fx:id="fehlerMeldung" layoutX="372.0" layoutY="481.0" prefHeight="39.0" prefWidth="212.0" textFill="RED">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="matrnr" layoutX="103.0" layoutY="108.0" />
-      </children>
- </AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="602.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.RegisterController">
+    <top>
+        <AnchorPane prefHeight="307.0" prefWidth="449.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="307.0" fitWidth="450.0" layoutX="157.0">
+                    <image>
+                        <Image url="@360_F_257457864_uBLaItupZ922AdkXzwzEHpNB5mFweIEO.jpg" />
+                    </image>
+                </ImageView>
+                <Button fx:id="allreadyLogin" layoutX="401.0" layoutY="267.0" mnemonicParsing="false" onAction="#backToLogin" text="Already have an Account? Log in." />
+                <Button fx:id="registerbutton" layoutX="435.0" layoutY="225.0" mnemonicParsing="false" onAction="#registerNow" text="Register and start now" />
+                <AnchorPane layoutY="1.0" prefHeight="305.0" prefWidth="147.0">
+                    <children>
+                        <ImageView fitHeight="305.0" fitWidth="146.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="92.0" fitWidth="127.0" layoutX="18.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@register-now.jpg" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="40.0" layoutY="153.0" opacity="0.26" pickOnBounds="true" preserveRatio="true" style="-fx-image: white;">
+                            <image>
+                                <Image url="@pngtree-light-green-film-strip-illustration-image_1447022.jpg" />
+                            </image>
+                        </ImageView>
+                        <Text fontSmoothingType="LCD" layoutX="31.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nothng but Cinema ">
+                            <font>
+                                <Font name="Berlin Sans FB" size="12.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="6.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your place to share your taste ">
+                            <font>
+                                <Font name="Berlin Sans FB" size="12.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+                <Text fill="WHITE" layoutX="185.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Mail">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="382.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nachname">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="186.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="186.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="382.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="username" layoutX="258.0" layoutY="130.0" prefHeight="25.0" prefWidth="114.0" promptText="Username" />
+                <TextField fx:id="mail" layoutX="258.0" layoutY="170.0" prefHeight="25.0" prefWidth="114.0" promptText="E@mail.com" />
+                <TextField fx:id="surname" layoutX="458.0" layoutY="81.0" prefHeight="25.0" prefWidth="114.0" promptText="Nachname" />
+                <TextField fx:id="name" layoutX="258.0" layoutY="81.0" prefHeight="25.0" prefWidth="114.0" promptText="Name" />
+                <Label fx:id="registererror" layoutX="258.0" layoutY="205.0" textFill="#f20909">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <PasswordField fx:id="passwort" layoutX="457.0" layoutY="130.0" prefHeight="25.0" prefWidth="115.0" promptText="Password" />
+            </children>
+        </AnchorPane>
+    </top>
+</BorderPane>

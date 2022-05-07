@@ -2,44 +2,65 @@ package com.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.User;
+import com.testPackage.Server;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class RegisterController extends SceneController implements Initializable {
     @FXML
-    TextField username, vorname, nachname, email;
+    public TextField username, name, surname, mail;
 
     @FXML
-    PasswordField passwort;
+    public PasswordField passwort;
+
+    @FXML
+    public Label registererror;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+    Server server = new Server();
 
     public void registerNow() throws IOException {
-        User user = new User(username.getText(), vorname.getText(), nachname.getText(), email.getText(), passwort.getText(), false);
+        User user = new User(username.getText(), name.getText(),surname.getText(), mail.getText(), passwort.getText(), false);
         ObjectMapper mapper = new ObjectMapper();
         String userstring = mapper.writeValueAsString(user);
         try {
-            Socket socket = new Socket("localhost", 7779);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            pw.println(userstring);
-            pw.flush();
+            /*if(server.checkArrayList(user.getUserName())) {
+                System.out.println("Username already in use!");
+            }
+            else {
+                System.out.println("User registration successfull, you can now log in!");*/
+                Socket socket = new Socket("localhost", 7779);
+                PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                pw.println(userstring);
+                pw.flush();
+
+                Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(socket.getInputStream())));
+                String userString = input.nextLine();
+                System.out.println(userString);
+                input.close();
+            //}
+
         } catch(Exception i) {
             throw new RuntimeException();
         }
 
-        switchToSceneWithStage("com/view/Login.fxml");
+        switchToSceneWithStage("/Login.fxml");
+    }
+
+    public void backToLogin(ActionEvent actionEvent) {
+        switchToSceneWithStage("/Login.fxml");
     }
 }

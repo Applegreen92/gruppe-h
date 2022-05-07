@@ -8,15 +8,22 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
-    TextField usernameField;
+    public TextField usernameField;
 
     @FXML
-    PasswordField passwordField;
+    public PasswordField passwordField;
+
+   // Client client = new Client(); // Line von Rapha hinzugefügt
+
+
+
+
 
   /*  public void loginPressed() throws IOException {
         int matr = Integer.parseInt(usernameField.getText());
@@ -45,7 +52,7 @@ public class LoginController extends SceneController implements Initializable {
 
 
     public void registerPressed() {
-        switchToSceneWithStage("Register.fxml");
+        switchToSceneWithStage("/Register.fxml");
     }
 
     @Override
@@ -54,6 +61,7 @@ public class LoginController extends SceneController implements Initializable {
     }
 
 
-    public void loginPressed(ActionEvent actionEvent) {
+    public void loginPressed(ActionEvent actionEvent) throws IOException {
+//        client.login(usernameField.getText(),passwordField.getText()); // Line von Rapha hinzugefügt
     }
 }

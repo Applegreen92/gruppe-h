@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
-public class AddMovieManually {
+import com.controller.SceneController;
+
+public class AddMovieManually extends SceneController {
 
     @FXML
     public TextField textTitle;
@@ -30,8 +33,24 @@ public class AddMovieManually {
     @FXML
     public TextField textCast;
 
-
-
+    ArrayList<String> genreList = new ArrayList<>();
+    ArrayList<String> authorList = new ArrayList<>();
+    ArrayList<String> castList = new ArrayList<>();
+    @FXML
+    public void genreAdd(){
+        genreList.add(textGenre.getText());
+        textGenre.clear();
+    }
+    @FXML
+    public void authorAdd(){
+        authorList.add(textAuthor.getText());
+        textAuthor.clear();
+    }
+    @FXML
+    public void castAdd(){
+        castList.add(textCast.getText());
+        textCast.clear();
+    }
 
     @FXML
     //Checks if the Film allready exists, if not,create a new movie Object using the Parameter
@@ -39,16 +58,18 @@ public class AddMovieManually {
     //Movie Object off the database, change the variables and pushes it back in.
     public boolean save()  {
         String title = textTitle.getText();
-        String genre = textGenre.getText();
+
         String posterSrc = textPosterSrc.getText();
         int releaseDate = Integer.parseInt(textReleaseDate.getText());
         int movieLength = Integer.parseInt(textMovieLength.getText());
         String regisseur = textRegisseur.getText();
-        String author = textAuthor.getText();
-        String cast = textCast.getText();
+        ArrayList<String> genre = this.genreList;
+        ArrayList<String> author = this. authorList;
+        ArrayList<String> cast = this.castList;
 
 
-        Movie movie = new Movie(title,genre,posterSrc,releaseDate,movieLength,regisseur,author,cast);
+        Movie movie = new Movie(title,posterSrc,releaseDate,movieLength,regisseur,genreList,authorList,castList);
+        System.out.println(movie.toString());
         try {
             String jsonMovie = new ObjectMapper().writeValueAsString(movie);
             Socket socket = new Socket("localhost", 10);
@@ -66,6 +87,7 @@ public class AddMovieManually {
     @FXML
     //Goes back to the last page without doing anything
     public void abort(){
+        switchToSceneWithStage("Login.fxml");
     }
 
 
