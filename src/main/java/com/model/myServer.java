@@ -1,5 +1,7 @@
 package com.model;
 
+import com.controller.DatabaseController;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -19,7 +21,6 @@ public class myServer {
         int newClientPort = 5009;
 
 
-
         while (true) {
 
             ServerSocket serverSocket = new ServerSocket(requestPort);
@@ -28,6 +29,8 @@ public class myServer {
 
             System.out.println("Waiting for Client ...");
             Socket clientSocketTemp = serverSocket.accept();
+
+
 
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocketTemp.getOutputStream()));
             pw.println(newClientPort);
@@ -74,16 +77,33 @@ public class myServer {
         }
 
     }
-    public static void sendJsonToClient(Scanner input ,PrintWriter output,String userJson){
-        output.println(userJson);
-        output.flush();
-    }
-    public static void sendJsonToDatabase(String userJson, int databasePort) throws IOException {
-        Socket databaseSocket = new Socket("localhost",databasePort);
-        PrintWriter output = new PrintWriter(new OutputStreamWriter(databaseSocket.getOutputStream()));
-        output.println(userJson);
-        output.flush();
-        output.close();
+
+
+
+
+
+
+
+
+
+
+    public static void sendJson(PrintWriter output,String Json) throws JsonProcessingException {
+        DatabaseController db = new DatabaseController();
+        ObjectMapper om = new ObjectMapper();
+        if(Json.contains("eMail")){
+            User user = om.readValue(Json,User.class);
+            if(user.getRegisterFlag() == true){
+                db.insertUser(user);
+                System.out.println("User is created ...");
+                return;
+            }else if(user.getLoginFlag() == true){
+                // Here you need a method to get someone out of the database and the return to the Client
+                //String JsonUser = om.writeValueAsString(user);
+                //output.println();
+                //output.flush();
+                //return;
+            }
+        }
     }
 
 

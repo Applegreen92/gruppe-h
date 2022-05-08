@@ -17,7 +17,7 @@ import static javafx.application.Application.launch;
 
 public class MyClient extends Application {
     public MyClient() throws IOException  {
-        /* for the Login we create a client wich requests a connection over port 4 and gets a new
+        /* for the Login we create a client which requests a connection over port 4 and gets a new
         port for usage from the Server afterwards since we don't have a switch for our Project.*/
         Socket requestSocket = new Socket("localhost", 5008);
         Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(requestSocket.getInputStream())));
