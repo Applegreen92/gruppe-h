@@ -5,9 +5,10 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-import com.view.MainAppGUI;
+import com.testPackage.stuffToDelete.MainAppGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -68,9 +69,9 @@ public class MyClient extends Application {
 
     public void start(Stage stage) throws IOException {
         current = stage;
-        //Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
-        FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
-        Scene scene = new Scene(loader.load());
+        Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+        //FXMLLoader loader = new FXMLLoader(MyClient.class.getResource("Login.fxml"));
+        Scene scene = new Scene(root);
         current.setTitle("Login");
         current.setScene(scene);
         current.show();

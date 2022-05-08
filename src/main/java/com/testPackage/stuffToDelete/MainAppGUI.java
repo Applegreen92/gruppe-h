@@ -1,4 +1,4 @@
-package com.view;
+package com.testPackage.stuffToDelete;
 
 
 import com.model.MyClient;
