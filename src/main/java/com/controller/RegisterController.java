@@ -31,7 +31,7 @@ public class RegisterController extends SceneController implements Initializable
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    Server server = new Server();
+
 
     public void registerNow() throws IOException {
         User user = new User(username.getText(), name.getText(),surname.getText(), mail.getText(), passwort.getText(), false);
@@ -47,6 +47,8 @@ public class RegisterController extends SceneController implements Initializable
 
                 MyClient.printwriter.println(userstring);
                 MyClient.printwriter.flush();
+                
+
 
 
             //}

@@ -33,7 +33,7 @@ public class MyClient extends Application{
     private Socket clientSocket;
     public static PrintWriter printwriter;
     public static Scanner scanner;
-    private User user;
+    public static User user;
 
     public Socket getClientSocket() {
         return this.clientSocket;

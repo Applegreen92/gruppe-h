@@ -101,7 +101,8 @@ public class myServer {
             }else if(user.getLoginFlag()){
                 //Here you need a method to get someone out of the database and the return to the Client
                 User fullUser = db.getUser(user);
-                output.println(om.writeValueAsString(fullUser));
+                String json = om.writeValueAsString(fullUser);
+                output.println(json);
                 output.flush();
             }
 
