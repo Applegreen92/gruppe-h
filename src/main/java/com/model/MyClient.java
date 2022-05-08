@@ -5,13 +5,16 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-import com.controller.AddMovieManually;
-import com.view.AddMovieApplication;
 import com.view.MainAppGUI;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import static javafx.application.Application.launch;
 
 
-
-public class MyClient {
+public class MyClient extends Application {
     public MyClient() throws IOException  {
         /* for the Login we create a client wich requests a connection over port 4 and gets a new
         port for usage from the Server afterwards since we don't have a switch for our Project.*/
@@ -27,7 +30,7 @@ public class MyClient {
 
 
 
-    private Socket clientSocket = null;
+    public static Socket clientSocket;
     final PrintWriter printwriter;
     final Scanner scanner;
     private User user;
@@ -47,11 +50,29 @@ public class MyClient {
 
     public static void main(String[] args) throws IOException {
         MyClient client = new MyClient();
-        AddMovieApplication.main();
-        //AddMovieManually add = new AddMovieManually(client.getClientSocket());
+        launch();
 
     }
 
+    public static Stage current;
+    public static MyClient currentClient;
 
-}
+    public static Stage getCurr() {
+        return current;
+    }
+
+
+    public static MyClient getCurrClient() {
+        return currentClient;
+    }
+
+    public void start(Stage stage) throws IOException {
+        current = stage;
+        //Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(MainAppGUI.class.getResource("Login.fxml"));
+        Scene scene = new Scene(loader.load());
+        current.setTitle("Login");
+        current.setScene(scene);
+        current.show();
+    }}
 

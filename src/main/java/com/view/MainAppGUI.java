@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class MainAppGUI extends Application {
 
+
     public static Stage current;
     public static MyClient currentClient;
 
@@ -39,6 +40,7 @@ public class MainAppGUI extends Application {
     }
 
     public static void main() {
+
         launch();
     }
 }

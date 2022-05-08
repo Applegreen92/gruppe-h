@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.MyClient;
 import com.model.User;
 import com.testPackage.Server;
 import javafx.event.ActionEvent;
@@ -42,7 +43,8 @@ public class RegisterController extends SceneController implements Initializable
             }
             else {
                 System.out.println("User registration successfull, you can now log in!");*/
-                Socket socket = new Socket("localhost", 7779);
+                Socket socket = MyClient.clientSocket;
+                System.out.println(socket.getPort());
                 PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 pw.println(userstring);
                 pw.flush();
