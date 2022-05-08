@@ -11,12 +11,12 @@ public class myServer {
 
 
 
-    public static void main(String[] args) throws IOException {
+    public static void start() throws IOException {
 
 
 
-        int requestPort = 4999;
-        int newClientPort = 5001;
+        int requestPort = 5008;
+        int newClientPort = 5009;
 
 
 

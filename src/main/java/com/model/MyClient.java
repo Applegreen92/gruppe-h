@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-import com.testPackage.stuffToDelete.MainAppGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +19,7 @@ public class MyClient extends Application {
     public MyClient() throws IOException  {
         /* for the Login we create a client wich requests a connection over port 4 and gets a new
         port for usage from the Server afterwards since we don't have a switch for our Project.*/
-        Socket requestSocket = new Socket("localhost", 4999);
+        Socket requestSocket = new Socket("localhost", 5008);
         Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(requestSocket.getInputStream())));
         int portForConnection = scanner.nextInt();
         System.out.println("Connected to Server over port : " + portForConnection);
@@ -50,8 +49,7 @@ public class MyClient extends Application {
 
 
 
-    public static void main(String[] args) throws IOException {
-        MyClient client = new MyClient();
+    public static void startClient() throws IOException {
         launch();
 
     }

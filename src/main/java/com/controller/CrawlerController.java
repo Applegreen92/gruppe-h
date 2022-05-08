@@ -14,7 +14,7 @@ public class CrawlerController extends SceneController implements Initializable 
 
     @FXML
     public TextField genres, startyear, endyear;
-    
+
     public void startNow(ActionEvent actionEvent) {
     }
 
