@@ -232,12 +232,17 @@ public class Crawler {
 
     public void insertCast(String persons) {
         ArrayList personenArray = new ArrayList();
-        String personArr[] = persons.split(" ", 2);
-        String personsRest = personArr[1];
+        //String personArr[] = persons.split(" ", 2);
+        persons = persons.replaceAll("\\(.*\\).", " ");
+        persons = persons.replaceAll("\\(.*\\).", " ");
+        persons = persons.replaceAll("\\(.*\\).*", " ");
+        persons = persons.replaceAll("\\(.*\\).*", " ");
+        String personsRest = persons;
         while (personsRest != null && personsRest != "") {
             String personArr2[] = personsRest.split(" ", 2);
-            personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
+            //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
+            System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
             if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
                 if (inBounds) {
@@ -255,11 +260,15 @@ public class Crawler {
 
     public void insertWriter (String persons){
         ArrayList personenArray = new ArrayList();
+        persons = persons.replaceAll("\\(.*\\).", " ");
+        persons = persons.replaceAll("\\(.*\\).", " ");
+        persons = persons.replaceAll("\\(.*\\).*", " ");
+        persons = persons.replaceAll("\\(.*\\).*", " ");
         String personArr[] = persons.split(" ", 2);
         String personsRest = personArr[1];
         while (personsRest != null && personsRest != "") {
             String personArr2[] = personsRest.split(" ", 2);
-            personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
+            //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
             System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);

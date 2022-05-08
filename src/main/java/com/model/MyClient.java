@@ -68,8 +68,6 @@ public class MyClient extends Application{
         current = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
         //FXMLLoader loader = new FXMLLoader(MyClient.class.getResource("Login.fxml"));
-        MyClient client = new MyClient();
-        currentClient = client;
         Scene scene = new Scene(root);
         current.setTitle("Login");
         current.setScene(scene);

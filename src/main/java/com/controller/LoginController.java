@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
-    public TextField usernameField;
+    public TextField emailField;
 
     @FXML
     public PasswordField passwordField;
@@ -49,19 +49,8 @@ public class LoginController extends SceneController implements Initializable {
 
 
     public void loginPressed(ActionEvent actionEvent) throws IOException {
-//        client.login(usernameField.getText(),passwordField.getText()); // Line von Rapha hinzugefügt
 
-      /*  if (myServer.getUser(usernameField.getText(), passwordField.getText()) != null) {
-            errorlabel.setText("Login Erfolgreich");
-            client.setUser(myServer.getUser(usernameField.getText(), passwordField.getText()));
-            switchToSceneWithStage("/Profil.fxml");
-        } else {
-            errorlabel.setText("Falsche eMail oder passwort!");
-        }
-
-       */
-
-        User user = new User("","","",usernameField.getText(),passwordField.getText(),false);
+        User user = new User("", "", "", emailField.getText(), passwordField.getText(), false);
         ObjectMapper mapper = new ObjectMapper();
         user.setLoginFlag(true);
         String userstring = mapper.writeValueAsString(user);
@@ -72,11 +61,19 @@ public class LoginController extends SceneController implements Initializable {
             System.out.println(UserString);
             User newUser = mapper.readValue(UserString, User.class);
             MyClient.user = newUser;
-            switchToSceneWithStage("/Profil.fxml");
-        }
-        catch (Exception i) {
+
+            DatabaseController db = new DatabaseController();
+
+            if (newUser != null) {
+                errorlabel.setText("Login Erfolgreich");
+                switchToSceneWithStage("/Profil.fxml");
+
+            } else {
+                errorlabel.setText("Falsche eMail oder passwort!");
+            }
+        } catch (Exception i) {
             throw new RuntimeException();
         }
 
     }
-    }
+}
