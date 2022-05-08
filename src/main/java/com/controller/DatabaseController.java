@@ -46,27 +46,42 @@ public class DatabaseController {
             throw new RuntimeException(e);
         }
     }
-    public boolean getUser(@NotNull User user){
+    public User getUser(@NotNull User user){
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)){
             //Create User Table if not exists
             createUserTable();
 
+            String id = "";
+            String firstname = "";
+            String lastname = "";
             String email = "";
+            int isAdmin = 0;
+            String userName = "";
             String password = "";
             String query = "SELECT * FROM USER WHERE email = '" + user.geteMail() + "' AND PASSWORD ='" + user.getPassword() + "'";
             Statement getData = con.prepareStatement(query);
             ResultSet result = getData.executeQuery(query);
             if(result != null) {
                 while(result.next()) {
+                    id = result.getString("ID");
+                    firstname = result.getString("FIRSTNAME");
+                    lastname = result.getString("LASTNAME");
                     email = result.getString("EMAIL");
+                    isAdmin = result.getInt("ISADMIN");
+                    userName = result.getString("USERNAME");
                     password = result.getString("PASSWORD");
                 }
             }
+            boolean isAdminbool = false;
+            if(isAdmin == 1){
+                isAdminbool = true;
+            }
             getData.close();
             if(email.equals(user.geteMail()) && password.equals(user.getPassword())) {
-                return true;
+                User loginUser = new User(userName,firstname,lastname,email,password,isAdminbool);
+                return loginUser;
             }else{
-                return false;
+                return null;
             }
 
 
@@ -212,33 +227,33 @@ public class DatabaseController {
             throw new RuntimeException(e);
         }
     }
-        //TODO getPersonID
-        public ArrayList getPersonIDCast(Movie movie) throws SQLException {
-            try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
-                ArrayList<Integer> peronID = new ArrayList<Integer>();
-                if(movie.getCastList() != null) {
-                    for(int x = 0; x < movie.getCastList().size(); x++) {
-                        String name = movie.getCastList().get(x);
-                        String nameArr[] = name.split(" ", 2);
-                        String firstname = nameArr[0];
-                        String lastname = nameArr[1];
-                        int regisseurID = 0;
-                        String queryRegisseur = "SELECT * FROM Person WHERE firstname = '" + firstname + "' AND lastname = '" + lastname + "'";
-                        Statement getData = con.prepareStatement(queryRegisseur);
-                        ResultSet result = getData.executeQuery(queryRegisseur);
-                        if (result != null) {
-                            while (result.next()) {
-                                peronID.add(result.getInt("PersonID"));
-                            }
+    //TODO getPersonID
+    public ArrayList getPersonIDCast(Movie movie) throws SQLException {
+        try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
+            ArrayList<Integer> peronID = new ArrayList<Integer>();
+            if(movie.getCastList() != null) {
+                for(int x = 0; x < movie.getCastList().size(); x++) {
+                    String name = movie.getCastList().get(x);
+                    String nameArr[] = name.split(" ", 2);
+                    String firstname = nameArr[0];
+                    String lastname = nameArr[1];
+                    int regisseurID = 0;
+                    String queryRegisseur = "SELECT * FROM Person WHERE firstname = '" + firstname + "' AND lastname = '" + lastname + "'";
+                    Statement getData = con.prepareStatement(queryRegisseur);
+                    ResultSet result = getData.executeQuery(queryRegisseur);
+                    if (result != null) {
+                        while (result.next()) {
+                            peronID.add(result.getInt("PersonID"));
                         }
-                        getData.close();
                     }
+                    getData.close();
                 }
-                return peronID;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
+            return peronID;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
     public ArrayList getPersonIDAuthor(Movie movie) throws SQLException {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             ArrayList<Integer> peronID = new ArrayList<Integer>();
@@ -287,7 +302,7 @@ public class DatabaseController {
                 getData.close();
             }
 
-        return peronID;
+            return peronID;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -440,10 +455,10 @@ public class DatabaseController {
                     if (genreID > 0) {
 
                     } else {
-                    Statement insertMovie = con.createStatement();
-                    insertMovie.execute("INSERT INTO GENRE (genre)" +
-                            "VALUES ('" + movie.getGenreList().get(i) + "')");
-                    insertMovie.close();
+                        Statement insertMovie = con.createStatement();
+                        insertMovie.execute("INSERT INTO GENRE (genre)" +
+                                "VALUES ('" + movie.getGenreList().get(i) + "')");
+                        insertMovie.close();
                     }
                 }
             }
