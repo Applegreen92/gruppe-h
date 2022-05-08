@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
-    public TextField usernameField;
+    public TextField emailField;
 
     @FXML
     public PasswordField passwordField;
@@ -61,7 +61,7 @@ public class LoginController extends SceneController implements Initializable {
 
        */
 
-        User user = new User("","","",usernameField.getText(),passwordField.getText(),false);
+        User user = new User("","","",emailField.getText(),passwordField.getText(),false);
         ObjectMapper mapper = new ObjectMapper();
         user.setLoginFlag(true);
         String userstring = mapper.writeValueAsString(user);
