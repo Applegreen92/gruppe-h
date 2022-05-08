@@ -2,6 +2,7 @@ package com.controller;
 
 
 
+import com.Main;
 import com.model.MyClient;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public abstract class SceneController {
     public void switchToScene(String fxmlPath){
         try {
             Scene newScene = FXMLLoader.load(getClass().getResource(fxmlPath));
-            MyClient.getCurr().setScene(newScene);
+           MyClient.getCurr().setScene(newScene);
         } catch (IOException e) {
             e.printStackTrace();
         }

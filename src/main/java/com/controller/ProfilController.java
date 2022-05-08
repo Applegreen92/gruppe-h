@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 public class ProfilController extends SceneController implements Initializable {
     @FXML
-    Text name_id, vorname_id, username_id, email_id;
+     public Text name_id, vorname_id, username_id, email_id;
 
 
     @Override

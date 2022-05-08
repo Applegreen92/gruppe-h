@@ -17,8 +17,8 @@ public class myServer {
 
 
 
-        int requestPort = 5008;
-        int newClientPort = 5009;
+        int requestPort = 5010;
+        int newClientPort = 5011;
 
 
         while (true) {

@@ -15,11 +15,11 @@ import static javafx.application.Application.launch;
 
 
 
-public class MyClient extends Application {
-    public MyClient() throws IOException  {
+public class MyClient extends Application{
+    public MyClient() throws IOException {
         /* for the Login we create a client which requests a connection over port 4 and gets a new
         port for usage from the Server afterwards since we don't have a switch for our Project.*/
-        Socket requestSocket = new Socket("localhost", 5008);
+        Socket requestSocket = new Socket("localhost", 5010);
         Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(requestSocket.getInputStream())));
         int portForConnection = scanner.nextInt();
         System.out.println("Connected to Server over port : " + portForConnection);
@@ -30,29 +30,29 @@ public class MyClient extends Application {
     }
 
 
-
     public static Socket clientSocket;
     final PrintWriter printwriter;
     final Scanner scanner;
     private User user;
 
-    public Socket getClientSocket() { return this.clientSocket; }
-    public User getUser() { return this.user; }
-    public void setUser(User user) { this.user = user; }
+    public Socket getClientSocket() {
+        return this.clientSocket;
+    }
 
+    public User getUser() {
+        return this.user;
+    }
 
-
-
-
-
-
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
     public static void startClient() throws IOException {
         launch();
 
     }
+
 
     public static Stage current;
     public static MyClient currentClient;

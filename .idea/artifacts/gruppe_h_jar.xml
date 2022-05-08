@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="gruppe-h:jar">
+  <artifact type="jar" build-on-make="true" name="gruppe-h:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/gruppe_h_jar</output-path>
     <root id="archive" name="gruppe-h.jar">
       <element id="module-output" name="gruppe-h" />
