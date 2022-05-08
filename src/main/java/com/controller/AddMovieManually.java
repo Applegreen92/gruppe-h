@@ -3,19 +3,26 @@ package com.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.Movie;
+import com.model.MyClient;
+import com.view.AddMovieApplication;
+import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import com.controller.SceneController;
 
-public class AddMovieManually extends SceneController {
+public class AddMovieManually extends SceneController{
 
+    MyClient client = new MyClient();
     @FXML
     public TextField textTitle;
     @FXML
@@ -36,6 +43,10 @@ public class AddMovieManually extends SceneController {
     ArrayList<String> genreList = new ArrayList<>();
     ArrayList<String> authorList = new ArrayList<>();
     ArrayList<String> castList = new ArrayList<>();
+
+    public AddMovieManually() throws IOException {
+    }
+
     @FXML
     public void genreAdd(){
         genreList.add(textGenre.getText());
@@ -64,7 +75,7 @@ public class AddMovieManually extends SceneController {
         int movieLength = Integer.parseInt(textMovieLength.getText());
         String regisseur = textRegisseur.getText();
         ArrayList<String> genre = this.genreList;
-        ArrayList<String> author = this. authorList;
+        ArrayList<String> author = this.authorList;
         ArrayList<String> cast = this.castList;
 
 
@@ -72,8 +83,7 @@ public class AddMovieManually extends SceneController {
         System.out.println(movie.toString());
         try {
             String jsonMovie = new ObjectMapper().writeValueAsString(movie);
-            Socket socket = new Socket("localhost", 10);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.client.getClientSocket().getOutputStream()));
             pw.println(jsonMovie);
             pw.flush();
             pw.close();

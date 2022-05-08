@@ -49,6 +49,8 @@ public class Movie {
     public ArrayList<String> getGenreList(){ return this.genre; }
 
 
+
+
     @Override
     public String toString() {
       return title+", "+posterSrc+", "+String.valueOf(releaseDate)+", "+String.valueOf(length)+", "+regisseur+", "+author+", "+cast+", "+genre;

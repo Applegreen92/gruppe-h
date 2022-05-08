@@ -5,6 +5,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
+import com.controller.AddMovieManually;
+import com.view.AddMovieApplication;
 import com.view.MainAppGUI;
 
 
@@ -45,7 +47,8 @@ public class MyClient {
 
     public static void main(String[] args) throws IOException {
         MyClient client = new MyClient();
-        MainAppGUI.main();
+        AddMovieApplication.main();
+        //AddMovieManually add = new AddMovieManually(client.getClientSocket());
 
     }
 

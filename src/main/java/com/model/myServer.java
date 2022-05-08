@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -45,7 +47,7 @@ public class myServer {
 
                         try {
 
-
+                            ObjectMapper om = new ObjectMapper();
                             Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(stableConnectionSocket.getInputStream())));
                             PrintWriter pw = new PrintWriter(new OutputStreamWriter(stableConnectionSocket.getOutputStream()));
 
