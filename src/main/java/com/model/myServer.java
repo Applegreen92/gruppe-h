@@ -114,9 +114,15 @@ public class myServer {
     }
 
 
+    public static User getUser(String email, String passwort) {
+        User user = new User("","","",email,passwort,false);
+        DatabaseController controller = new DatabaseController();
 
+        return controller.getUser(user);
 
-}
+    }
+    }
+
 
 
 
