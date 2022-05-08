@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 
 import java.lang.String;
 
-import java.util.Arrays;
+import com.model.log;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -180,6 +180,10 @@ public class Crawler {
                 count = (3000-(count*totalDiff*pass))/totalDiff;
                 pass = pass +1;
             }
+
+            //Create Log data
+            log movieLogger = new log();
+            log.createLog(MovieList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -299,4 +303,5 @@ public class Crawler {
         return person;
 
     }
+
 }
