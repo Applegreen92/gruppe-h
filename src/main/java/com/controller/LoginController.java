@@ -1,16 +1,23 @@
 package com.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.MyClient;
+import com.model.User;
+import com.model.myServer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.json.JSONObject;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
@@ -19,36 +26,16 @@ public class LoginController extends SceneController implements Initializable {
     @FXML
     public PasswordField passwordField;
 
+    @FXML
+    public Label errorlabel;
+
    // Client client = new Client(); // Line von Rapha hinzugefügt
 
 
 
 
 
-  /*  public void loginPressed() throws IOException {
-        int matr = Integer.parseInt(usernameField.getText());
-        String password = passwordField.getText();
-        File f = new File(String.valueOf(Paths.get(matr + ".json")));
-        if (f.exists() && !f.isDirectory()) {
-            Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(matr + ".json"));
-            User loginUser = gson.fromJson(reader, User.class);
-            System.out.println("Login");
-            if (loginUser.getPasswort().equals(password)) {
-                MainAppGUI.setCurrUser(loginUser);
-                switchToSceneWithStage("Profil.fxml");
-            } else {
-                System.out.println("Falsches Passwort");
-                usernameField.clear();
-                passwordField.clear();
-            }
 
-        } else {
-            System.out.println("Nutzer exsitiert nicht");
-            usernameField.clear();
-            passwordField.clear();
-        }
-*/
 
 
     public void registerPressed() {
@@ -63,5 +50,33 @@ public class LoginController extends SceneController implements Initializable {
 
     public void loginPressed(ActionEvent actionEvent) throws IOException {
 //        client.login(usernameField.getText(),passwordField.getText()); // Line von Rapha hinzugefügt
+
+      /*  if (myServer.getUser(usernameField.getText(), passwordField.getText()) != null) {
+            errorlabel.setText("Login Erfolgreich");
+            client.setUser(myServer.getUser(usernameField.getText(), passwordField.getText()));
+            switchToSceneWithStage("/Profil.fxml");
+        } else {
+            errorlabel.setText("Falsche eMail oder passwort!");
+        }
+
+       */
+
+        User user = new User("","","",usernameField.getText(),passwordField.getText(),false);
+        ObjectMapper mapper = new ObjectMapper();
+        user.setLoginFlag(true);
+        String userstring = mapper.writeValueAsString(user);
+        try {
+            MyClient.printwriter.println(userstring);
+            MyClient.printwriter.flush();
+            String UserString = MyClient.scanner.nextLine();
+            System.out.println(UserString);
+            User newUser = mapper.readValue(UserString, User.class);
+            MyClient.user = newUser;
+            switchToSceneWithStage("/Profil.fxml");
+        }
+        catch (Exception i) {
+            throw new RuntimeException();
+        }
+
     }
-}
+    }

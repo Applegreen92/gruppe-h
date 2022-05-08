@@ -39,11 +39,9 @@ public class MyClient extends Application{
         return this.clientSocket;
     }
 
-    public User getUser() {
-        return this.user;
-    }
 
-    public void setUser(User user) {
+
+    public  void setUser(User user) {
         this.user = user;
     }
 
@@ -62,14 +60,16 @@ public class MyClient extends Application{
     }
 
 
-    public static MyClient getCurrClient() {
-        return currentClient;
+    public  MyClient getCurrClient() {
+        return this.currentClient;
     }
 
     public void start(Stage stage) throws IOException {
         current = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
         //FXMLLoader loader = new FXMLLoader(MyClient.class.getResource("Login.fxml"));
+        MyClient client = new MyClient();
+        currentClient = client;
         Scene scene = new Scene(root);
         current.setTitle("Login");
         current.setScene(scene);
