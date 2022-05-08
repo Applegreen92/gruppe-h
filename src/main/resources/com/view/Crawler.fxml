@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right,aqua, green);" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.CrawlerController">
+   <children>
+      <TextField fx:id="genres" layoutX="45.0" layoutY="45.0" prefHeight="31.0" prefWidth="513.0" promptText="Genre" />
+      <TextField fx:id="startyear" layoutX="45.0" layoutY="139.0" prefHeight="42.0" prefWidth="149.0" promptText="Von" />
+      <TextField fx:id="endyear" layoutX="408.0" layoutY="139.0" prefHeight="42.0" prefWidth="149.0" promptText="Bis" />
+      <Button fx:id="startbutton" layoutX="268.0" layoutY="284.0" mnemonicParsing="false" onAction="#startNow" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: black;" text="Start" textFill="#f2efef" />
+      <Button fx:id="abortbutton" layoutX="276.0" layoutY="336.0" mnemonicParsing="false" onAction="#abortNow" prefHeight="23.0" prefWidth="52.0" style="-fx-background-color: black;" text="Abort" textFill="#f2efef" />
+   </children>
+</AnchorPane>

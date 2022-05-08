@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 public class addMovieApplication extends Application {
 
+
+
     public void start(Stage stage) throws Exception {
         Scene newScene = new Scene(FXMLLoader.load(getClass().getResource("addFilmGUI.fxml")));
         //FXMLLoader fxmlLoader = new FXMLLoader(addMovieApplication.class.getResource("addFilmGUI.fxml"));
