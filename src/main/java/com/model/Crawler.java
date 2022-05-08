@@ -162,10 +162,10 @@ public class Crawler {
                             System.out.println(title);
                             System.out.println(length);
                             System.out.println(release);
-                            //System.out.println(movieGenreArray.toString());
-                            //Movie movie = new Movie(title, movieGenres.toString(), posterLink.get(x).toString(), Integer.parseInt(release), 1, "", "", "");
-                            //System.out.println(posterLink.get(x).toString());
-                            //MovieList.add(movie);
+                            Movie movie = new Movie(title, posterLink.get(x).toString(), Integer.parseInt(release), Integer.parseInt(length), director.get(x).toString(), movieGenreArray, writer, cast);
+                            MovieList.add(movie);
+
+                            clearAllLists();
                         }
                         countMovies += hreflink.size();
                     }
@@ -268,6 +268,16 @@ public class Crawler {
             }
         }
 
+    }
+
+
+    public void clearAllLists(){
+        hreflink.clear();
+        posterLink.clear();
+        movieGenreArray.clear();
+        cast.clear();
+        director.clear();
+        writer.clear();
     }
 
 }
