@@ -29,4 +29,8 @@ public class ProfilController extends SceneController implements Initializable {
 
 
     }
+    //public void addmanually() {switchToSceneWithStage("/addFilmGUI.fxml"); }
+    // public void autodownload() { switchToSceneWithStage("/downloadwindown.fxml")}
+    // public void changemail() { switchToSceneWithStage("/mailchange.fxml")}
+    // public void userwatchlist () { switchToSceneWithStage("/userwatchlist.fxml")}
 }
