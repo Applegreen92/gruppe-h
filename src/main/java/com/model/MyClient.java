@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
 
+public class MyClient {
 
 public class MyClient extends Application {
     public MyClient() throws IOException  {
