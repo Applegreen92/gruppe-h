@@ -64,5 +64,15 @@
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-core:6.1" level="project" />
     <orderEntry type="library" name="Maven: com.j256.ormlite:ormlite-jdbc:6.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:23.0.0" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../javafx-sdk-18/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/../../javafx-sdk-18/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
