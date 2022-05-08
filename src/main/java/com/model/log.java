@@ -14,19 +14,15 @@ public class log {
 
         try {
             String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-            File log = new File("C:\\user\\Desktop\\Log\\MovieLog.txt");
-            log.getParentFile().mkdirs();
-            FileWriter DataWriter = new FileWriter("MovieLog " + time + ".txt", StandardCharsets.UTF_8, true);
+            FileWriter DataWriter = new FileWriter("movielog.txt", StandardCharsets.UTF_8, true);
             for(Movie movie : movieList) {
-                DataWriter.write(movie.toString() + "\n");
+                DataWriter.write(time + " " +movie.toString() + "\n");
             }
             DataWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Logging failed ...");
+            System.out.println("-------------------Logging failed-----------------");
             throw new RuntimeException(e);
-        }finally {
-            System.out.println("Logging failed ...");
         }
     }
 }
