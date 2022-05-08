@@ -13,12 +13,13 @@ module com.view {
     requires ormlite.core;
     requires org.jetbrains.annotations;
 
-
+    exports com;
     exports com.view;
     exports com.controller;
     exports com.model;
     exports com.testPackage.stuffToDelete;
 
+    opens com to javafx.fxml;
     opens com.view to javafx.fxml;
     opens com.testPackage to javafx.fxml;
     opens com.controller to javafx.fxml;
