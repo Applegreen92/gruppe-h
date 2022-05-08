@@ -17,5 +17,5 @@ public class addMovieApplication extends Application {
 
 
     }
-    public static void main(String[] args) {launch(args);}
+    public static void main() {launch();}
 }

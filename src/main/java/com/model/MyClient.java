@@ -6,14 +6,14 @@ import java.util.Scanner;
 
 
 import com.controller.AddMovieManually;
-import com.view.AddMovieApplication;
+import com.view.addMovieApplication;
 import com.view.MainAppGUI;
 
 
 
 public class MyClient {
     public MyClient() throws IOException  {
-        /* for the Login we create a client wich requests a connection over port 4 and gets a new
+        /* for the Login we create a client which requests a connection over port 4 and gets a new
         port for usage from the Server afterwards since we don't have a switch for our Project.*/
         Socket requestSocket = new Socket("localhost", 4999);
         Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(requestSocket.getInputStream())));
@@ -47,7 +47,7 @@ public class MyClient {
 
     public static void main(String[] args) throws IOException {
         MyClient client = new MyClient();
-        AddMovieApplication.main();
+        addMovieApplication.main();
         //AddMovieManually add = new AddMovieManually(client.getClientSocket());
 
     }

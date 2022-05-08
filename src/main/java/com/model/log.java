@@ -14,7 +14,7 @@ public class log {
 
         try {
             String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-            File log = new File("C:\\user\\Desktop\\Log\\MovieLog.txt");
+            File log = new File("target\\Log\\MovieLog.txt");
             log.getParentFile().mkdirs();
             FileWriter DataWriter = new FileWriter("MovieLog " + time + ".txt", StandardCharsets.UTF_8, true);
             for(Movie movie : movieList) {
