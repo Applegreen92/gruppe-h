@@ -231,18 +231,22 @@ public class Crawler {
     }
 
     public void insertCast(String persons) {
-
+        ArrayList personenArray = new ArrayList();
         String personArr[] = persons.split(" ", 2);
         String personsRest = personArr[1];
         while (personsRest != null && personsRest != "") {
             String personArr2[] = personsRest.split(" ", 2);
             personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
-            this.cast.add(personArr2[0]);
+            personenArray.add(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (this.cast.get(this.cast.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
+                    for(int x = 0; x < personenArray.size(); x++){
+                        this.cast.add(personenArray.get(x) + " " + personenArray.get(x+1));
+                        x = x+1;
+                    }
                     return;
                 }
             }
@@ -250,24 +254,27 @@ public class Crawler {
     }
 
     public void insertWriter (String persons){
-
+        ArrayList personenArray = new ArrayList();
         String personArr[] = persons.split(" ", 2);
         String personsRest = personArr[1];
         while (personsRest != null && personsRest != "") {
             String personArr2[] = personsRest.split(" ", 2);
             personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
-            this.writer.add(personArr2[0]);
+            personenArray.add(personArr2[0]);
             System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (this.writer.get(this.writer.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
+                    for(int x = 0; x < personenArray.size(); x++){
+                        this.writer.add(personenArray.get(x) + " " + personenArray.get(x+1));
+                        x = x+1;
+                    }
                     return;
                 }
             }
         }
-
     }
 
 
