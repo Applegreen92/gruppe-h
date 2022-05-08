@@ -50,10 +50,8 @@ public class MyClient extends Application {
 
 
 
-    public static void main(String[] args) throws IOException {
-        MyClient client = new MyClient();
-        AddMovieApplication.main();
-        //AddMovieManually add = new AddMovieManually(client.getClientSocket());
+    public void main() throws IOException {
+        launch();
 
     }
 

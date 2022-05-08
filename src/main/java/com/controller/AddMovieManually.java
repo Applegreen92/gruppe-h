@@ -1,28 +1,18 @@
 package com.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.model.Movie;
-import com.model.MyClient;
-import com.view.addMovieApplication;
-import javafx.application.Application;
+
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
-import com.controller.SceneController;
+import java.util.ArrayList;
 
 public class AddMovieManually extends SceneController{
 
-    MyClient client;
     @FXML
     public TextField textTitle;
     @FXML
@@ -82,11 +72,18 @@ public class AddMovieManually extends SceneController{
         Movie movie = new Movie(title,posterSrc,releaseDate,movieLength,regisseur,genreList,authorList,castList);
         System.out.println(movie.toString());
         try {
-            String jsonMovie = new ObjectMapper().writeValueAsString(movie);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.client.getClientSocket().getOutputStream()));
-            pw.println(jsonMovie);
-            pw.flush();
-            pw.close();
+
+
+            //String jsonMovie = new ObjectMapper().writeValueAsString(movie);
+            // Here you can send to server where it gets into the Database after Sayan made the GUI Connections
+            DatabaseController db = new DatabaseController();
+            ArrayList movieArray = new ArrayList<>();
+            movieArray.add(movie);
+            db.insertMovie(movieArray);
+            //PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.client.getClientSocket().getOutputStream()));
+            //pw.println(jsonMovie);
+            //pw.flush();
+            //pw.close();
         }catch(Exception e){
             System.out.println("Sending Movie to Server failed ...");
             return false;
@@ -97,7 +94,7 @@ public class AddMovieManually extends SceneController{
     @FXML
     //Goes back to the last page without doing anything
     public void abort(){
-        switchToSceneWithStage("Login.fxml");
+        switchToSceneWithStage("/Login.fxml");
     }
 
 
