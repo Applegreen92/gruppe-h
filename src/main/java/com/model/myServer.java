@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class myServer {
@@ -50,17 +51,15 @@ public class myServer {
 
                         try {
 
-                            ObjectMapper om = new ObjectMapper();
                             Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(stableConnectionSocket.getInputStream())));
                             PrintWriter pw = new PrintWriter(new OutputStreamWriter(stableConnectionSocket.getOutputStream()));
 
 
 
+                            String inputString = scanner.nextLine();
+                            sendJson(pw,inputString);
 
-                            if (scanner.hasNextLine()) {
-                                String inputString = scanner.nextLine();
-                                System.out.println(inputString);
-                            }
+
                         } catch (IOException e) {
                             e.printStackTrace();
                             System.out.println("create Streams failed");
@@ -88,21 +87,29 @@ public class myServer {
 
 
     public static void sendJson(PrintWriter output,String Json) throws JsonProcessingException {
+
         DatabaseController db = new DatabaseController();
         ObjectMapper om = new ObjectMapper();
-        if(Json.contains("eMail")){
+        if(Json.contains("givenName")){
+
             User user = om.readValue(Json,User.class);
-            if(user.getRegisterFlag() == true){
+            if(user.getRegisterFlag()){
+                System.out.println("h");
                 db.insertUser(user);
                 System.out.println("User is created ...");
                 return;
-            }else if(user.getLoginFlag() == true){
-                // Here you need a method to get someone out of the database and the return to the Client
-                //String JsonUser = om.writeValueAsString(user);
-                //output.println();
-                //output.flush();
-                //return;
+            }else if(user.getLoginFlag()){
+                //Here you need a method to get someone out of the database and the return to the Client
+                User fullUser = db.getUser(user);
+                output.println(om.writeValueAsString(fullUser));
+                output.flush();
             }
+
+        }else{
+            Movie movie = om.readValue(Json,Movie.class);
+            ArrayList movieArray = new ArrayList<>();
+            movieArray.add(movie);
+            db.insertMovie(movieArray);
         }
     }
 

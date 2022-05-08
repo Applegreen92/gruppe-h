@@ -30,9 +30,9 @@ public class MyClient extends Application{
     }
 
 
-    public static Socket clientSocket;
-    final PrintWriter printwriter;
-    final Scanner scanner;
+    private Socket clientSocket;
+    public static PrintWriter printwriter;
+    public static Scanner scanner;
     private User user;
 
     public Socket getClientSocket() {

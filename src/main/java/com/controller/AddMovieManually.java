@@ -83,12 +83,10 @@ public class AddMovieManually extends SceneController{
         System.out.println(movie.toString());
         try {
             String jsonMovie = new ObjectMapper().writeValueAsString(movie);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.client.getClientSocket().getOutputStream()));
-            pw.println(jsonMovie);
-            pw.flush();
-            pw.close();
+            MyClient.printwriter.println(jsonMovie);
+            MyClient.printwriter.flush();
         }catch(Exception e){
-            System.out.println("Sending Movie to Server failed ...");
+            e.printStackTrace();
             return false;
         }
 

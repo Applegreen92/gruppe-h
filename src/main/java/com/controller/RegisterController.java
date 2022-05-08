@@ -36,6 +36,7 @@ public class RegisterController extends SceneController implements Initializable
     public void registerNow() throws IOException {
         User user = new User(username.getText(), name.getText(),surname.getText(), mail.getText(), passwort.getText(), false);
         ObjectMapper mapper = new ObjectMapper();
+        user.setRegisterFlag(true);
         String userstring = mapper.writeValueAsString(user);
         try {
             /*if(server.checkArrayList(user.getUserName())) {
@@ -43,16 +44,11 @@ public class RegisterController extends SceneController implements Initializable
             }
             else {
                 System.out.println("User registration successfull, you can now log in!");*/
-                Socket socket = MyClient.clientSocket;
-                System.out.println(socket.getPort());
-                PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-                pw.println(userstring);
-                pw.flush();
 
-                Scanner input = new Scanner(new InputStreamReader(new BufferedInputStream(socket.getInputStream())));
-                String userString = input.nextLine();
-                System.out.println(userString);
-                input.close();
+                MyClient.printwriter.println(userstring);
+                MyClient.printwriter.flush();
+
+
             //}
 
         } catch(Exception i) {
