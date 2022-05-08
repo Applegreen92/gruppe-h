@@ -94,7 +94,6 @@ public class myServer {
 
             User user = om.readValue(Json,User.class);
             if(user.getRegisterFlag()){
-                System.out.println("h");
                 db.insertUser(user);
                 System.out.println("User is created ...");
                 return;
