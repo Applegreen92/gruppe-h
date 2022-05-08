@@ -22,7 +22,7 @@ import com.controller.SceneController;
 
 public class AddMovieManually extends SceneController{
 
-    MyClient client = new MyClient();
+    MyClient client;
     @FXML
     public TextField textTitle;
     @FXML

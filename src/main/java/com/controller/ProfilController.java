@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.view.MainAppGUI;
+import com.testPackage.stuffToDelete.MainAppGUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
