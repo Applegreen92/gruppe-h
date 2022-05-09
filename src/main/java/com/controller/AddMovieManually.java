@@ -119,7 +119,7 @@ public class AddMovieManually extends SceneController{
     @FXML
     //Goes back to the last page without doing anything
     public void abort(){
-        switchToSceneWithStage("Login.fxml");
+        switchToSceneWithStage("/Profil_Saiyan.fxml");
     }
 
 

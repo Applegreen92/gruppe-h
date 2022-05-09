@@ -40,6 +40,8 @@ public class ProfilController extends SceneController implements Initializable {
     //}
 
     public void autodownload(ActionEvent actionEvent) {
+        switchToSceneWithStage("/Crawler.fxml");
+
     }
 
     public void userwatchlist(ActionEvent actionEvent) {

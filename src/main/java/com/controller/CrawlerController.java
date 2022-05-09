@@ -16,9 +16,13 @@ public class CrawlerController extends SceneController implements Initializable 
     public TextField genres, startyear, endyear;
 
     public void startNow(ActionEvent actionEvent) {
+
+        
+
+
     }
 
-    public void abortNow(ActionEvent actionEvent) {
+    public void abortNow(ActionEvent actionEvent) {switchToSceneWithStage("/Profil_Saiyan.fxml");
     }
 
     @Override
