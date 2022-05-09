@@ -57,7 +57,7 @@ public class myServer {
 
 
                             String inputString = scanner.nextLine();
-                            sendJson(pw,inputString);
+                            getAndIdentifyInputStream(pw,inputString);
 
 
                         } catch (IOException e) {
@@ -86,7 +86,7 @@ public class myServer {
 
 
 
-    public static void sendJson(PrintWriter output,String Json) throws JsonProcessingException {
+    public static void getAndIdentifyInputStream(PrintWriter output,String Json) throws JsonProcessingException {
 
         DatabaseController db = new DatabaseController();
         ObjectMapper om = new ObjectMapper();
