@@ -4,20 +4,17 @@ package com.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.MyClient;
 import com.model.User;
-import com.model.myServer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.json.JSONObject;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class LoginController extends SceneController implements Initializable {
     @FXML
@@ -61,12 +58,14 @@ public class LoginController extends SceneController implements Initializable {
             System.out.println(UserString);
             User newUser = mapper.readValue(UserString, User.class);
             MyClient.user = newUser;
+            System.out.println("Name: "+MyClient.user.getFamilyName());
 
             DatabaseController db = new DatabaseController();
 
             if (newUser != null) {
                 errorlabel.setText("Login Erfolgreich");
-                switchToSceneWithStage("/Profil.fxml");
+                switchToSceneWithStage("/Profil_Saiyan.fxml");
+                System.out.println("Szenewechsel");
 
             } else {
                 errorlabel.setText("Falsche eMail oder passwort!");
