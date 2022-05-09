@@ -106,6 +106,7 @@ public class myServer {
             }
 
         }else{
+            System.out.println(Json);
             Movie movie = om.readValue(Json,Movie.class);
             ArrayList movieArray = new ArrayList<>();
             movieArray.add(movie);
