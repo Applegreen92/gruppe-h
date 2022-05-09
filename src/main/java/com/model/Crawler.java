@@ -1,5 +1,7 @@
 package com.model;
 
+import com.controller.DatabaseController;
+import javafx.scene.chart.PieChart;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +12,8 @@ import java.lang.String;
 import com.model.log;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class Crawler {
@@ -162,9 +166,43 @@ public class Crawler {
                             System.out.println(title);
                             System.out.println(length);
                             System.out.println(release);
-                            Movie movie = new Movie(title, posterLink.get(x).toString(), Integer.parseInt(release), convertLength(length), director.get(x).toString(), movieGenreArray, writer, cast);
+                            if(writer.size() == 0){
+                                writer.add("");
+                            }
+                            if(cast.size() == 0){
+                                cast.add("");
+                            }
+                            if(movieGenreArray.size() == 0){
+                                movieGenreArray.add("");
+                            }
+                            if(director.size() == 0){
+                                director.add("");
+                            }
+                            if(x == 149){
+                                System.out.println("Test");
+                            }
+                            for(int y = 0; writer.size() > y; y++){
+                                System.out.print(writer.get(y));
+                            };
+                            ArrayList tempGenreArray = new ArrayList();
+                            tempGenreArray.addAll(movieGenreArray);
+                            ArrayList tempWriterArray = new ArrayList();
+                            tempWriterArray.addAll(writer);
+                            ArrayList tempCastArray = new ArrayList();
+                            tempCastArray.addAll(cast);
+                            //Collections.copy(movieGenreArray, tempGenreArray);
+                            Movie movie = new Movie(title,
+                                    posterLink.get(x).toString(),
+                                    Integer.parseInt(release),
+                                    convertLength(length),
+                                    director.get(0).toString(),
+                                    tempGenreArray,
+                                    tempWriterArray,
+                                    tempCastArray);
                             MovieList.add(movie);
-
+                            //Create Log data
+                            log movieLogger = new log();
+                            log.createLog(movie);
                             clearAllLists();
                         }
                         countMovies += hreflink.size();
@@ -174,6 +212,9 @@ public class Crawler {
                     } else if (diff == 0) {
                         start += 250;
                     }
+                    DatabaseController db = new DatabaseController();
+                    db.insertMovie(MovieList);
+                    posterLink.clear();
                     hreflink.clear();
                 }
                 countMovies = 0;
@@ -182,8 +223,8 @@ public class Crawler {
             }
 
             //Create Log data
-            log movieLogger = new log();
-            log.createLog(MovieList);
+            //log movieLogger = new log();
+            //log.createLog(MovieList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -238,19 +279,20 @@ public class Crawler {
         persons = persons.replaceAll("\\(.*\\).*", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
         String personsRest = persons;
-        while (personsRest != null && personsRest != "") {
+        // && personsRest != ""
+        while (personsRest != null) {
             String personArr2[] = personsRest.split(" ", 2);
             //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
-            System.out.println(personArr2[0]);
+            //System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0]) || personenArray.get(personenArray.size() - 1).equals("")) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
 
-                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() % 2 != 0){
                             personenArray.add("");
                         }
 
@@ -270,27 +312,28 @@ public class Crawler {
         persons = persons.replaceAll("\\(.*\\).", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
+        //&& personsRest != ""
         String personArr[] = persons.split(" ", 2);
         String personsRest = personArr[1];
-        while (personsRest != null && personsRest != "") {
+        while (personsRest != null) {
             String personArr2[] = personsRest.split(" ", 2);
             //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
-            System.out.println(personArr2[0]);
+            //System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0]) || personenArray.get(personenArray.size() - 1).equals("")) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
-                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() % 2 != 0){
                             personenArray.add("");
                         }
                         this.writer.add(personenArray.get(x) + " " + personenArray.get(x+1));
                         x = x+1;
                     }
-                }
                 return;
+                }
             }
         }
     }
@@ -298,12 +341,10 @@ public class Crawler {
 
 
     public void clearAllLists(){
-        hreflink.clear();
-        posterLink.clear();
-        movieGenreArray.clear();
-        cast.clear();
-        director.clear();
-        writer.clear();
+        movieGenreArray.removeAll(movieGenreArray);
+        cast.removeAll(cast);
+        director.removeAll(director);
+        writer.removeAll(writer);
     }
 
     public int convertLength(String runtime) {
@@ -317,7 +358,11 @@ public class Crawler {
                 res = hours + min + min10;
             } else {
                 hours = Integer.parseInt(String.valueOf(runtime.charAt(0))) * 60;
-                min = Integer.parseInt(String.valueOf(runtime.charAt(3)));
+                if(runtime.length() == 4) {
+                    min = Integer.parseInt(String.valueOf(runtime.charAt(3)));
+                }else{
+                    min = 0;
+                }
                 res = hours + min;
             }
         }

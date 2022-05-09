@@ -48,8 +48,41 @@ public class Movie {
     public ArrayList<String> getCastList() { return this.cast; }
     public ArrayList<String> getGenreList(){ return this.genre; }
 
+    public void setAuthor(ArrayList<String> author) {
+        this.author = author;
+    }
 
+    public void setCast(ArrayList<String> cast) {
+        this.cast = cast;
+    }
 
+    public void setGenre(ArrayList<String> genre) {
+        this.genre = genre;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public void setPosterSrc(String posterSrc) {
+        this.posterSrc = posterSrc;
+    }
+
+    public void setRegisseur(String regisseur) {
+        this.regisseur = regisseur;
+    }
+
+    public void setReleaseDate(int releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @Override
     public String toString() {

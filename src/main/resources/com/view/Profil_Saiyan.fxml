@@ -21,8 +21,8 @@
       <Text fx:id="matr_id" layoutX="190.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text fx:id="email_id" layoutX="190.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Button fx:id="changemail" layoutX="269.0" layoutY="179.0" mnemonicParsing="false" onAction="#changemail" style="-fx-background-color: #abd0a4;" text="change Mail" />
-      <Button fx:id="autodownload" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#autodownload" prefHeight="23.0" prefWidth="110.0" style="-fx-background-color: lightblue;" text="Filme anlegen" />
-      <Button fx:id="addmanually" layoutX="25.0" layoutY="345.0" mnemonicParsing="false" onAction="#addmanually" prefHeight="23.0" prefWidth="110.0" style="-fx-background-color: lightpink;" text="Download Filme" />
-      <Button fx:id="Watchlist" layoutX="491.0" layoutY="345.0" mnemonicParsing="false" onAction="#userwatchlist" style="-fx-background-color: #abd0a4;" text="My Watchlist" />
+      <Button fx:id="addmanually" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#addmanually" prefHeight="23.0" prefWidth="110.0" style="-fx-background-color: lightblue;" text="Filme anlegen" />
+      <Button fx:id="autodownload" layoutX="25.0" layoutY="345.0" mnemonicParsing="false" onAction="#autodownload" prefHeight="23.0" prefWidth="110.0" style="-fx-background-color: lightpink;" text="Download Filme" />
+      <Button fx:id="watchlist" layoutX="491.0" layoutY="345.0" mnemonicParsing="false" onAction="#userwatchlist" style="-fx-background-color: #abd0a4;" text="My Watchlist" />
    </children>
 </AnchorPane>

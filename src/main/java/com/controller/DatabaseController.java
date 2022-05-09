@@ -110,7 +110,7 @@ public class DatabaseController {
                 if(movieID == 0){
                     Statement insertMovie = con.createStatement();
                     insertMovie.execute("INSERT INTO MOVIE (title, releaseDate, length, posterScr)" +
-                            "VALUES ('" + movie.get(x).getTitle() + "', " + movie.get(x).getReleaseDate() + ", " + movie.get(x).getLength() + ", '" + movie.get(x).getPosterSrc() + "')");
+                            "VALUES ('" + movie.get(x).getTitle().replaceAll("\'", "") + "', " + movie.get(x).getReleaseDate() + ", " + movie.get(x).getLength() + ", '" + movie.get(x).getPosterSrc() + "')");
                     insertMovie.close();
                 }else{
                     //TODO update Movie
@@ -160,7 +160,7 @@ public class DatabaseController {
                 for(int z = 0; z < personIDRegisseur.size(); z++ ){
                     int personID = 0;
                     if(personIDRegisseur != null) {
-                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDRegisseur + "'";
+                        String queryRegisseur = "SELECT * FROM Person WHERE personID = '" + personIDRegisseur.get(z) + "'";
                         Statement getData = con.prepareStatement(queryRegisseur);
                         ResultSet result = getData.executeQuery(queryRegisseur);
                         if (result != null) {
@@ -173,7 +173,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 1)");
+                                "VALUES (" + movieID + ", " + personID + ", 1)");
                         insertMovie.close();
                     }
                 }
@@ -181,7 +181,7 @@ public class DatabaseController {
 
                     int personID = 0;
                     if(personIDAuthor != null) {
-                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDAuthor + "'";
+                        String queryRegisseur = "SELECT * FROM Person WHERE personID = '" + personIDAuthor.get(z) + "'";
                         Statement getData = con.prepareStatement(queryRegisseur);
                         ResultSet result = getData.executeQuery(queryRegisseur);
                         if (result != null) {
@@ -194,7 +194,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDAuthor.get(z) + ", 2)");
+                                "VALUES (" + movieID + ", " + personID + ", 2)");
                         insertMovie.close();
                     }
                 }
@@ -202,7 +202,7 @@ public class DatabaseController {
 
                     int personID = 0;
                     if(personIDCast != null) {
-                        String queryRegisseur = "SELECT * FROM moviepersonrolle WHERE personID = '" + personIDCast + "'";
+                        String queryRegisseur = "SELECT * FROM Person WHERE personID = '" + personIDCast.get(z) + "'";
                         Statement getData = con.prepareStatement(queryRegisseur);
                         ResultSet result = getData.executeQuery(queryRegisseur);
                         if (result != null) {
@@ -215,7 +215,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDCast.get(z) + ", 3)");
+                                "VALUES (" + movieID + ", " + personID + ", 3)");
                         insertMovie.close();
                     }
                 }
@@ -400,7 +400,7 @@ public class DatabaseController {
         int movieID = 0;
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             //check if movie does exists
-            String queryGetMovieTitle = "SELECT * FROM Movie WHERE title = '" + movie.getTitle() + "'";
+            String queryGetMovieTitle = "SELECT * FROM Movie WHERE title = '" + movie.getTitle().replaceAll("\'", "") + "'";
             Statement getMovie = con.prepareStatement(queryGetMovieTitle);
             ResultSet resultMovie = getMovie.executeQuery(queryGetMovieTitle);
             if (resultMovie != null) {
