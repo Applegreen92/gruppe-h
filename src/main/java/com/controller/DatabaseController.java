@@ -173,7 +173,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDRegisseur.get(z) + ", 1)");
+                                "VALUES (" + movieID + ", " + personID + ", 1)");
                         insertMovie.close();
                     }
                 }
@@ -194,7 +194,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDAuthor.get(z) + ", 2)");
+                                "VALUES (" + movieID + ", " + personID + ", 2)");
                         insertMovie.close();
                     }
                 }
@@ -215,7 +215,7 @@ public class DatabaseController {
                     if(personID == 0) {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO MOVIEPERSONROLLE(movie_id, personid, rolleid)" +
-                                "VALUES (" + movieID + ", " + personIDCast.get(z) + ", 3)");
+                                "VALUES (" + movieID + ", " + personID + ", 3)");
                         insertMovie.close();
                     }
                 }

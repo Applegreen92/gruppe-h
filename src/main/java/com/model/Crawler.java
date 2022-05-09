@@ -12,6 +12,8 @@ import java.lang.String;
 import com.model.log;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class Crawler {
@@ -182,14 +184,21 @@ public class Crawler {
                             for(int y = 0; writer.size() > y; y++){
                                 System.out.print(writer.get(y));
                             };
+                            ArrayList tempGenreArray = new ArrayList();
+                            tempGenreArray.addAll(movieGenreArray);
+                            ArrayList tempWriterArray = new ArrayList();
+                            tempWriterArray.addAll(writer);
+                            ArrayList tempCastArray = new ArrayList();
+                            tempCastArray.addAll(cast);
+                            //Collections.copy(movieGenreArray, tempGenreArray);
                             Movie movie = new Movie(title,
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
                                     convertLength(length),
                                     director.get(0).toString(),
-                                    movieGenreArray,
-                                    writer,
-                                    cast);
+                                    tempGenreArray,
+                                    tempWriterArray,
+                                    tempCastArray);
                             MovieList.add(movie);
                             //Create Log data
                             log movieLogger = new log();
@@ -332,10 +341,10 @@ public class Crawler {
 
 
     public void clearAllLists(){
-        movieGenreArray.clear();
-        cast.clear();
-        director.clear();
-        writer.clear();
+        movieGenreArray.removeAll(movieGenreArray);
+        cast.removeAll(cast);
+        director.removeAll(director);
+        writer.removeAll(writer);
     }
 
     public int convertLength(String runtime) {
