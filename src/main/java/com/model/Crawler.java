@@ -1,5 +1,7 @@
 package com.model;
 
+import com.controller.DatabaseController;
+import javafx.scene.chart.PieChart;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -159,9 +161,9 @@ public class Crawler {
                             }
 
 
-                            //System.out.println(title);
-                            //System.out.println(length);
-                            //System.out.println(release);
+                            System.out.println(title);
+                            System.out.println(length);
+                            System.out.println(release);
                             if(writer.size() == 0){
                                 writer.add("");
                             }
@@ -177,6 +179,9 @@ public class Crawler {
                             if(x == 149){
                                 System.out.println("Test");
                             }
+                            for(int y = 0; writer.size() > y; y++){
+                                System.out.print(writer.get(y));
+                            };
                             Movie movie = new Movie(title,
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
@@ -188,7 +193,7 @@ public class Crawler {
                             MovieList.add(movie);
                             //Create Log data
                             log movieLogger = new log();
-                            log.createLog(MovieList.get(x));
+                            log.createLog(movie);
                             clearAllLists();
                         }
                         countMovies += hreflink.size();
@@ -198,6 +203,8 @@ public class Crawler {
                     } else if (diff == 0) {
                         start += 250;
                     }
+                    DatabaseController db = new DatabaseController();
+                    db.insertMovie(MovieList);
                     posterLink.clear();
                     hreflink.clear();
                 }
@@ -276,7 +283,7 @@ public class Crawler {
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
 
-                        if(personenArray.size() == 7 || personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() % 2 != 0){
                             personenArray.add("");
                         }
 
@@ -310,7 +317,7 @@ public class Crawler {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
-                        if(personenArray.size() == 7 || personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() % 2 != 0){
                             personenArray.add("");
                         }
                         this.writer.add(personenArray.get(x) + " " + personenArray.get(x+1));
@@ -342,7 +349,7 @@ public class Crawler {
                 res = hours + min + min10;
             } else {
                 hours = Integer.parseInt(String.valueOf(runtime.charAt(0))) * 60;
-                if(runtime.length() > 2) {
+                if(runtime.length() == 4) {
                     min = Integer.parseInt(String.valueOf(runtime.charAt(3)));
                 }else{
                     min = 0;
