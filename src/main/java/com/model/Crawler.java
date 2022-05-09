@@ -159,12 +159,36 @@ public class Crawler {
                             }
 
 
-                            System.out.println(title);
-                            System.out.println(length);
-                            System.out.println(release);
-                            Movie movie = new Movie(title, posterLink.get(x).toString(), Integer.parseInt(release), convertLength(length), director.get(x).toString(), movieGenreArray, writer, cast);
+                            //System.out.println(title);
+                            //System.out.println(length);
+                            //System.out.println(release);
+                            if(writer.size() == 0){
+                                writer.add("");
+                            }
+                            if(cast.size() == 0){
+                                cast.add("");
+                            }
+                            if(movieGenreArray.size() == 0){
+                                movieGenreArray.add("");
+                            }
+                            if(director.size() == 0){
+                                director.add("");
+                            }
+                            if(x == 149){
+                                System.out.println("Test");
+                            }
+                            Movie movie = new Movie(title,
+                                    posterLink.get(x).toString(),
+                                    Integer.parseInt(release),
+                                    convertLength(length),
+                                    director.get(0).toString(),
+                                    movieGenreArray,
+                                    writer,
+                                    cast);
                             MovieList.add(movie);
-
+                            //Create Log data
+                            log movieLogger = new log();
+                            log.createLog(MovieList.get(x));
                             clearAllLists();
                         }
                         countMovies += hreflink.size();
@@ -174,6 +198,7 @@ public class Crawler {
                     } else if (diff == 0) {
                         start += 250;
                     }
+                    posterLink.clear();
                     hreflink.clear();
                 }
                 countMovies = 0;
@@ -182,8 +207,8 @@ public class Crawler {
             }
 
             //Create Log data
-            log movieLogger = new log();
-            log.createLog(MovieList);
+            //log movieLogger = new log();
+            //log.createLog(MovieList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -238,19 +263,20 @@ public class Crawler {
         persons = persons.replaceAll("\\(.*\\).*", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
         String personsRest = persons;
-        while (personsRest != null && personsRest != "") {
+        // && personsRest != ""
+        while (personsRest != null) {
             String personArr2[] = personsRest.split(" ", 2);
             //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
-            System.out.println(personArr2[0]);
+            //System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0]) || personenArray.get(personenArray.size() - 1).equals("")) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
 
-                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() == 7 || personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
                             personenArray.add("");
                         }
 
@@ -270,27 +296,28 @@ public class Crawler {
         persons = persons.replaceAll("\\(.*\\).", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
         persons = persons.replaceAll("\\(.*\\).*", " ");
+        //&& personsRest != ""
         String personArr[] = persons.split(" ", 2);
         String personsRest = personArr[1];
-        while (personsRest != null && personsRest != "") {
+        while (personsRest != null) {
             String personArr2[] = personsRest.split(" ", 2);
             //personArr2[0] = personArr2[0].replaceAll("\\(.*", "");
             personenArray.add(personArr2[0]);
-            System.out.println(personArr2[0]);
+            //System.out.println(personArr2[0]);
             boolean inBounds = (1 >= 0) && (1 < personArr2.length);
-            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0])) {
+            if (personenArray.get(personenArray.size() - 1).equals(personArr2[0]) || personenArray.get(personenArray.size() - 1).equals("")) {
                 if (inBounds) {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
-                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                        if(personenArray.size() == 7 || personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
                             personenArray.add("");
                         }
                         this.writer.add(personenArray.get(x) + " " + personenArray.get(x+1));
                         x = x+1;
                     }
-                }
                 return;
+                }
             }
         }
     }
@@ -298,8 +325,6 @@ public class Crawler {
 
 
     public void clearAllLists(){
-        hreflink.clear();
-        posterLink.clear();
         movieGenreArray.clear();
         cast.clear();
         director.clear();
@@ -317,7 +342,11 @@ public class Crawler {
                 res = hours + min + min10;
             } else {
                 hours = Integer.parseInt(String.valueOf(runtime.charAt(0))) * 60;
-                min = Integer.parseInt(String.valueOf(runtime.charAt(3)));
+                if(runtime.length() > 2) {
+                    min = Integer.parseInt(String.valueOf(runtime.charAt(3)));
+                }else{
+                    min = 0;
+                }
                 res = hours + min;
             }
         }
