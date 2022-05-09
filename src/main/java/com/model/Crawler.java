@@ -249,8 +249,14 @@ public class Crawler {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
-                        this.cast.add(personenArray.get(x) + " " + personenArray.get(x+1));
-                        x = x+1;
+
+                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                            personenArray.add("");
+                        }
+
+                        this.cast.add(personenArray.get(x) + " " + personenArray.get(x + 1));
+                        x = x + 1;
+
                     }
                     return;
                 }
@@ -277,14 +283,18 @@ public class Crawler {
                     personsRest = personArr2[1];
                 } else {
                     for(int x = 0; x < personenArray.size(); x++){
+                        if(personenArray.size() == 5 || personenArray.size() == 3 || personenArray.size() == 1){
+                            personenArray.add("");
+                        }
                         this.writer.add(personenArray.get(x) + " " + personenArray.get(x+1));
                         x = x+1;
                     }
-                    return;
                 }
+                return;
             }
         }
     }
+
 
 
     public void clearAllLists(){
