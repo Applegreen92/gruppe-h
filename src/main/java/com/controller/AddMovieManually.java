@@ -47,6 +47,30 @@ public class AddMovieManually extends SceneController{
     public AddMovieManually() throws IOException {
     }
 
+    public ArrayList<String> getAuthorList() {
+        return authorList;
+    }
+
+    public ArrayList<String> getCastList() {
+        return castList;
+    }
+
+    public ArrayList<String> getGenreList() {
+        return genreList;
+    }
+
+    public void setAuthorList(ArrayList<String> authorList) {
+        this.authorList = authorList;
+    }
+
+    public void setCastList(ArrayList<String> castList) {
+        this.castList = castList;
+    }
+
+    public void setGenreList(ArrayList<String> genreList) {
+        this.genreList = genreList;
+    }
+
     @FXML
     public void genreAdd(){
         genreList.add(textGenre.getText());

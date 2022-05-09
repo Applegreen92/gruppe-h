@@ -60,10 +60,6 @@ public class MyClient extends Application{
     }
 
 
-    public  MyClient getCurrClient() {
-        return this.currentClient;
-    }
-
     public void start(Stage stage) throws IOException {
         current = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
