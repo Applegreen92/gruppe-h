@@ -239,9 +239,9 @@ public class DatabaseController {
     public ArrayList getPersonIDCast(Movie movie) throws SQLException {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             ArrayList<Integer> peronID = new ArrayList<Integer>();
-            if(movie.getCastList() != null) {
-                for(int x = 0; x < movie.getCastList().size(); x++) {
-                    String name = movie.getCastList().get(x);
+            if(movie.getListCast() != null) {
+                for(int x = 0; x < movie.getListCast().size(); x++) {
+                    String name = movie.getListCast().get(x);
                     if (name != "") {
                         String nameArr[] = name.split(" ", 2);
                         String firstname = nameArr[0];
@@ -272,7 +272,7 @@ public class DatabaseController {
 
                     //TODO check if exists
 
-                    String name = movie.getAuthorList().get(x);
+                    String name = movie.getListAuthor().get(x);
                     if (name != "") {
                         String nameArr[] = name.split(" ", 2);
                         String firstname = nameArr[0];
@@ -356,9 +356,9 @@ public class DatabaseController {
                 }
             }
             //autor
-            if(movie.getAuthorList() != null) {
-                for(int x = 0; x < movie.getAuthorList().size(); x++) {
-                    String name = movie.getAuthorList().get(x);
+            if(movie.getListAuthor() != null) {
+                for(int x = 0; x < movie.getListAuthor().size(); x++) {
+                    String name = movie.getListAuthor().get(x);
                     if (name != "") {
                         String nameArr[] = name.split(" ", 2);
                         String firstname = nameArr[0];
@@ -384,9 +384,9 @@ public class DatabaseController {
                 }
             }
             //cast
-            if(movie.getCastList() != null) {
-                for(int x = 0; x < movie.getCastList().size(); x++) {
-                    String name = movie.getCastList().get(x);
+            if(movie.getListCast() != null) {
+                for(int x = 0; x < movie.getListCast().size(); x++) {
+                    String name = movie.getListCast().get(x);
                     if (name != "") {
                         String nameArr[] = name.split(" ", 2);
                         String firstname = nameArr[0];
