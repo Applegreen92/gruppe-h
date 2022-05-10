@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class Main extends Application {
+public class Main {
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
         Thread t1 = new Thread(new Runnable() {
             @Override
@@ -90,8 +90,5 @@ public class Main extends Application {
     }
 
 
-    @Override
-    public void start(Stage stage) throws IOException{
-        launch();
-    }
+
 }

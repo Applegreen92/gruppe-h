@@ -8,7 +8,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources/com" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources/com/view" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources/com/view/META-INF" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
