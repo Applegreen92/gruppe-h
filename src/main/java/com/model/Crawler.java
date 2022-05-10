@@ -184,6 +184,9 @@ public class Crawler {
                             for(int y = 0; writer.size() > y; y++){
                                 System.out.print(writer.get(y));
                             };
+                            if(release != ""){
+                                release = "0";
+                            }
                             ArrayList tempGenreArray = new ArrayList();
                             tempGenreArray.addAll(movieGenreArray);
                             ArrayList tempWriterArray = new ArrayList();
