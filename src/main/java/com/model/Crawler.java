@@ -212,12 +212,12 @@ public class Crawler {
                     } else if (diff == 0) {
                         start += 250;
                     }
-                    DatabaseController db = new DatabaseController();
-                    db.insertMovie(MovieList);
                     posterLink.clear();
                     hreflink.clear();
                 }
                 countMovies = 0;
+                DatabaseController db = new DatabaseController();
+                db.insertMovie(MovieList);
                 count = (3000 - (count * totalDiff * pass)) / totalDiff;
                 pass = pass + 1;
             }
