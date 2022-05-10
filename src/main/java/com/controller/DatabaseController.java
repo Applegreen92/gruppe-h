@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 
 public class DatabaseController {
     private String db_url = "jdbc:mysql://localhost/IMDBClone";
@@ -583,6 +584,34 @@ public class DatabaseController {
             System.out.println(sqlCreateRolle);
             stmt.executeUpdate(sqlCreateRolle);
             stmt.close();
+
+
+            //regisseur ID = 1
+            //author ID = 2
+            //cast ID = 3
+            ArrayList rolle = new ArrayList();
+            ArrayList rolleToAdd = new ArrayList();
+            rolleToAdd.add("regisseur");
+            rolleToAdd.add("author");
+            rolleToAdd.add("cast");
+
+            String queryRolle = "SELECT * FROM rolle";
+            Statement getData = con.prepareStatement(queryRolle);
+            ResultSet result = getData.executeQuery(queryRolle);
+            if (result != null) {
+                while (result.next()) {
+                    rolle.add(result.getInt("rolleID"));
+                }
+            }
+            if (rolle.size() == 0) {
+                for(int x = 0; x<rolleToAdd.size(); x++){
+                    Statement insertMovie = con.createStatement();
+                    insertMovie.execute("INSERT INTO ROLLE (rolleName)" +
+                            "VALUES ('"+ rolleToAdd.get(x) +"')");
+                    insertMovie.close();
+                }
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -219,12 +219,11 @@ public class Crawler {
                     hreflink.clear();
                 }
                 countMovies = 0;
-                DatabaseController db = new DatabaseController();
-                db.insertMovie(MovieList);
                 count = (3000 - (count * totalDiff * pass)) / totalDiff;
                 pass = pass + 1;
             }
-
+            DatabaseController db = new DatabaseController();
+            db.insertMovie(MovieList);
             //Create Log data
             //log movieLogger = new log();
             //log.createLog(MovieList);
