@@ -231,9 +231,9 @@ public class DatabaseController {
     public ArrayList getPersonIDCast(Movie movie) throws SQLException {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             ArrayList<Integer> peronID = new ArrayList<Integer>();
-            if(movie.getCastList() != null) {
-                for(int x = 0; x < movie.getCastList().size(); x++) {
-                    String name = movie.getCastList().get(x);
+            if(movie.getListCast() != null) {
+                for(int x = 0; x < movie.getListCast().size(); x++) {
+                    String name = movie.getListCast().get(x);
                     String nameArr[] = name.split(" ", 2);
                     String firstname = nameArr[0];
                     String lastname = nameArr[1];
@@ -257,12 +257,12 @@ public class DatabaseController {
     public ArrayList getPersonIDAuthor(Movie movie) throws SQLException {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             ArrayList<Integer> peronID = new ArrayList<Integer>();
-            if(movie.getAuthorList() != null) {
-                for(int x = 0; x < movie.getAuthorList().size(); x++) {
+            if(movie.getListAuthor() != null) {
+                for(int x = 0; x < movie.getListAuthor().size(); x++) {
 
                     //TODO check if exists
 
-                    String name = movie.getAuthorList().get(x);
+                    String name = movie.getListAuthor().get(x);
                     String nameArr[] = name.split(" ", 2);
                     String firstname = nameArr[0];
                     String lastname = nameArr[1];
@@ -340,9 +340,9 @@ public class DatabaseController {
                 }
             }
             //autor
-            if(movie.getAuthorList() != null) {
-                for(int x = 0; x < movie.getAuthorList().size(); x++) {
-                    String name = movie.getAuthorList().get(x);
+            if(movie.getListAuthor() != null) {
+                for(int x = 0; x < movie.getListAuthor().size(); x++) {
+                    String name = movie.getListAuthor().get(x);
                     String nameArr[] = name.split(" ", 2);
                     String firstname = nameArr[0];
                     String lastname = nameArr[1];
@@ -366,9 +366,9 @@ public class DatabaseController {
                 }
             }
             //cast
-            if(movie.getCastList() != null) {
-                for(int x = 0; x < movie.getCastList().size(); x++) {
-                    String name = movie.getCastList().get(x);
+            if(movie.getListCast() != null) {
+                for(int x = 0; x < movie.getListCast().size(); x++) {
+                    String name = movie.getListCast().get(x);
                     String nameArr[] = name.split(" ", 2);
                     String firstname = nameArr[0];
                     String lastname = nameArr[1];
@@ -418,8 +418,8 @@ public class DatabaseController {
     public ArrayList getGenre(Movie movie) throws SQLException {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             ArrayList genreID = new ArrayList();
-            for (int i = 0; i < movie.getGenreList().size(); i++) {
-                String queryGetGenre = "SELECT * FROM GENRE WHERE genre = '" + movie.getGenreList().get(i) + "'";
+            for (int i = 0; i < movie.getListGenre().size(); i++) {
+                String queryGetGenre = "SELECT * FROM GENRE WHERE genre = '" + movie.getListGenre().get(i) + "'";
                 Statement getGenre = con.prepareStatement(queryGetGenre);
                 ResultSet resultGenre = getGenre.executeQuery(queryGetGenre);
                 if (resultGenre != null) {
@@ -439,11 +439,11 @@ public class DatabaseController {
         try(Connection con = DriverManager.getConnection(db_url,user_name,password)) {
             //check if genre does exists
             int genreID = 0;
-            for(int i = 0; i < movie.getGenreList().size(); i++) {
+            for(int i = 0; i < movie.getListGenre().size(); i++) {
                 ResultSet resultGenre = null;
                 genreID = 0;
                 ArrayList genre = new ArrayList<>();
-                String queryGetGenre = "SELECT * FROM GENRE WHERE GENRE = '" + movie.getGenreList().get(i) + "'";
+                String queryGetGenre = "SELECT * FROM GENRE WHERE GENRE = '" + movie.getListGenre().get(i) + "'";
                 System.out.println(queryGetGenre);
                 Statement getGenre = con.prepareStatement(queryGetGenre);
                 resultGenre = getGenre.executeQuery(queryGetGenre);
@@ -457,7 +457,7 @@ public class DatabaseController {
                     } else {
                         Statement insertMovie = con.createStatement();
                         insertMovie.execute("INSERT INTO GENRE (genre)" +
-                                "VALUES ('" + movie.getGenreList().get(i) + "')");
+                                "VALUES ('" + movie.getListGenre().get(i) + "')");
                         insertMovie.close();
                     }
                 }

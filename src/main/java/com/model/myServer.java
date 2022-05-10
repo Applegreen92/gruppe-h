@@ -1,6 +1,7 @@
 package com.model;
 
 import com.controller.DatabaseController;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -86,7 +87,7 @@ public class myServer {
 
 
 
-    public static void getAndIdentifyInputStream(PrintWriter output,String Json) throws JsonProcessingException {
+    public static void getAndIdentifyInputStream(PrintWriter pw,String Json) throws JsonProcessingException {
 
         DatabaseController db = new DatabaseController();
         ObjectMapper om = new ObjectMapper();
@@ -95,22 +96,25 @@ public class myServer {
             User user = om.readValue(Json,User.class);
             if(user.getRegisterFlag()){
                 db.insertUser(user);
-                System.out.println("User is created ...");
+                System.out.println("[Server] : User is created");
                 return;
             }else if(user.getLoginFlag()){
                 //Here you need a method to get someone out of the database and the return to the Client
                 User fullUser = db.getUser(user);
                 String json = om.writeValueAsString(fullUser);
-                output.println(json);
-                output.flush();
+                pw.println(json);
+                pw.flush();
+                System.out.println("[Server] : You are logged in");
             }
 
         }else{
             System.out.println(Json);
+
             Movie movie = om.readValue(Json,Movie.class);
             ArrayList movieArray = new ArrayList<>();
             movieArray.add(movie);
             db.insertMovie(movieArray);
+            System.out.println("[Server] : Movie is now inside the database");
         }
     }
 
@@ -122,7 +126,7 @@ public class myServer {
         return controller.getUser(user);
 
     }
-    }
+}
 
 
 

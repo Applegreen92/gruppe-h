@@ -1,11 +1,12 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
 
-
+@JsonAutoDetect
 public class Movie {
 
     private int movieId;
@@ -44,19 +45,19 @@ public class Movie {
     public int getReleaseDate(){ return releaseDate; }
     public int getLength() { return length; }
     public String getRegisseur() { return regisseur; }
-    public ArrayList<String> getAuthorList() { return this.author; }
-    public ArrayList<String> getCastList() { return this.cast; }
-    public ArrayList<String> getGenreList(){ return this.genre; }
+    public ArrayList<String> getListAuthor() { return this.author; }
+    public ArrayList<String> getListCast() { return this.cast; }
+    public ArrayList<String> getListGenre(){ return this.genre; }
 
-    public void setAuthor(ArrayList<String> author) {
+    public void setListAuthor(ArrayList<String> author) {
         this.author = author;
     }
 
-    public void setCast(ArrayList<String> cast) {
+    public void setListCast(ArrayList<String> cast) {
         this.cast = cast;
     }
 
-    public void setGenre(ArrayList<String> genre) {
+    public void setListGenre(ArrayList<String> genre) {
         this.genre = genre;
     }
 
@@ -99,24 +100,24 @@ public class Movie {
 
 
         for(int i = 0;i< cast.size();i++){
-            for(int j = 0;j<movie.getCastList().size();j++){
-                if(cast.get(i) == movie.getCastList().get(j)){
+            for(int j = 0;j<movie.getListCast().size();j++){
+                if(cast.get(i) == movie.getListCast().get(j)){
                     break;
                 }
                 return false;
             }
         }
         for(int i = 0;i< genre.size();i++){
-            for(int j = 0;j<movie.getGenreList().size();j++){
-                if(genre.get(i) == movie.getGenreList().get(j)){
+            for(int j = 0;j<movie.getListGenre().size();j++){
+                if(genre.get(i) == movie.getListGenre().get(j)){
                     break;
                 }
                 return false;
             }
         }
         for(int i = 0;i< author.size();i++){
-            for(int j = 0;j<movie.getAuthorList().size();j++){
-                if(cast.get(i) == movie.getAuthorList().get(j)){
+            for(int j = 0;j<movie.getListAuthor().size();j++){
+                if(cast.get(i) == movie.getListAuthor().get(j)){
                     break;
                 }
                 return false;

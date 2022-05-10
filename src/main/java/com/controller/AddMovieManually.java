@@ -91,7 +91,7 @@ public class AddMovieManually extends SceneController{
     //Checks if the Film allready exists, if not,create a new movie Object using the Parameter
     //given from the Textfields and pushes it into the Database. If it allready exists take the
     //Movie Object off the database, change the variables and pushes it back in.
-    public boolean save()  {
+    public void save()  {
         String title = textTitle.getText();
 
         String posterSrc = textPosterSrc.getText();
@@ -104,17 +104,27 @@ public class AddMovieManually extends SceneController{
 
 
         Movie movie = new Movie(title,posterSrc,releaseDate,movieLength,regisseur,genreList,authorList,castList);
-        System.out.println(movie.toString());
+        genreList.add(this.textGenre.getText());
+        authorList.add(this.textAuthor.getText());
+        castList.add(this.textCast.getText());
         try {
             String jsonMovie = new ObjectMapper().writeValueAsString(movie);
             MyClient.printwriter.println(jsonMovie);
             MyClient.printwriter.flush();
+            textCast.clear();
+            textAuthor.clear();
+            textRegisseur.clear();
+            textMovieLength.clear();
+            textPosterSrc.clear();
+            textTitle.clear();
+            textGenre.clear();
+            textReleaseDate.clear();
         }catch(Exception e){
             e.printStackTrace();
-            return false;
+
         }
 
-        return true;
+
     }
     @FXML
     //Goes back to the last page without doing anything
