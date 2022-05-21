@@ -1,12 +1,16 @@
 package com.example.application.views.login;
 
+import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("Login")
-@Route(value = "login")
+@Route("login")
+@PermitAll
 public class LoginView extends LoginOverlay {
     public LoginView() {
         setAction("login");
@@ -17,7 +21,8 @@ public class LoginView extends LoginOverlay {
         i18n.getHeader().setDescription("Login using user/user or admin/admin");
         i18n.setAdditionalInformation(null);
         setI18n(i18n);
-
+        LoginOverlay loginOverlay = new LoginOverlay();
+        loginOverlay.setI18n(i18n);
         setForgotPasswordButtonVisible(false);
         setOpened(true);
     }
