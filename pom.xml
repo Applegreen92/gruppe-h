@@ -176,6 +176,7 @@
                 <version>${vaadin.version}</version>
                 <executions>
                     <execution>
+                        <id>flyway-clean1</id>
                         <goals>
                             <goal>prepare-frontend</goal>
                         </goals>
@@ -197,11 +198,13 @@
                         <version>${vaadin.version}</version>
                         <executions>
                             <execution>
+                                <id>flyway-clean2</id>
                                 <goals>
                                     <goal>prepare-frontend</goal>
                                 </goals>
                             </execution>
                             <execution>
+                                <id>flyway-clean3</id>
                                 <goals>
                                     <goal>build-frontend</goal>
                                 </goals>
@@ -256,6 +259,7 @@
                                 <phase>generate-resources</phase>
                             </execution>
                             <execution>
+                                <id>flyway-clean5</id>
                                 <goals>
                                     <goal>integration-test</goal>
                                     <goal>verify</goal>
