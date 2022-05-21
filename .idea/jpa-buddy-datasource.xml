@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="03dca279-f4c7-4b1a-89bc-a5fdd3f32388" name="gruppe-h" url="jdbc:mysql://localhost:3306/imdbclone" driverClass="com.mysql.jdbc.Driver" />
+    </data-sources>
+  </component>
+</project>

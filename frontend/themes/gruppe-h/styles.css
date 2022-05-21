@@ -1,0 +1,15 @@
+@import url('./main-layout.css');
+@import url('./views/person-form-view.css');
+@import url('./views/reviews-view.css');
+@import url('./views/user-overview-view.css');
+@import url('./views/movie-list-view.css');
+@import url('./views/user-info-view.css');
+@import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');    html {
+      --lumo-border-radius: calc(var(--lumo-size-m) / 2);
+      --lumo-size-xl: 4rem;
+      --lumo-size-l: 3rem;
+      --lumo-size-m: 2.5rem;
+      --lumo-size-s: 2rem;
+      --lumo-size-xs: 1.75rem;
+
+    }
