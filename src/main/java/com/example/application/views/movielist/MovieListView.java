@@ -15,7 +15,7 @@ import com.vaadin.flow.router.Route;
 import javax.annotation.security.PermitAll;
 
 @PageTitle("Movie List")
-@Route(value = "movie-list", layout = MainLayout.class)
+@Route(value ="" , layout = MainLayout.class)
 @PermitAll
 public class MovieListView extends Main implements HasComponents, HasStyle {
 
