@@ -1,0 +1,2 @@
+Userstory: Als User moechte ich ein Nutzerkonto anlegen koennen
+um mich mit Freunden und anderen Usern ueber Filme auszutauschen.

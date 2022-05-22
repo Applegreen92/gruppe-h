@@ -1,0 +1,2 @@
+Userstory: Als User moechte ich Filme als gesehen markieren koennen um damit ich einen Ueberblick
+ueber die Filme habe, welche ich bereich geschaut habe.
