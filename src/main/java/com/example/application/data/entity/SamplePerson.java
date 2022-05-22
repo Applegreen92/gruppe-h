@@ -1,5 +1,7 @@
 package com.example.application.data.entity;
 
+import org.springframework.context.annotation.Bean;
+
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
