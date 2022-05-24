@@ -1,7 +1,7 @@
 package com.example.application.data.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
@@ -31,6 +31,9 @@ public class Movie {
 
     }
     public Movie(int movieID, String title, String posterSrc, int releaseDate, int length) {
+    }
+
+    public Movie(String title, String toString, int parseInt, int convertLength, String toString1, ArrayList tempGenreArray, ArrayList tempWriterArray, ArrayList tempCastArray) {
     }
 
     public int getMovieID() {
