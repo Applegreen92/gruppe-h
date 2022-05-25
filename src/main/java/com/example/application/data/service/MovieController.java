@@ -6,20 +6,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "movie")
+@RestController()
+@RequestMapping(path = "/movie")
 public class MovieController {
     private final MovieService movieService;
 
     @Autowired
-    public MovieController(MovieService movieService){
-        this.movieService = movieService;
-    }
-    @GetMapping
+    public MovieController(MovieService movieService){ this.movieService = movieService; }
+    @GetMapping("getmovie")
     public List<Movie> getMovie(){
         return movieService.getMovie();
     }
-    @PostMapping
+    @PostMapping(path = "postmovie")
     public void addNewMovie(@RequestBody Movie movie){
         movieService.addNewMovie(movie);
     }

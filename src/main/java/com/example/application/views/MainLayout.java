@@ -2,6 +2,7 @@ package com.example.application.views;
 
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
+import com.example.application.views.addMovie.AddMovie;
 import com.example.application.views.chat.ChatView;
 import com.example.application.views.login.LoginView;
 import com.example.application.views.movielist.MovieListView;
@@ -144,6 +145,7 @@ public class MainLayout extends AppLayout {
 
                 new MenuItemInfo("Search", "la la-search", SearchView.class), //
 
+                new MenuItemInfo("Add Movie", "la la-download", AddMovie.class), //
         };
     }
 
