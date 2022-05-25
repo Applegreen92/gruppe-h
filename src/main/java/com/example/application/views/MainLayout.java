@@ -7,6 +7,7 @@ import com.example.application.views.login.LoginView;
 import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.personform.PersonFormView;
 import com.example.application.views.reviews.ReviewsView;
+import com.example.application.views.search.SearchView;
 import com.example.application.views.userinfo.UserInfoView;
 import com.example.application.views.useroverview.UserOverviewView;
 import com.vaadin.flow.component.Component;
@@ -16,18 +17,11 @@ import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+
 import java.util.Optional;
 
 /**
@@ -147,6 +141,8 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Movie List", "la la-th-list", MovieListView.class), //
 
                 new MenuItemInfo("User Info", "la la-columns", UserInfoView.class), //
+
+                new MenuItemInfo("Search", "la la-search", SearchView.class), //
 
         };
     }

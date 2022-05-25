@@ -273,7 +273,7 @@ driver
 
 bower_components
 node
-node_modules
+node_modules/
 /frontend
 */flow-*/frontend
 package-lock.json
@@ -296,3 +296,5 @@ flow-tests/**/.pnpmfile.cjs
 flow-tests/**/*.npmrc
 
 *.xml.versionsBackup
+
+gruppe-h/node_modules/
