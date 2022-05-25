@@ -13,20 +13,27 @@ public class MovieService {
     private final MovieRepository movieRepository;
     @Autowired
     public MovieService(MovieRepository movieRepository) {
+
         this.movieRepository = movieRepository;
     }
 
     public List<Movie> getMovie(){
+
         return movieRepository.findAll();
     }
 
     public Movie update(Movie entity) {
+
         return movieRepository.save(entity);
     }
 
     public void delete(int movieID) {
+
         movieRepository.deleteById(movieID);
     }
 
-    public void addNewMovie(Movie movie) {movieRepository.save(movie);}
+    public void addNewMovie(Movie movie) {
+        movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());
+        movieRepository.save(movie);
+    }
 }

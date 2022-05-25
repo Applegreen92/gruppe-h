@@ -3,6 +3,7 @@ package com.example.application.data.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,8 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
+
+    private List<Person> person = new ArrayList<>();
 
     public Movie() {
 
