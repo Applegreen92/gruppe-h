@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,7 +34,12 @@ public class MovieService {
     }
 
     public void addNewMovie(Movie movie) {
-        movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());
-        movieRepository.save(movie);
+        System.out.println("Test");
+        Optional<Movie> movieByTitleAndReleaseDate = movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());
+        if(movieByTitleAndReleaseDate.isEmpty()){
+            movieRepository.save(movie);
+        }else {
+            throw new IllegalStateException();
+        }
     }
 }

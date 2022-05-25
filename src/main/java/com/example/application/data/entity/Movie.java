@@ -29,8 +29,6 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
-    private List<Person> person = new ArrayList<>();
-
     public Movie() {
 
     }
