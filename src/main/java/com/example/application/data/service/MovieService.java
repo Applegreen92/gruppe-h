@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,12 @@ import java.util.UUID;
 @Service
 public class MovieService {
     private final MovieRepository movieRepository;
-    @Autowired
-    public MovieService(MovieRepository movieRepository) {
 
+
+
+    @Autowired
+
+    public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
@@ -32,7 +36,7 @@ public class MovieService {
 
         movieRepository.deleteById(movieID);
     }
-
+    
     public void addNewMovie(Movie movie) {
         System.out.println("Test");
         Optional<Movie> movieByTitleAndReleaseDate = movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());

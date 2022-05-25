@@ -29,6 +29,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
+
     public Movie() {
 
     }
