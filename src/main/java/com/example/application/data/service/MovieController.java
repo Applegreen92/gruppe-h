@@ -4,6 +4,7 @@ import com.example.application.data.entity.Movie;
 import com.vaadin.flow.router.Route;
 import org.atmosphere.config.service.Get;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,9 @@ public class MovieController {
     public List<Movie> getMovie(){
         return movieService.getMovie();
     }
-    @PostMapping()
+    @PostMapping(value = "post")
     public void addNewMovie(@RequestBody Movie movie){
-        System.out.println("Test");
+        System.out.println("test");
         movieService.addNewMovie(movie);
     }
 }

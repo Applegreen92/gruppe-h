@@ -2,8 +2,6 @@ package com.example.application.views.addMovie;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
@@ -13,23 +11,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.atmosphere.config.service.Post;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.PermitAll;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
 
 @PageTitle("AddMovie")
 @Route(value = "addMovie", layout = MainLayout.class)
@@ -37,9 +22,12 @@ import java.io.UnsupportedEncodingException;
 @Uses(Icon.class)
 public class AddMovie extends Div {
 
-    public AddMovie(){
+    public AddMovie(MovieService movieService){
         add(saveMovieLayout());
+        this.movieService = movieService;
     }
+
+    private final MovieService movieService;
 
 
     protected Component saveMovieLayout(){
@@ -73,7 +61,7 @@ public class AddMovie extends Div {
                                 Integer.valueOf(textFieldreleaseDate.getValue()),
                                 Integer.valueOf(textFieldLength.getValue()));
 
-                    } catch (IOException e) {
+                    } catch (IOException | InterruptedException e) {
                         System.out.println("Could not put Movie into Database");
                         throw new RuntimeException(e);
                     }
@@ -86,22 +74,10 @@ public class AddMovie extends Div {
 
 
 
-    public void saveMovieInDatabase(int movieId, String title, String posterSrc, int releaseDate, int length) throws IOException {
-            
-            String movieString = new ObjectMapper().writeValueAsString(new Movie(movieId,title,posterSrc,releaseDate,length));
+    public void saveMovieInDatabase(int movieId, String title, String posterSrc, int releaseDate, int length) throws IOException, InterruptedException {
+        Movie movie = new Movie(movieId,title,posterSrc,releaseDate,length);
+        movieService.addNewMovie(movie);
 
-            CloseableHttpClient client = HttpClients.createDefault();
-
-            HttpPost post = new HttpPost("http://localhost:8080/movie");
-            post.setEntity(new StringEntity(movieString));
-            post.setHeader("Accept","application/json");
-            post.setHeader("Content-type", "application/json");
-
-            CloseableHttpResponse response = client.execute(post);
-            System.out.println(response.getStatusLine().getStatusCode());
-            if(response.getStatusLine().getStatusCode() == 302){
-                System.out.println(response.getStatusLine().getReasonPhrase());
-            }
 
 
 
