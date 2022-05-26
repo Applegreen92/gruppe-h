@@ -37,7 +37,6 @@ public class Crawler {
     public Crawler(MoviePersonPartLinkService moviePersonPartLinkService) {
         this.moviePersonPartLinkService = moviePersonPartLinkService;
     }
-    //TODO Tobi das Movie Objekt erstellen
     public void insertMovieIntoDB(ArrayList<Movie> MovieList){
         moviePersonPartLinkService.addNewMovie(MovieList);
     }
@@ -170,10 +169,6 @@ public class Crawler {
                                 sortPersons(person);
                             }
 
-
-                            System.out.println(title);
-                            System.out.println(length);
-                            System.out.println(release);
                             if(writer.size() == 0){
                                 writer.add("");
                             }
@@ -201,7 +196,7 @@ public class Crawler {
                             tempWriterArray.addAll(writer);
                             ArrayList tempCastArray = new ArrayList();
                             tempCastArray.addAll(cast);
-                            //Collections.copy(movieGenreArray, tempGenreArray);
+
                             Movie movie = new Movie(title,
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
@@ -230,7 +225,6 @@ public class Crawler {
                 count = (3000 - (count * totalDiff * pass)) / totalDiff;
                 pass = pass + 1;
             }
-            //TODO <DB controller flag>
             insertMovieIntoDB(MovieList);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -242,7 +236,7 @@ public class Crawler {
         for (Element movieImage : body.select("img.loadlate")) {
             String moviePoster = movieImage.attr("loadlate");
             posterLink.add(moviePoster);
-            //System.out.println(moviePoster);
+
         }
     }
 

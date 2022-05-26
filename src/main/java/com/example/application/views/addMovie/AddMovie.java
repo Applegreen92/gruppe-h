@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -80,6 +81,24 @@ public class AddMovie extends Div {
 
 
 
+
+            // Input Error handling
+            if(movieId != (int) movieId){
+                Notification.show("movieId must be of type Integer");
+            }
+            else if(title != (String) title || getTitle().isEmpty() == true){
+                Notification.show("Title must be of Type String");
+            }
+            else if(posterSrc != (String) posterSrc || posterSrc.isEmpty() == true){
+                Notification.show("Poster source must be of Type String");
+            }
+            else if(releaseDate != (int) releaseDate){
+                Notification.show("Releasedate must be of type Integer");
+            }
+            else if(length != (int) length){
+                Notification.show("Length must be of type Integer");
+
+    }
 
 
     }

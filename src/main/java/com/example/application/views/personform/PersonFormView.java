@@ -57,6 +57,18 @@ public class PersonFormView extends Div {
             Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
             clearForm();
         });
+
+        if(firstName.toString().isEmpty()){
+            Notification.show("Please enter your first name");
+        }
+        else if(lastName.toString().isEmpty()){
+            Notification.show("Please enter your last name");
+        }
+        else if(email.toString().isEmpty()){
+            Notification.show("Please enter valid email");
+        }
+
+
     }
 
     private void clearForm() {

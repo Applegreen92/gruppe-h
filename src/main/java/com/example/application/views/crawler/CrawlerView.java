@@ -1,20 +1,22 @@
 package com.example.application.views.crawler;
 
-
-import com.example.application.data.service.MoviePersonPartLinkService;
-import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.example.application.data.generator.Crawler;
 import com.vaadin.flow.router.PageTitle;
 
+import com.example.application.data.generator.Crawler;
+import com.example.application.data.service.MoviePersonPartLinkService;
+import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
 import java.io.IOException;
+
 
 @PageTitle("Crawler")
 @Route(value = "crawler", layout = MainLayout.class)
@@ -33,11 +35,14 @@ public class CrawlerView extends Div{
 
         this.crawler = new Crawler(moviePersonPartLinkService);
         add(createFormLayout());
-        add(createExecButton());
+        add(horizontalLayout());
 
+
+        if(Integer.parseInt(String.valueOf(startDate)) > Integer.parseInt(String.valueOf(endDate))){
+            Notification.show("Start date must be greater than end date!");
+        }
     }
 
-    //TODO connect via Actiontrigger
     public Button createExecButton(){
         Button primary = new Button("Get Movies",event -> {
             try {
@@ -49,15 +54,21 @@ public class CrawlerView extends Div{
         primary.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         primary.isDisableOnClick();
         return primary;
-
     }
 
     public Component createFormLayout(){
         FormLayout crawlerView = new FormLayout();
         crawlerView.add(startDate, endDate, genre);
         return crawlerView;
-
     }
+
+    public Component horizontalLayout(){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setPadding(true);
+        layout.add(createExecButton());
+        return layout;
+    }
+
 
 
 }

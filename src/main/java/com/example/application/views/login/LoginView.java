@@ -23,7 +23,6 @@ public class LoginView extends LoginOverlay {
         setAction("login");
 
         LoginI18n i18n = LoginI18n.createDefault();
-
         i18n.setHeader(new LoginI18n.Header());
 
         i18n.getHeader().setTitle("OnlyFilms");
