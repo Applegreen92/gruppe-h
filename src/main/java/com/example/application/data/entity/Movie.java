@@ -29,11 +29,27 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "movieID=" + movieID +
+                ", title='" + title + '\'' +
+                ", posterSrc='" + posterSrc + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", length=" + length +
+                ", moviePersonPartLink=" + moviePersonPartLink +
+                '}';
+    }
 
     public Movie() {
 
     }
     public Movie(int movieID, String title, String posterSrc, int releaseDate, int length) {
+        this.movieID = movieID;
+        this.title = title;
+        this.posterSrc = posterSrc;
+        this.releaseDate = releaseDate;
+        this.length = length;
     }
 
     public Movie(String title, String toString, int parseInt, int convertLength, String toString1, ArrayList tempGenreArray, ArrayList tempWriterArray, ArrayList tempCastArray) {

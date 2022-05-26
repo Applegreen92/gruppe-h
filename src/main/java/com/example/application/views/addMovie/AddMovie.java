@@ -13,6 +13,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -20,14 +22,17 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.atmosphere.config.service.Post;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.PermitAll;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-
 @PageTitle("AddMovie")
-@Route(value = "addmovie", layout = MainLayout.class)
+@Route(value = "addMovie", layout = MainLayout.class)
 @PermitAll
 @Uses(Icon.class)
 public class AddMovie extends Div {
@@ -67,6 +72,7 @@ public class AddMovie extends Div {
                                 textFieldPosterSrc.getValue(),
                                 Integer.valueOf(textFieldreleaseDate.getValue()),
                                 Integer.valueOf(textFieldLength.getValue()));
+
                     } catch (IOException e) {
                         System.out.println("Could not put Movie into Database");
                         throw new RuntimeException(e);
@@ -81,17 +87,24 @@ public class AddMovie extends Div {
 
 
     public void saveMovieInDatabase(int movieId, String title, String posterSrc, int releaseDate, int length) throws IOException {
-        String movieString = new ObjectMapper().writeValueAsString(new Movie(movieId,title,posterSrc,releaseDate,length));
+            
+            String movieString = new ObjectMapper().writeValueAsString(new Movie(movieId,title,posterSrc,releaseDate,length));
 
-        CloseableHttpClient client = HttpClients.createDefault();
+            CloseableHttpClient client = HttpClients.createDefault();
 
-        HttpPost post = new HttpPost("http://localhost:8080/movie/postmovie");
-        post.setEntity(new StringEntity(movieString));
-        post.setHeader("Accept","application/json");
-        post.setHeader("Content-type", "application/json");
+            HttpPost post = new HttpPost("http://localhost:8080/movie/put");
+            post.setEntity(new StringEntity(movieString));
+            post.setHeader("Accept","application/json");
+            post.setHeader("Content-type", "application/json");
 
-        CloseableHttpResponse response = client.execute(post);
-        System.out.println(response.getStatusLine().getStatusCode());
+            CloseableHttpResponse response = client.execute(post);
+            System.out.println(response.getStatusLine().getStatusCode());
+            if(response.getStatusLine().getStatusCode() == 302){
+                System.out.println(response.getStatusLine().getReasonPhrase());
+            }
+
+
+
 
     }
 
