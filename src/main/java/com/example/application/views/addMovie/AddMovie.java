@@ -92,7 +92,7 @@ public class AddMovie extends Div {
 
             CloseableHttpClient client = HttpClients.createDefault();
 
-            HttpPost post = new HttpPost("http://localhost:8080/movie/put");
+            HttpPost post = new HttpPost("http://localhost:8080/movie");
             post.setEntity(new StringEntity(movieString));
             post.setHeader("Accept","application/json");
             post.setHeader("Content-type", "application/json");
