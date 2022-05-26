@@ -25,9 +25,29 @@ public class Movie {
     private String posterSrc;
     private int releaseDate;
     private int length;
+    @Transient
+    ArrayList<Genre> genreList = new ArrayList<>();
+    @Transient
+    String personDirector;
+    @Transient
+    ArrayList<Person> personAuthorList = new ArrayList<>();
+    @Transient
+    ArrayList<Person> personCastList = new ArrayList<>();
 
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
+
+    public Movie(String title, String toString, int parseInt, int convertLength, ArrayList tempGenreArray, String personDirector, ArrayList tempWriterArray, ArrayList tempCastArray) {
+        this.title = title;
+        this.posterSrc = posterSrc;
+        this.releaseDate = releaseDate;
+        this.length = length;
+        this.genreList = genreList;
+        this.personDirector = personDirector;
+        this.personAuthorList = personAuthorList;
+        this.personCastList = personCastList;
+        this.moviePersonPartLink = moviePersonPartLink;
+    }
 
     @Override
     public String toString() {
@@ -41,6 +61,38 @@ public class Movie {
                 '}';
     }
 
+    public ArrayList<Genre> getGenreList() {
+        return genreList;
+    }
+
+    public void setGenreList(ArrayList<Genre> genreList) {
+        this.genreList = genreList;
+    }
+
+    public String getPersonDirector() {
+        return personDirector;
+    }
+
+    public void setPersonDirector(String personDirector) {
+        this.personDirector = personDirector;
+    }
+
+    public ArrayList<Person> getPersonAuthorList() {
+        return personAuthorList;
+    }
+
+    public void setPersonAuthorList(ArrayList<Person> personAuthorList) {
+        this.personAuthorList = personAuthorList;
+    }
+
+    public ArrayList<Person> getPersonCastList() {
+        return personCastList;
+    }
+
+    public void setPersonCastList(ArrayList<Person> personCastList) {
+        this.personCastList = personCastList;
+    }
+
     public Movie() {
 
     }
@@ -50,9 +102,6 @@ public class Movie {
         this.posterSrc = posterSrc;
         this.releaseDate = releaseDate;
         this.length = length;
-    }
-
-    public Movie(String title, String toString, int parseInt, int convertLength, String toString1, ArrayList tempGenreArray, ArrayList tempWriterArray, ArrayList tempCastArray) {
     }
 
     public int getMovieID() {

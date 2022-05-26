@@ -1,6 +1,8 @@
 package com.example.application.data.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -17,6 +19,7 @@ public class Genre {
     )
     private int genreID;
     private String genre;
+
 
     public Genre() {
     }

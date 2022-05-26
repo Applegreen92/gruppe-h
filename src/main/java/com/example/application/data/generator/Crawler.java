@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 
 public class Crawler {
-
+    private final MoviePersonPartLinkService moviePersonPartLinkService;
     ArrayList<Movie> MovieList = new ArrayList<Movie>();
     ArrayList hreflink = new ArrayList();
     ArrayList posterLink = new ArrayList();
@@ -32,6 +32,14 @@ public class Crawler {
     Elements body = null;
     Document movies = null;
     int pass = 1;
+
+    public Crawler(MoviePersonPartLinkService moviePersonPartLinkService) {
+        this.moviePersonPartLinkService = moviePersonPartLinkService;
+    }
+    //TODO Tobi das Movie Objekt erstellen
+    public void insertMovieIntoDB(ArrayList<Movie> MovieList){
+        moviePersonPartLinkService.addNewMovie(MovieList);
+    }
 
 
     public void getMoviesByGenre(String genre, int start, int startDate, int endDate) throws IOException {
@@ -197,11 +205,11 @@ public class Crawler {
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
                                     convertLength(length),
-                                    director.get(0).toString(),
                                     tempGenreArray,
+                                    director.get(0).toString(),
                                     tempWriterArray,
                                     tempCastArray);
-
+                            MovieList.add(movie);
                             //Create Log data
                             Log movieLogger = new Log();
                             movieLogger.createLog(movie);
@@ -222,7 +230,7 @@ public class Crawler {
                 pass = pass + 1;
             }
             //TODO <DB controller flag>
-
+            insertMovieIntoDB(MovieList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

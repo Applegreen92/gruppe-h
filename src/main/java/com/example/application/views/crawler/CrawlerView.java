@@ -1,6 +1,7 @@
 package com.example.application.views.crawler;
 
 
+import com.example.application.data.service.MoviePersonPartLinkService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -9,12 +10,11 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-
+import com.example.application.data.generator.Crawler;
 import com.vaadin.flow.router.PageTitle;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
+import java.io.IOException;
 
 @PageTitle("Crawler")
 @Route(value = "crawler", layout = MainLayout.class)
@@ -23,11 +23,16 @@ import javax.annotation.security.RolesAllowed;
 @PermitAll
 
 public class CrawlerView extends Div{
+    private final Crawler crawler;
+    private final MoviePersonPartLinkService moviePersonPartLinkService;
     private TextField startDate = new TextField("Start year");
     private TextField endDate = new TextField("End year");
     private TextField genre = new TextField("Genre");
 
-    public CrawlerView() {
+    public CrawlerView(MoviePersonPartLinkService moviePersonPartLinkService) {
+
+        this.moviePersonPartLinkService = moviePersonPartLinkService;
+        this.crawler = new Crawler(moviePersonPartLinkService);
         add(createFormLayout());
         add(createExecButton());
 
@@ -35,7 +40,13 @@ public class CrawlerView extends Div{
 
     //TODO connect via Actiontrigger
     public Button createExecButton(){
-        Button primary = new Button("Get Movies");
+        Button primary = new Button("Get Movies",event -> {
+            try {
+                crawler.getMoviesByGenre(genre.getValue(),0,Integer.parseInt(startDate.getValue()),Integer.parseInt(endDate.getValue()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         primary.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         primary.isDisableOnClick();
         return primary;

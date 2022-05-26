@@ -27,7 +27,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(int personID, String firstname, String lastname) {
+    public Person(int personID, String firstname, String lastname, int partID) {
         this.personID = personID;
         this.firstname = firstname;
         this.lastname = lastname;

@@ -38,4 +38,8 @@ public class UserService {
         return (int) repository.count();
     }
 
+    public void registerUser(User user){
+        repository.save(user);
+    }
+
 }

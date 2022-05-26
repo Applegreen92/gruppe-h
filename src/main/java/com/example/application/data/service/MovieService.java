@@ -1,7 +1,6 @@
 package com.example.application.data.service;
 
 import com.example.application.data.entity.Movie;
-import com.example.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class MovieService {
@@ -47,5 +45,7 @@ public class MovieService {
         }else {
             throw new IllegalStateException();
         }
+
     }
+
 }

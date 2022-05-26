@@ -1,6 +1,7 @@
 package com.example.application.data.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -28,6 +29,14 @@ public class MoviePersonPartLink {
     @ManyToOne
     @JoinColumn(name = "personID")
     private Person person;
+
+    public MoviePersonPartLink() {
+    }
+
+    public MoviePersonPartLink(Movie movie, List<Person> person ) {
+        this.movie = movie;
+        this.person = (Person) person;
+    }
 
     public Person getPerson() {
         return person;
