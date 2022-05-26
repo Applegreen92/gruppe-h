@@ -24,14 +24,13 @@ import java.io.IOException;
 
 public class CrawlerView extends Div{
     private final Crawler crawler;
-    private final MoviePersonPartLinkService moviePersonPartLinkService;
+
     private TextField startDate = new TextField("Start year");
     private TextField endDate = new TextField("End year");
     private TextField genre = new TextField("Genre");
 
     public CrawlerView(MoviePersonPartLinkService moviePersonPartLinkService) {
 
-        this.moviePersonPartLinkService = moviePersonPartLinkService;
         this.crawler = new Crawler(moviePersonPartLinkService);
         add(createFormLayout());
         add(createExecButton());

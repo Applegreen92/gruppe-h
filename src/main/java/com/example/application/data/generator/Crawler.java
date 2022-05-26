@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.String;
 //todo import logging functionality
@@ -32,7 +33,7 @@ public class Crawler {
     Elements body = null;
     Document movies = null;
     int pass = 1;
-
+@Autowired
     public Crawler(MoviePersonPartLinkService moviePersonPartLinkService) {
         this.moviePersonPartLinkService = moviePersonPartLinkService;
     }

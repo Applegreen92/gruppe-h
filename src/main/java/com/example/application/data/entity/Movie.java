@@ -25,8 +25,12 @@ public class Movie {
     private String posterSrc;
     private int releaseDate;
     private int length;
-    @Transient
-    ArrayList<Genre> genreList = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(name = "movieGenre",
+            joinColumns = @JoinColumn(name = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "genreID")
+    )
+    private List<Genre> genreList = new ArrayList<>();
     @Transient
     String personDirector;
     @Transient
@@ -37,16 +41,15 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
-    public Movie(String title, String toString, int parseInt, int convertLength, ArrayList tempGenreArray, String personDirector, ArrayList tempWriterArray, ArrayList tempCastArray) {
+    public Movie(String title, String posterSrc, int releaseDate, int length, ArrayList tempGenreArray, String personDirector, ArrayList personAuthorList, ArrayList personCastList) {
         this.title = title;
         this.posterSrc = posterSrc;
         this.releaseDate = releaseDate;
         this.length = length;
-        this.genreList = genreList;
+        this.genreList = tempGenreArray;
         this.personDirector = personDirector;
         this.personAuthorList = personAuthorList;
         this.personCastList = personCastList;
-        this.moviePersonPartLink = moviePersonPartLink;
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Movie {
                 '}';
     }
 
-    public ArrayList<Genre> getGenreList() {
+    public List<Genre> getGenreList() {
         return genreList;
     }
 

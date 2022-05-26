@@ -1,7 +1,9 @@
 package com.example.application.data.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +21,8 @@ public class Genre {
     )
     private int genreID;
     private String genre;
-
+    @ManyToMany(mappedBy = "genreList")
+    private List<Movie> movies = new ArrayList<>();
 
     public Genre() {
     }

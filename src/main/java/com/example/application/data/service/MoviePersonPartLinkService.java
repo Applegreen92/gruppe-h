@@ -19,15 +19,15 @@ public class MoviePersonPartLinkService {
     }
 
     public void addNewMovie(ArrayList<Movie> MovieList) {
-
+        System.out.println("Test");
         for(int x = 0; x < MovieList.size()-1; x++){
             Movie movie = MovieList.get(x);
-            if(movie.getMovieID() != 0) {
-                movieRepository.save(movie);
-            }
-            for(int i = 0; i < movie.getGenreList().size();i++){
-                genreRepository.save(movie.getGenreList().get(i));
-            }
+            System.out.println(movie);
+            movieRepository.save(movie);
+//            for(int i = 0; i < movie.getGenreList().size();i++){
+//                genreRepository.save(movie.getGenreList().get(i));
+//                System.out.println(movie.getGenreList().get(i));
+//            }
 
         }
 
