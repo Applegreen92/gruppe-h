@@ -4,6 +4,7 @@ import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.addMovie.AddMovie;
 import com.example.application.views.chat.ChatView;
+import com.example.application.views.crawler.CrawlerView;
 import com.example.application.views.login.LoginView;
 import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.personform.PersonFormView;
@@ -143,7 +144,7 @@ public class MainLayout extends AppLayout {
 
                 new MenuItemInfo("User Info", "la la-columns", UserInfoView.class), //
 
-                new MenuItemInfo("Search", "la la-search", SearchView.class), //
+                new MenuItemInfo("Crawler" ,"la la-th-list", CrawlerView.class), //
 
                 new MenuItemInfo("Add Movie", "la la-download", AddMovie.class), //
         };

@@ -1,7 +1,6 @@
 package com.example.application.data.generator;
 
-//todo substitute database controller
-
+import com.example.application.data.service.*;
 import com.example.application.data.entity.Movie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +12,7 @@ import java.lang.String;
     //import com.model.log;
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 
 public class Crawler {
@@ -201,10 +201,10 @@ public class Crawler {
                                     tempGenreArray,
                                     tempWriterArray,
                                     tempCastArray);
-                            MovieList.add(movie);
+
                             //Create Log data
                             Log movieLogger = new Log();
-                            Log.createLog(movie);
+                            movieLogger.createLog(movie);
                             clearAllLists();
                         }
                         countMovies += hreflink.size();

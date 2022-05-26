@@ -38,6 +38,7 @@ public class MovieService {
     }
     
     public void addNewMovie(Movie movie) {
+
         System.out.println("Test");
         Optional<Movie> movieByTitleAndReleaseDate = movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());
         if(movieByTitleAndReleaseDate.isEmpty()){
