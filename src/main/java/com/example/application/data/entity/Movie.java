@@ -52,15 +52,18 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.length = length;
     }
-    public Movie(String title, String posterSrc, int releaseDate, int length, ArrayList tempGenreArray, String personDirector, ArrayList personAuthorList, ArrayList personCastList) {
+    public Movie(String title, String posterSrc, int releaseDate, int length,String personDirector, ArrayList tempGenreArray, ArrayList personAuthorList, ArrayList personCastList) {
         this.title = title;
         this.posterSrc = posterSrc;
         this.releaseDate = releaseDate;
         this.length = length;
-        this.genreList = tempGenreArray;
         this.personDirector = personDirector;
+        this.genreList = tempGenreArray;
         this.personAuthorList = personAuthorList;
         this.personCastList = personCastList;
+    }
+    //todo erase
+    public Movie(String title, String toString, int parseInt, int convertLength, ArrayList tempWriterArray, ArrayList tempCastArray) {
     }
 
 
