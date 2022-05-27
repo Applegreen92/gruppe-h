@@ -41,6 +41,17 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
+    // different Constructors of Movie
+    public Movie() {
+
+    }
+    public Movie(int movieID, String title, String posterSrc, int releaseDate, int length) {
+        this.movieID = movieID;
+        this.title = title;
+        this.posterSrc = posterSrc;
+        this.releaseDate = releaseDate;
+        this.length = length;
+    }
     public Movie(String title, String posterSrc, int releaseDate, int length, ArrayList tempGenreArray, String personDirector, ArrayList personAuthorList, ArrayList personCastList) {
         this.title = title;
         this.posterSrc = posterSrc;
@@ -52,17 +63,6 @@ public class Movie {
         this.personCastList = personCastList;
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "movieID=" + movieID +
-                ", title='" + title + '\'' +
-                ", posterSrc='" + posterSrc + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", length=" + length +
-                ", moviePersonPartLink=" + moviePersonPartLink +
-                '}';
-    }
 
     public List<Genre> getGenreList() {
         return genreList;
@@ -96,16 +96,6 @@ public class Movie {
         this.personCastList = personCastList;
     }
 
-    public Movie() {
-
-    }
-    public Movie(int movieID, String title, String posterSrc, int releaseDate, int length) {
-        this.movieID = movieID;
-        this.title = title;
-        this.posterSrc = posterSrc;
-        this.releaseDate = releaseDate;
-        this.length = length;
-    }
 
     public int getMovieID() {
         return movieID;
@@ -145,6 +135,18 @@ public class Movie {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "movieID=" + movieID +
+                ", title='" + title + '\'' +
+                ", posterSrc='" + posterSrc + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", length=" + length +
+                ", moviePersonPartLink=" + moviePersonPartLink +
+                '}';
     }
 
 }

@@ -39,6 +39,7 @@ public class AddMovie extends Div {
         TextField textFieldPosterSrc = new TextField("Postersrc");
         TextField textFieldreleaseDate = new TextField("Release date");
         TextField textFieldLength = new TextField("Movie length");
+        TextField textField
 
         VerticalLayout layout = new VerticalLayout();
 
@@ -55,12 +56,17 @@ public class AddMovie extends Div {
                 buttonClickEvent -> {
                     try {
                         saveMovieInDatabase(
-
                                 Integer.valueOf(textFieldMovieId.getValue()),
                                 textFieldTitle.getValue(),
                                 textFieldPosterSrc.getValue(),
                                 Integer.valueOf(textFieldreleaseDate.getValue()),
-                                Integer.valueOf(textFieldLength.getValue()));
+                                Integer.valueOf(textFieldLength.getValue())
+
+
+
+                        );
+
+
 
                     } catch (IOException | InterruptedException e) {
                         System.out.println("Could not put Movie into Database");
