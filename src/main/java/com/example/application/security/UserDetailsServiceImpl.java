@@ -2,8 +2,15 @@ package com.example.application.security;
 
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.example.application.security.twofactor.ConfirmationToken;
+import com.example.application.security.twofactor.ConfirmationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,9 +24,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final ConfirmationTokenService confirmationTokenService;
+
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     @Override
@@ -37,6 +47,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 
+    }
+    public void register(String username, String password, String vorname, String nachname, LocalDate geburtsdatum) {
+        User appUser = new User(username,password,vorname,nachname,geburtsdatum);
+        userRepository.save(appUser);
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                appUser
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
     }
 
 }

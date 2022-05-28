@@ -2,6 +2,11 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -16,7 +21,36 @@ import javax.persistence.Table;
 public class User extends AbstractEntity {
 
     private String username;
+    private String firstname;
+    private String lastname;
     private String name;
+
+    private LocalDate geburtsdatum;
+
+    public LocalDate getGeburtsdatum() {
+        return geburtsdatum;
+    }
+
+    public void setGeburtsdatum(LocalDate geburtsdatum) {
+        this.geburtsdatum = geburtsdatum;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
     @JsonIgnore
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
@@ -54,6 +88,20 @@ public class User extends AbstractEntity {
     }
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
+    }
+    public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum ) {
+        this.username = username;
+        this.firstname = vorname;
+        this.lastname = nachname;
+        this.geburtsdatum = geburtsdatum;
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {
+
+        };
+        this.hashedPassword = passwordEncoder.encode(password1);
+        setRoles(Collections.singleton(Role.USER));
+    }
+    public User() {
+
     }
 
 }

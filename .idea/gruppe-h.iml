@@ -12,7 +12,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
-          <factory-entry name="gruppe-h" />
+          <factory-entry name="gruppe-h" value="09e6220b-0344-404d-baec-2890b92171bc" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -29,6 +29,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
+    <content url="file://$MODULE_DIR$/node_modules" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin:23.0.9" level="project" />
@@ -328,5 +329,6 @@
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-shared:8.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.external:gentyref:1.2.0.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: org.vaadin.addons:autocomplete:0.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.24" level="project" />
   </component>
 </module>
