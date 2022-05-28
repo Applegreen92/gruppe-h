@@ -159,8 +159,8 @@ public class AddMovie extends Div {
             return;
         }else{
 
-            Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),personDirector,this.genreList,this.authorList,this.castList);
-            movieService.addNewMovie(movie);
+            //Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),personDirector,this.genreList,this.authorList,this.castList);
+            //movieService.addNewMovie(movie);
             Notification.show("Movie Successfully saved");
         }
 

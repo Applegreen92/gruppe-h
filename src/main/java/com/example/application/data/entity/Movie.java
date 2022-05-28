@@ -43,6 +43,9 @@ public class Movie {
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.ALL})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
+    public Movie() {
+    }
+
     public List<Genre> getGenreArrayList() {
 
         return genreArrayList;
