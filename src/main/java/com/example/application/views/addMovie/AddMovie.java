@@ -8,6 +8,8 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -26,7 +28,6 @@ public class AddMovie extends Div {
 
     public AddMovie(MovieService movieService){
         add(saveMovieLayout());
-        add(listSaveButtons());
         this.movieService = movieService;
     }
 
@@ -47,81 +48,47 @@ public class AddMovie extends Div {
                 textFieldPosterSrc,
                 textFieldreleaseDate,
                 textFieldLength,
-                textFieldDirector,
-                textFieldGenre,
-                textFieldAuthor,
-                textFieldCast
+                textFieldDirector
                 );
 
-
-
-
-        // WIth this Button you put the Movie Object into the DB
-
-        Button movieIntoDatabaseButton = new Button("Save Movie",
-                buttonClickEvent -> {
-                    if(!textFieldGenre.isEmpty()){
-                        this.genreList.add(textFieldGenre.getValue());
-                    }
-                    if(!textFieldAuthor.isEmpty()){
-                        this.genreList.add(textFieldGenre.getValue());
-                    }
-                    if(!textFieldCast.isEmpty()){
-                        this.castList.add(textFieldCast.getValue());
-                    }
-
-
-                    try {
-                        saveMovieInDatabase(
-                                textFieldMovieId.getValue(),
-                                textFieldTitle.getValue(),
-                                textFieldPosterSrc.getValue(),
-                                textFieldreleaseDate.getValue(),
-                                textFieldLength.getValue(),
-                                textFieldDirector.getValue()
-                        );
-
-                    } catch (IOException | InterruptedException e) {
-                        System.out.println("Could not put Movie into Database");
-                        throw new RuntimeException(e);
-                    }
-                });
+        layout.add(saveGenreComponent());
+        layout.add(saveAuthorComponent());
+        layout.add(saveCastComponent());
         layout.add(movieIntoDatabaseButton);
 
 
 
+
+
         return layout;
 
 
     }
-    protected Component listSaveButtons(){
-
-        VerticalLayout layout = new VerticalLayout();
-        layout.add(new Button("Save Genre",
-                buttonClickEvent -> {
-                    this.genreList.add(textFieldGenre.getValue());
-                    textFieldGenre.clear();
-                }));
-
-        layout.add(new Button("Save Author",
-                buttonClickEvent -> {
-                    this.authorList.add(textFieldAuthor.getValue());
-                    textFieldAuthor.clear();
-                }));
-
-        layout.add(new Button("Save Cast",
-                buttonClickEvent ->{
-                    this.castList.add(textFieldCast.getValue());
-                    textFieldCast.clear();
-                }));
+    protected Component saveGenreComponent(){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.add(textFieldGenre);
+        layout.add(saveGenreButton);
+        layout.setAlignItems(FlexComponent.Alignment.BASELINE);
         return layout;
     }
-
-
+    protected Component saveAuthorComponent(){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.add(textFieldAuthor);
+        layout.add(saveAuthorButton);
+        layout.setAlignItems(FlexComponent.Alignment.BASELINE);
+        return layout;
+    }
+    protected Component saveCastComponent(){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.add(textFieldCast);
+        layout.add(saveCastButton);
+        layout.setAlignItems(FlexComponent.Alignment.BASELINE);
+        return layout;
+    }
     public void saveMovieInDatabase(String movieId, String title, String posterSrc, String releaseDate, String length,String personDirector) throws IOException, InterruptedException {
 
         // Input Error handling
-        
+
         if(releaseDate.isEmpty()){
             Notification.show("Please type in a Releasedate");
         }else {
@@ -163,13 +130,10 @@ public class AddMovie extends Div {
             //movieService.addNewMovie(movie);
             Notification.show("Movie Successfully saved");
         }
-
-
-
-
     }
 
-    // All the Textfields to create a Movie
+
+    // --------------Text fields start--------------------
     TextField textFieldMovieId = new TextField("MovieID");
     TextField textFieldTitle = new TextField("Movie Title");
     TextField textFieldPosterSrc = new TextField("Postersrc");
@@ -179,6 +143,52 @@ public class AddMovie extends Div {
     TextField textFieldGenre = new TextField("Genres");
     TextField textFieldAuthor = new TextField("Authors");
     TextField textFieldCast = new TextField("Cast");
+    // --------------Text fields end--------------------
+
+    // --------------Buttons start--------------------
+    Button saveGenreButton = new Button("Save Genre",
+            buttonClickEvent -> {
+                this.genreList.add(textFieldGenre.getValue());
+                textFieldGenre.clear();
+            });
+    Button saveAuthorButton = new Button("Save Author",
+            buttonClickEvent -> {
+                this.authorList.add(textFieldAuthor.getValue());
+                textFieldAuthor.clear();
+            });
+    Button saveCastButton = new Button("Save Cast",
+            buttonClickEvent ->{
+                this.castList.add(textFieldCast.getValue());
+                textFieldCast.clear();
+            });
+    Button movieIntoDatabaseButton = new Button("Save Movie",
+            buttonClickEvent -> {
+                if(!textFieldGenre.isEmpty()){
+                    this.genreList.add(textFieldGenre.getValue());
+                }
+                if(!textFieldAuthor.isEmpty()){
+                    this.genreList.add(textFieldGenre.getValue());
+                }
+                if(!textFieldCast.isEmpty()){
+                    this.castList.add(textFieldCast.getValue());
+                }
 
 
+                try {
+                    saveMovieInDatabase(
+                            textFieldMovieId.getValue(),
+                            textFieldTitle.getValue(),
+                            textFieldPosterSrc.getValue(),
+                            textFieldreleaseDate.getValue(),
+                            textFieldLength.getValue(),
+                            textFieldDirector.getValue()
+                    );
+
+                } catch (IOException | InterruptedException e) {
+                    System.out.println("Could not put Movie into Database");
+                    throw new RuntimeException(e);
+                }
+            });
+
+    // --------------Buttons end--------------------
 }
