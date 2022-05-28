@@ -59,7 +59,7 @@ public class MoviePersonPartLinkService {
             if (movie.getPersonDirector() != "") {
                 String name = movie.getPersonDirector();
                 String nameArr[] = name.split(" ", 2);
-                if(nameArr.length < 1) {
+                if(nameArr.length > 1) {
                     String firstname = nameArr[0];
                     String lastname = nameArr[1];
 
@@ -78,7 +78,7 @@ public class MoviePersonPartLinkService {
                 for(int i = 0; i < movie.getPersonAuthorList().size(); i++) {
                     String name = String.valueOf(movie.getPersonAuthorList().get(i));
                     String nameArr[] = name.split(" ", 2);
-                    if (nameArr.length < 1) {
+                    if (nameArr.length > 1) {
                         String firstname = nameArr[0];
                         String lastname = nameArr[1];
                         person = new Person(firstname, lastname);
@@ -97,7 +97,7 @@ public class MoviePersonPartLinkService {
                 for(int i = 0; i < movie.getPersonCastList().size(); i++) {
                     String name = String.valueOf(movie.getPersonCastList().get(i));
                     String nameArr[] = name.split(" ", 2);
-                    if (nameArr.length < 1) {
+                    if (nameArr.length > 1) {
                         String firstname = nameArr[0];
                         String lastname = nameArr[1];
                         person = new Person(firstname, lastname);
