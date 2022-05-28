@@ -1,5 +1,6 @@
 package com.example.application.data.generator;
 
+import com.example.application.data.entity.Genre;
 import com.example.application.data.service.*;
 import com.example.application.data.entity.Movie;
 import org.jsoup.Jsoup;
@@ -157,7 +158,16 @@ public class Crawler {
                             Elements movieGenres = focusMovie.select("div.sc-16ede01-4");
                             for (Element movieGenreList : movieGenres.select("a.sc-16ede01-3")) {
                                 String movieGenre = movieGenreList.text();
-                                movieGenreArray.add(movieGenre);
+                                System.out.println(movieGenre);
+                                Genre genre1 = new Genre(movieGenre);
+                                movieGenreArray.add(genre1);
+                            }
+                            Elements movieGenres2 = focusMovie.select("div.sc-16ede01-5");
+                            for (Element movieGenreList : movieGenres2.select("a.sc-16ede01-3")) {
+                                String movieGenre = movieGenreList.text();
+                                System.out.println(movieGenre);
+                                Genre genre1 = new Genre(movieGenre);
+                                movieGenreArray.add(genre1);
                             }
 
                             //3rd website

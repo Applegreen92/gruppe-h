@@ -25,7 +25,7 @@ public class Movie {
     private String posterSrc;
     private int releaseDate;
     private int length;
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "movieGenre",
             joinColumns = @JoinColumn(name = "movieID"),
             inverseJoinColumns = @JoinColumn(name = "genreID")
@@ -34,31 +34,32 @@ public class Movie {
     @Transient
     String personDirector;
     @Transient
+    ArrayList<Genre> genreArrayList = new ArrayList<>();
+    @Transient
     ArrayList<Person> personAuthorList = new ArrayList<>();
     @Transient
     ArrayList<Person> personCastList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "movie",cascade = {CascadeType.ALL})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
-    // different Constructors of Movie
-    public Movie() {
+    public List<Genre> getGenreArrayList() {
 
+        return genreArrayList;
     }
-    public Movie(int movieID, String title, String posterSrc, int releaseDate, int length) {
-        this.movieID = movieID;
+
+    public void setGenreArrayList(ArrayList<Genre> genreArrayList) {
+
+        this.genreArrayList = genreArrayList;
+    }
+
+    public Movie(String title, String posterSrc, int releaseDate, int length, ArrayList tempGenreArray, String personDirector, ArrayList personAuthorList, ArrayList personCastList) {
         this.title = title;
         this.posterSrc = posterSrc;
         this.releaseDate = releaseDate;
         this.length = length;
-    }
-    public Movie(String title, String posterSrc, int releaseDate, int length,String personDirector, ArrayList tempGenreArray, ArrayList personAuthorList, ArrayList personCastList) {
-        this.title = title;
-        this.posterSrc = posterSrc;
-        this.releaseDate = releaseDate;
-        this.length = length;
+        this.genreArrayList = tempGenreArray;
         this.personDirector = personDirector;
-        this.genreList = tempGenreArray;
         this.personAuthorList = personAuthorList;
         this.personCastList = personCastList;
     }
@@ -70,9 +71,15 @@ public class Movie {
     public List<Genre> getGenreList() {
         return genreList;
     }
+    public void clearGenreList() {
+        this.genreList.clear();
+    }
 
     public void setGenreList(ArrayList<Genre> genreList) {
         this.genreList = genreList;
+    }
+    public void setGenreList(Genre genre) {
+        genreList.add(genre);
     }
 
     public String getPersonDirector() {

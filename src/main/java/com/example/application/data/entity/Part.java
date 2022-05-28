@@ -29,10 +29,14 @@ public class Part {
         this.partID = partID;
         this.partName = partName;
     }
+    public Part(String partName) {
+        this.partName = partName;
+    }
 
     public int getPartID() {
         return partID;
     }
+
 
     public void setPartID(int partID) {
         this.partID = partID;

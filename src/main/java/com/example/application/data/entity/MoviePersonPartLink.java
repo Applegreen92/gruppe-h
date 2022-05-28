@@ -33,9 +33,10 @@ public class MoviePersonPartLink {
     public MoviePersonPartLink() {
     }
 
-    public MoviePersonPartLink(Movie movie, List<Person> person ) {
+    public MoviePersonPartLink(Movie movie, Person person, Part part) {
         this.movie = movie;
-        this.person = (Person) person;
+        this.person = person;
+        this.part = part;
     }
 
     public Person getPerson() {

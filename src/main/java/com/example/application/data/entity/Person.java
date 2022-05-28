@@ -33,6 +33,10 @@ public class Person {
         this.lastname = lastname;
     }
 
+    public Person(String firstname, String lastname){
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
     public int getPersonID() {
         return personID;
     }

@@ -19,10 +19,10 @@ public class Genre {
             strategy = GenerationType.SEQUENCE,
             generator = "genre_sequence"
     )
-    private int genreID;
-    private String genre;
-    @ManyToMany(mappedBy = "genreList")
-    private List<Movie> movies = new ArrayList<>();
+    public int genreID;
+    public String genre;
+    @ManyToMany(mappedBy = "genreList",cascade = {CascadeType.MERGE})
+    public List<Movie> movies = new ArrayList<>();
 
     public Genre() {
     }
@@ -52,4 +52,5 @@ public class Genre {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
 }
