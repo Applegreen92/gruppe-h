@@ -211,6 +211,8 @@ public class Crawler {
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
                                     convertLength(length),
+                                    tempGenreArray,
+                                    director.get(0).toString(),
                                     tempWriterArray,
                                     tempCastArray);
                             MovieList.add(movie);
