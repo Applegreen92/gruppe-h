@@ -59,8 +59,11 @@ public class MoviePersonPartLinkService {
             if (movie.getPersonDirector() != "") {
                 String name = movie.getPersonDirector();
                 String nameArr[] = name.split(" ", 2);
+
+                //TODO Insert dies here
                 String firstname = nameArr[0];
                 String lastname = nameArr[1];
+
 
                 person = new Person(firstname, lastname);
                 if(personRepository.findAllByFirstnameAndLastname(firstname,lastname) == null){
