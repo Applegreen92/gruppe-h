@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.String;
 //todo import logging functionality
-    //import com.model.log;
+//import com.model.log;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class Crawler {
     Elements body = null;
     Document movies = null;
     int pass = 1;
-@Autowired
+    @Autowired
     public Crawler(MoviePersonPartLinkService moviePersonPartLinkService) {
         this.moviePersonPartLinkService = moviePersonPartLinkService;
     }
@@ -211,8 +211,8 @@ public class Crawler {
                                     posterLink.get(x).toString(),
                                     Integer.parseInt(release),
                                     convertLength(length),
-                                    //tempGenreArray,
-                                    //director.get(0).toString(),
+                                    tempGenreArray,
+                                    director.get(0).toString(),
                                     tempWriterArray,
                                     tempCastArray);
                             MovieList.add(movie);

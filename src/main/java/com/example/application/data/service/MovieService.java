@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieService {
+public class MovieService  {
     private final MovieRepository movieRepository;
 
 
@@ -37,9 +37,14 @@ public class MovieService {
     
     public void addNewMovie(Movie movie) {
 
+        if(movie == null) {
+        System.err.println("Movie object is empty");
+        return;
+        }
+
         System.out.println("Test");
-        Optional<Movie> movieByTitleAndReleaseDate = movieRepository.findAllByTitleAndReleaseDate(movie.getTitle(), movie.getReleaseDate());
-        if(movieByTitleAndReleaseDate.isEmpty()){
+        Optional<Movie> movieByTitle = movieRepository.findAllMoviesByTitle(movie.getTitle());
+        if(movieByTitle.isEmpty()){
             movieRepository.save(movie);
         }else {
             throw new IllegalStateException();
@@ -47,4 +52,22 @@ public class MovieService {
 
     }
 
+    public List<Movie> findAllMoviesByTitle(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return movieRepository.findAll();
+        } else {
+            return movieRepository.title(stringFilter);
+        }
+    }
+
+    public long countMovies() {
+        return movieRepository.count();
+    }
+
+
+
+
+
 }
+
+

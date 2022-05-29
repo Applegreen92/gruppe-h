@@ -37,10 +37,10 @@ public class CrawlerView extends Div{
         add(createFormLayout());
         add(horizontalLayout());
 
-
-//        if(Integer.parseInt(String.valueOf(startDate)) > Integer.parseInt(String.valueOf(endDate))){
-//            Notification.show("Start date must be greater than end date!");
-//        }
+        //TODO causes fronted crash atm |FIX|
+        /*if(Integer.parseInt(String.valueOf(startDate)) > Integer.parseInt(String.valueOf(endDate))){
+            Notification.show("Start date must be greater than end date!");
+        }*/
     }
 
     public Button createExecButton(){
