@@ -3,6 +3,7 @@ package com.example.application.views;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.addMovie.AddMovie;
+import com.example.application.views.bugReport.BugReportView;
 import com.example.application.views.chat.ChatView;
 import com.example.application.views.crawler.CrawlerView;
 import com.example.application.views.login.LoginView;
@@ -152,6 +153,8 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Profile Page", "la la-user", ProfileView.class), //
 
                 new MenuItemInfo("Add Movie", "la la-download", AddMovie.class), //
+
+                new MenuItemInfo("Report Bug", "la la-bug", BugReportView.class), //
         };
     }
 
