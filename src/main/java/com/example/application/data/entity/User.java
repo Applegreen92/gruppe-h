@@ -2,16 +2,14 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -132,7 +130,7 @@ public class User extends AbstractEntity {
     public void setWatchList(List<Movie> watchList) {
         this.watchList = watchList;
     }
-    public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum ) {
+
     public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum, String email ) {
         this.username = username;
         this.firstname = vorname;
