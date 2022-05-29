@@ -8,6 +8,7 @@ import com.example.application.views.crawler.CrawlerView;
 import com.example.application.views.login.LoginView;
 import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.personform.PersonFormView;
+import com.example.application.views.profile.ProfileView;
 import com.example.application.views.reviews.ReviewsView;
 import com.example.application.views.search.SearchView;
 import com.example.application.views.userinfo.UserInfoView;
@@ -145,6 +146,10 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("User Info", "la la-columns", UserInfoView.class), //
 
                 new MenuItemInfo("Crawler" ,"la la-th-list", CrawlerView.class), //
+
+                new MenuItemInfo("Search User" ,"la la-search", SearchView.class),
+
+                new MenuItemInfo("Profile Page", "la la-user", ProfileView.class), //
 
                 new MenuItemInfo("Add Movie", "la la-download", AddMovie.class), //
         };
