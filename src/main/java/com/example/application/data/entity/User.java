@@ -2,15 +2,14 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,6 +36,8 @@ public class User extends AbstractEntity {
 
 
 
+
+    private String email;
 
     private LocalDate geburtsdatum;
 
@@ -96,6 +97,15 @@ public class User extends AbstractEntity {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getProfilePictureUrl() {
         return profilePictureUrl;
     }
@@ -120,11 +130,13 @@ public class User extends AbstractEntity {
     public void setWatchList(List<Movie> watchList) {
         this.watchList = watchList;
     }
-    public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum ) {
+
+    public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum, String email ) {
         this.username = username;
         this.firstname = vorname;
         this.lastname = nachname;
         this.geburtsdatum = geburtsdatum;
+        this.email = email;
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder() {
 
         };
