@@ -1,42 +1,33 @@
-package com.example.application.views.movielist;
+/*
+package com.example.application.views.userWatchedMovies;
 
 import com.example.application.data.entity.Movie;
-import com.example.application.data.entity.User;
 import com.example.application.data.service.MovieService;
-import com.example.application.data.service.UserService;
-import com.example.application.security.AuthenticatedUser;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.example.application.data.service.MovieRepository;
 import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
-import java.util.Optional;
 
 
 @PageTitle("Movie List")
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
 
-public class MovieListView extends VerticalLayout  {
-    private AuthenticatedUser authenticatedUser;
+public class userWatchedMoviesView extends VerticalLayout {
     Grid<Movie> grid = new Grid<>(Movie.class);
     TextField filterText = new TextField();
     private final MovieService movieService;
-    private final UserService userService;
-    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, UserService userService) {
+
+    public userWatchedMoviesView(MovieService movieService) {
         this.movieService = movieService;
-        this.authenticatedUser = authenticatedUser;
-        this.userService = userService;
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
@@ -54,29 +45,15 @@ public class MovieListView extends VerticalLayout  {
         return content;
     }
 
-    private User getCurrentUser(){
-        Optional<User> maybeUser = authenticatedUser.get();
-        if (maybeUser.isPresent()) {
-            User user = maybeUser.get();
-            return user;
-        }
-        return null;
-    }
+
 
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("title", "releaseDate");
-
-
-        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
-            button.addThemeVariants(ButtonVariant.LUMO_ICON,
-                    ButtonVariant.LUMO_ERROR,
-                    ButtonVariant.LUMO_TERTIARY);
-            userService.insertWatchedList(getCurrentUser(), Movie);
-            button.setIcon(new Icon(VaadinIcon.PLUS));
-        })).setHeader("Tag Movie as Watched");
-
+        grid.addColumn(movie -> movie.getTitle()).setHeader("title");
+        grid.addColumn(movie -> movie.getReleaseDate()).setHeader("releaseDate");
+        grid.addColumn(movie -> movie.getGenreList()).setHeader("genre");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -86,13 +63,16 @@ public class MovieListView extends VerticalLayout  {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
+        Button addMovieButton = new Button("Untag Movie");
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addMovieButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
-
-        private void updateList() {
+    private void updateList() {
         grid.setItems(movieService.findAllMoviesByTitle(filterText.getValue()));
     }
 }
+
+*/
+

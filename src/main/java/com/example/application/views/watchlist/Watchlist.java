@@ -20,10 +20,6 @@ import java.util.ArrayList;
 @PermitAll
 public class Watchlist extends Div {
 
-
-
-
-
     private final MovieService movieService;
 
     public Watchlist(MovieService movieService) {

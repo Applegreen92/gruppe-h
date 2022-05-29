@@ -1,3 +1,4 @@
+/*
 package com.example.application.data.service;
 
 import com.example.application.data.entity.User;
@@ -20,9 +21,7 @@ public class WatchlistService {
 
     public Watchlist getWatchlist(User user){
 
-
-
-
         return null;
     }
 }
+*/

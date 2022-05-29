@@ -1,5 +1,6 @@
 package com.example.application.data.service;
 
+import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,10 @@ public class UserService {
     }
     public void registerUser(User user){
         repository.save(user);
+    }
+
+    public void insertWatchedList(User user, Movie movie){
+        user.getWatchedMovies().add(movie);
     }
 
 }
