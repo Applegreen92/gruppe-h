@@ -1,5 +1,7 @@
 package com.example.application.views.addMovie;
+import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.Person;
 import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -33,7 +35,7 @@ public class AddMovie extends Div {
 
     private final MovieService movieService;
 
-    private final ArrayList<String> genreList= new ArrayList();
+    private final ArrayList<Genre> genreList= new ArrayList();
     private final ArrayList<String> authorList= new ArrayList();
     private final ArrayList<String> castList= new ArrayList();
 
@@ -134,7 +136,7 @@ public class AddMovie extends Div {
 
 
     // --------------Text fields start--------------------
-    TextField textFieldMovieId = new TextField("MovieID");
+        TextField textFieldMovieId = new TextField("MovieID");
     TextField textFieldTitle = new TextField("Movie Title");
     TextField textFieldPosterSrc = new TextField("Postersrc");
     TextField textFieldreleaseDate = new TextField("Release date");
@@ -148,7 +150,7 @@ public class AddMovie extends Div {
     // --------------Buttons start--------------------
     Button saveGenreButton = new Button("Save Genre",
             buttonClickEvent -> {
-                this.genreList.add(textFieldGenre.getValue());
+                this.genreList.add(new Genre(textFieldGenre.getValue()));
                 textFieldGenre.clear();
             });
     Button saveAuthorButton = new Button("Save Author",
@@ -164,10 +166,10 @@ public class AddMovie extends Div {
     Button movieIntoDatabaseButton = new Button("Save Movie",
             buttonClickEvent -> {
                 if(!textFieldGenre.isEmpty()){
-                    this.genreList.add(textFieldGenre.getValue());
+                    this.genreList.add(new Genre(textFieldGenre.getValue()));
                 }
                 if(!textFieldAuthor.isEmpty()){
-                    this.genreList.add(textFieldGenre.getValue());
+                    this.authorList.add(textFieldAuthor.getValue());
                 }
                 if(!textFieldCast.isEmpty()){
                     this.castList.add(textFieldCast.getValue());
@@ -189,6 +191,5 @@ public class AddMovie extends Div {
                     throw new RuntimeException(e);
                 }
             });
-
     // --------------Buttons end--------------------
 }
