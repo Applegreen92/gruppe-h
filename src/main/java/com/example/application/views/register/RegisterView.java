@@ -1,6 +1,5 @@
 package com.example.application.views.register;
 
-import com.example.application.data.service.UserRepository;
 import com.example.application.security.UserDetailsServiceImpl;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
@@ -37,6 +36,7 @@ public class RegisterView extends Composite {
         TextField vorname = new TextField("Vorname");
         TextField nachname = new TextField("Nachname");
         DatePicker geburtsdatum =  new DatePicker("Geburtsdatum");
+        TextField email  = new TextField("eMail");
         vorname.setPrefixComponent(new Icon("vaadin", "map-marker"));
         return new VerticalLayout(
                 new H2("Register"),
@@ -46,15 +46,16 @@ public class RegisterView extends Composite {
                 vorname,
                 nachname,
                 geburtsdatum,
+                email,
                 new Button("Register now", event -> register (username.getValue(), password1.getValue(), password2.getValue(),
-                        vorname.getValue(), nachname.getValue(), geburtsdatum.getValue() )
+                        vorname.getValue(), nachname.getValue(), geburtsdatum.getValue(),email.getValue() )
                 )
         );
 
 
     }
 
-    private void register(String username , String password1, String password2, String vorname, String nachname, LocalDate geburtsdatum) {
+    private void register(String username , String password1, String password2, String vorname, String nachname, LocalDate geburtsdatum, String email) {
         if (username.trim().isEmpty()) {
             Notification.show("Enter a Username!");
         } else if (password1.isEmpty()) {
@@ -62,7 +63,7 @@ public class RegisterView extends Composite {
         } else if (!password1.equals(password2)) {
             Notification.show("Passwords don't match!");
         } else {
-            authService.register(username, password1, vorname, nachname, geburtsdatum);
+            authService.register(username, password1, vorname, nachname, geburtsdatum, email);
             Notification.show("Registration successfull LOL ALS OB");
         }
     }

@@ -1,7 +1,5 @@
 package com.example.application.security.twofactor;
 
-import com.example.application.data.entity.AbstractEntity;
-import com.example.application.data.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,20 +32,24 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-
+/*
     @ManyToOne
     @JoinColumn(
             nullable = false,
             name = "user_id"
     )
     private User user;
-
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiredAt, User user) {
+*/
+    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiredAt) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiredAt;
 
-        this.user = user;
+      //  this.user = user;
+    }
+
+    public String getToken() {
+        return this.token;
     }
 
 
