@@ -14,6 +14,7 @@ import com.example.application.views.reviews.ReviewsView;
 import com.example.application.views.search.SearchView;
 import com.example.application.views.userinfo.UserInfoView;
 import com.example.application.views.useroverview.UserOverviewView;
+import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -155,6 +156,8 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Add Movie", "la la-download", AddMovie.class), //
 
                 new MenuItemInfo("Report Bug", "la la-bug", BugReportView.class), //
+
+                new MenuItemInfo("Watchlist", "la la-eye", Watchlist.class), //
         };
     }
 

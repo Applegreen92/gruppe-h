@@ -1,7 +1,5 @@
 package com.example.application.views.addMovie;
 import com.example.application.data.entity.Genre;
-import com.example.application.data.entity.Movie;
-import com.example.application.data.entity.Person;
 import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 @PageTitle("AddMovie")
 @Route(value = "addMovie", layout = MainLayout.class)
 @PermitAll
-@Uses(Icon.class)
 public class AddMovie extends Div {
 
     public AddMovie(MovieService movieService){
