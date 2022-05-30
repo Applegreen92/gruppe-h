@@ -14,7 +14,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "application_user")
-public class User extends AbstractEntity {
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     private String username;
     private String firstname;
@@ -72,6 +77,14 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
     @Lob
     private String profilePictureUrl;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
