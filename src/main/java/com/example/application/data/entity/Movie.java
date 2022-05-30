@@ -42,8 +42,12 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie",cascade = {CascadeType.ALL})
     private Set<MoviePersonPartLink> moviePersonPartLink;
+
     @ManyToMany(mappedBy = "watchedMovies", cascade = {CascadeType.MERGE})
-    public List<User> users = new ArrayList<>();
+    public List<User> usersWatched = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "watchList", cascade = {CascadeType.MERGE})
+    public List<User> usersWatch = new ArrayList<>();
 
 
     public Movie() {
