@@ -2,25 +2,22 @@ package com.example.application.views.bugReport;
 
 import com.example.application.data.entity.BugReport;
 import com.example.application.data.service.BugReportService;
+import com.example.application.security.email.EmailSenderService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.receivers.FileBuffer;
-import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.apache.commons.compress.utils.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.PermitAll;
-import javax.imageio.ImageIO;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
 
 
 @PageTitle("Bug Report")
@@ -49,7 +46,13 @@ public class BugReportView extends Div{
     public Button createExecButton(){
         Button primary = new Button("Report Bug",event -> {
             BugReport bugReport = new BugReport(Topic.getValue(),Description.getValue());
-            bugReportService.insertBug(bugReport);
+            if(bugReportService.insertBug(bugReport)){
+                Notification notification = Notification.show("Bug was Created!");
+                notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            }else {
+                Notification notification = Notification.show("Failed to create Bug!");
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            }
         });
         primary.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         primary.isDisableOnClick();
@@ -60,10 +63,19 @@ public class BugReportView extends Div{
         VerticalLayout layout = new VerticalLayout();
         layout.add(Topic);
         layout.add(Description);
+        Topic.setMaxLength(255);
+        Topic.setValueChangeMode(ValueChangeMode.EAGER);
+        Topic.addValueChangeListener(e -> {
+            e.getSource().setHelperText(e.getValue().length() + "/" + 255);
+        });
+        Description.setMaxLength(1000);
+        Description.setValueChangeMode(ValueChangeMode.EAGER);
+        Description.addValueChangeListener(e -> {
+            e.getSource().setHelperText(e.getValue().length() + "/" + 1000);
+        });
         Description.setWidthFull();
         layout.setPadding(true);
         layout.add(createExecButton());
         return layout;
     }
-
 }

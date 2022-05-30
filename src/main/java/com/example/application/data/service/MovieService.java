@@ -56,6 +56,9 @@ public class MovieService  {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return movieRepository.findAll();
         } else {
+            if(movieRepository.title(stringFilter).size()>0){
+                System.out.println(movieRepository.title(stringFilter).get(0).getTitle());
+            }
             return movieRepository.title(stringFilter);
         }
     }

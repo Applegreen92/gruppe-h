@@ -54,6 +54,8 @@ public class UserService {
 
     public void insertWatchedList(User user, Movie movie){
         user.getWatchedMovies().add(movie);
+
+        //repository.save(user);
     }
 
 }

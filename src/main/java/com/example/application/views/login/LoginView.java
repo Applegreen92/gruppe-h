@@ -1,5 +1,6 @@
 package com.example.application.views.login;
 
+import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.register.RegisterView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -33,6 +34,7 @@ public class LoginView extends LoginOverlay {
         setError(true);
         setForgotPasswordButtonVisible(true);
         setOpened(true);
+        //Change LoginConfirmCode.class to MovieListView.class
         addLoginListener(loginEvent -> UI.getCurrent().navigate(loginConfirmCode.class));
         addForgotPasswordListener(forgotPasswordEvent -> UI.getCurrent().navigate(RegisterView.class));
 
