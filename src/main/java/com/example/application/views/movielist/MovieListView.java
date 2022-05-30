@@ -2,7 +2,9 @@ package com.example.application.views.movielist;
 
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
+import com.example.application.data.service.MoviePersonPartLinkService;
 import com.example.application.data.service.MovieService;
+import com.example.application.data.service.MovieWatchedListService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.vaadin.flow.component.Component;
@@ -11,6 +13,8 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -21,6 +25,7 @@ import com.vaadin.flow.router.Route;
 import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
 import java.util.Optional;
+import com.example.application.data.entity.MovieWatchedList;
 
 
 @PageTitle("Movie List")
@@ -33,10 +38,12 @@ public class MovieListView extends VerticalLayout  {
     TextField filterText = new TextField();
     private final MovieService movieService;
     private final UserService userService;
-    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, UserService userService) {
+    private final MovieWatchedListService movieWatchedListService;
+    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, UserService userService, MovieWatchedListService movieWatchedListService) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
         this.userService = userService;
+        this.movieWatchedListService = movieWatchedListService;
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
@@ -73,7 +80,8 @@ public class MovieListView extends VerticalLayout  {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_ERROR,
                     ButtonVariant.LUMO_TERTIARY);
-            userService.insertWatchedList(getCurrentUser(), Movie);
+            button.addClickListener(e->
+                movieWatchedListService.insertWatchedList(getCurrentUser(), Movie));
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
 

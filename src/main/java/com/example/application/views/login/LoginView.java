@@ -1,5 +1,6 @@
 package com.example.application.views.login;
 
+import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.register.RegisterView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.UI;

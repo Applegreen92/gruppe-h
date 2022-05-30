@@ -23,15 +23,15 @@ public class User extends AbstractEntity {
 
 
     @ManyToMany
-    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
+    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> watchList = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_watched_movies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @JoinTable(name = "user_watched_movies", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> watchedMovies = new ArrayList<>();
 
 
