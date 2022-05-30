@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,10 @@ public class UserService {
     public void insertWatchedList(User user, Movie movie){
         user.getWatchedMovies().add(movie);
         repository.save(user);
+    }
+
+    public void insertWatchList (User user, Movie movie){
+        user.getWatchList().add(movie);
     }
 
 }

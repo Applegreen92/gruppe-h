@@ -5,9 +5,12 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
+import com.vaadin.data.Binder;
+import com.vaadin.event.selection.MultiSelectionEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -20,16 +23,22 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
-import java.util.Optional;
+import java.util.*;
+
 import com.example.application.data.entity.MovieWatchedList;
+import com.vaadin.ui.CheckBoxGroup;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.MultiSelect;
+import com.vaadin.ui.SingleSelect;
 
 
 @PageTitle("Movie List")
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
 
-public class MovieListView extends VerticalLayout  {
+public class MovieListView extends VerticalLayout   {
     private AuthenticatedUser authenticatedUser;
+
     Grid<Movie> grid = new Grid<>(Movie.class);
     TextField filterText = new TextField();
     private final MovieService movieService;
@@ -45,6 +54,7 @@ public class MovieListView extends VerticalLayout  {
         updateList();
 
     }
+
 
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(grid);
@@ -68,7 +78,7 @@ public class MovieListView extends VerticalLayout  {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("title", "releaseDate");
-
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
@@ -87,13 +97,31 @@ public class MovieListView extends VerticalLayout  {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
-
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, saveInWatchlistButton());
         toolbar.addClassName("toolbar");
         return toolbar;
     }
+    public  Component saveInWatchlistButton(){
+        HashSet<Movie> movieSet = new HashSet<>();
 
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+        grid.addSelectionListener(event -> {
+            movieSet.addAll(event.getAllSelectedItems());
+        });
+
+        Button button = new Button("Save in Watchlist",
+                event -> {
+                    Iterator<Movie> it= movieSet.iterator();
+                    while (it.hasNext()){
+                        System.out.println(it.next());;
+                    }
+
+
+                });
+
+
+    return button;
+    }
         private void updateList() {
         grid.setItems(movieService.findAllMoviesByTitle(filterText.getValue()));
     }

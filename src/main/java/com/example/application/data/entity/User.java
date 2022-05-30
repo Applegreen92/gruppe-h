@@ -2,6 +2,7 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "application_user")
@@ -160,4 +162,22 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", name='" + name + '\'' +
+                ", friends=" + friends +
+                ", watchList=" + watchList +
+                ", watchedMovies=" + watchedMovies +
+                ", email='" + email + '\'' +
+                ", geburtsdatum=" + geburtsdatum +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", roles=" + roles +
+                ", profilePictureUrl='" + profilePictureUrl + '\'' +
+                '}';
+    }
 }

@@ -1,35 +1,48 @@
 package com.example.application.views.watchlist;
 
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.User;
 import com.example.application.data.service.MovieService;
+import com.example.application.data.service.UserService;
+import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import javax.annotation.security.PermitAll;
-import java.util.ArrayList;
 
 @PageTitle("Watchlist")
 @Route(value = "watchlist", layout = MainLayout.class)
 @PermitAll
 public class Watchlist extends Div {
 
+    private final AuthenticatedUser user;
     private final MovieService movieService;
+    private final UserService userService;
 
-    public Watchlist(MovieService movieService) {
+
+    @Autowired
+    public Watchlist(MovieService movieService, UserService userService, AuthenticatedUser user) {
         this.movieService = movieService;
+        this.userService = userService;
+        this.user = user;
         setSizeFull();
         configureGrid();
         add(getToolbar(), grid);
         updateList();
 
     }
+
 
 
    /* private Component getContent() {
@@ -49,8 +62,9 @@ public class Watchlist extends Div {
         grid.setColumns("title", "releaseDate");
         grid.addColumn(movie -> movie.getTitle()).setHeader("title");
         grid.addColumn(movie -> movie.getReleaseDate()).setHeader("releaseDate");
-        //grid.addColumn(movie -> movie.getGenreList()).setHeader("genre");
+        grid.addColumn(movie -> movie.getGenreList()).setHeader("genre");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
     }
 
     private HorizontalLayout getToolbar() {
@@ -59,7 +73,8 @@ public class Watchlist extends Div {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addMovieButton = new Button("Delete Movie");
+        Button addMovieButton = new Button("Delete");
+
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addMovieButton);
         toolbar.addClassName("toolbar");
