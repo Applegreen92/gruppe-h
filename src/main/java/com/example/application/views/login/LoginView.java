@@ -35,8 +35,15 @@ public class LoginView extends LoginOverlay {
         setError(true);
         setForgotPasswordButtonVisible(true);
         setOpened(true);
+
         //Change LoginConfirmCode.class to MovieListView.class
         addLoginListener(loginEvent -> UI.getCurrent().navigate(MovieListView.class));
+
+        addLoginListener(loginEvent -> UI.getCurrent().navigate(loginConfirmCode.class));
+
+        //ChangeLoginConfirmCode.class to MovieListView.class
+        addLoginListener(loginEvent -> UI.getCurrent().navigate(MovieListView.class));
+
         addForgotPasswordListener(forgotPasswordEvent -> UI.getCurrent().navigate(RegisterView.class));
 
 

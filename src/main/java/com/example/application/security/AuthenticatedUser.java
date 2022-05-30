@@ -14,8 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+// no extends user ? 
 @Component
-public class AuthenticatedUser {
+public class AuthenticatedUser{
 
     private final UserRepository userRepository;
 

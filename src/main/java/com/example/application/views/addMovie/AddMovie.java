@@ -1,5 +1,6 @@
 package com.example.application.views.addMovie;
 import com.example.application.data.entity.Genre;
+import com.example.application.data.entity.Movie;
 import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -42,7 +43,7 @@ public class AddMovie extends Div {
 
         VerticalLayout layout = new VerticalLayout();
         //Add Textfields to the layout
-        layout.add(textFieldMovieId,
+        layout.add(
                 textFieldTitle,
                 textFieldPosterSrc,
                 textFieldreleaseDate,
@@ -84,7 +85,7 @@ public class AddMovie extends Div {
         layout.setAlignItems(FlexComponent.Alignment.BASELINE);
         return layout;
     }
-    public void saveMovieInDatabase(String movieId, String title, String posterSrc, String releaseDate, String length,String personDirector) throws IOException, InterruptedException {
+    public void saveMovieInDatabase(String title, String posterSrc, String releaseDate, String length,String personDirector) throws IOException, InterruptedException {
 
         // Input Error handling
 
@@ -106,7 +107,7 @@ public class AddMovie extends Div {
                 Notification.show("Movielength has to be an Integer");
             }
         }
-        if (getTitle().isEmpty()) {
+        if (title.isEmpty()) {
             Notification.show("Title must be of Type String");
             return;
         } else if (posterSrc.isEmpty()) {
@@ -125,15 +126,15 @@ public class AddMovie extends Div {
             return;
         }else{
 
-            //Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),personDirector,this.genreList,this.authorList,this.castList);
-            //movieService.addNewMovie(movie);
+            Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),this.genreList,personDirector,this.authorList,this.castList);
+            movieService.addNewMovie(movie);
             Notification.show("Movie Successfully saved");
         }
     }
 
 
     // --------------Text fields start--------------------
-        TextField textFieldMovieId = new TextField("MovieID");
+
     TextField textFieldTitle = new TextField("Movie Title");
     TextField textFieldPosterSrc = new TextField("Postersrc");
     TextField textFieldreleaseDate = new TextField("Release date");
@@ -175,7 +176,6 @@ public class AddMovie extends Div {
 
                 try {
                     saveMovieInDatabase(
-                            textFieldMovieId.getValue(),
                             textFieldTitle.getValue(),
                             textFieldPosterSrc.getValue(),
                             textFieldreleaseDate.getValue(),
