@@ -65,8 +65,7 @@ public class SearchView extends VerticalLayout {
                     button.addThemeVariants(ButtonVariant.LUMO_ICON,
                             ButtonVariant.LUMO_ERROR,
                             ButtonVariant.LUMO_TERTIARY);
-//                    button.addClickListener(e-> getAuthUser().getFriends().add(User));
-                    //button.addClickListener(e-> System.out.println(User.getUsername()));
+                    button.addClickListener(e-> userService.addFriend(getAuthUser(),User));
                     button.setIcon(new Icon(VaadinIcon.PLUS));
                 })).setHeader("Add friend");
 
