@@ -21,7 +21,7 @@ public class Genre {
     )
     public int genreID;
     public String genre;
-    @ManyToMany(mappedBy = "genreList",cascade = {CascadeType.MERGE})
+    @ManyToMany(mappedBy = "genreList",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     public List<Movie> movies = new ArrayList<>();
 
     public Genre() {

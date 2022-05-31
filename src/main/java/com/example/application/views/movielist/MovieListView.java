@@ -1,12 +1,12 @@
 package com.example.application.views.movielist;
 
+import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
+import com.example.application.data.service.GenreService;
 import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
-import com.vaadin.data.Binder;
-import com.vaadin.event.selection.MultiSelectionEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -16,6 +16,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -24,7 +25,6 @@ import com.vaadin.flow.router.Route;
 import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
 import java.util.*;
-
 
 
 
@@ -37,11 +37,15 @@ public class MovieListView extends VerticalLayout   {
 
     Grid<Movie> grid = new Grid<>(Movie.class);
     TextField filterText = new TextField();
+
+    ComboBox<Genre> selectGenre = new ComboBox<>();
     private final MovieService movieService;
+    private final GenreService genreService;
     private final UserService userService;
-    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, UserService userService) {
+    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
+        this.genreService = genreService;
         this.userService = userService;
         addClassName("movie-view");
         setSizeFull();
@@ -73,7 +77,7 @@ public class MovieListView extends VerticalLayout   {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("title", "releaseDate");
+        grid.setColumns("title", "releaseDate", "genreList");
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
@@ -92,7 +96,12 @@ public class MovieListView extends VerticalLayout   {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, saveInWatchlistButton());
+
+        selectGenre.setItems(genreService.getGenre());
+        selectGenre.setItemLabelGenerator(Genre::getGenre);
+        selectGenre.addValueChangeListener(e -> updateListByGenre());
+
+        HorizontalLayout toolbar = new HorizontalLayout(filterText,selectGenre, saveInWatchlistButton());
         toolbar.addClassName("toolbar");
         return toolbar;
     }
@@ -120,5 +129,8 @@ public class MovieListView extends VerticalLayout   {
     }
         private void updateList() {
         grid.setItems(movieService.findAllMoviesByTitle(filterText.getValue()));
+    }
+    private void updateListByGenre() {
+//         grid.setItems(movieService.findAllMoviesByGenre(String.valueOf(selectGenre.getValue())));
     }
 }

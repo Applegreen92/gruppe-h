@@ -63,6 +63,15 @@ public class MovieService  {
         }
     }
 
+//    public List<Movie> findAllMoviesByGenre(String genre) {
+//        if (genre == null || genre.isEmpty()) {
+//            return movieRepository.findAll();
+//        } else {
+//            movieRepository.findAllByGenre(genre);
+//        }
+//        return null;
+//    }
+
     public long countMovies() {
         return movieRepository.count();
     }

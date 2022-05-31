@@ -61,6 +61,10 @@ public class UserService {
         user.getWatchedMovies().add(movie);
         repository.save(user);
     }
+    public void insertFriend(User user, User user2){
+        user.getFriends().add(user2);
+        repository.save(user);
+    }
 
     public void insertWatchList (User user, Movie movie){
         user.getWatchList().add(movie);

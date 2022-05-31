@@ -1,7 +1,5 @@
 package com.example.application.data.entity;
 
-import org.springframework.context.annotation.Lazy;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,11 +25,10 @@ public class Movie {
     private String posterSrc;
     private int releaseDate;
     private int length;
-
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
     @JoinTable(name = "movieGenre",
-            joinColumns = @JoinColumn(name = "movieID"),
-            inverseJoinColumns = @JoinColumn(name = "genreID")
+            joinColumns = @JoinColumn(name = "genre_movieID",referencedColumnName = "movieID"),
+            inverseJoinColumns = @JoinColumn(name = "movie_genreID",referencedColumnName = "genreID")
     )
     private List<Genre> genreList = new ArrayList<>();
 
@@ -44,7 +41,7 @@ public class Movie {
     @Transient
     ArrayList<Person> personCastList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie",cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "movie",cascade = {CascadeType.MERGE})
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
     @ManyToMany(mappedBy = "watchedMovies", cascade = {CascadeType.MERGE})
