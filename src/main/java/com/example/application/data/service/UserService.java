@@ -60,6 +60,8 @@ public class UserService {
 
     public void insertWatchList (User user, Movie movie){
         user.getWatchList().add(movie);
+        repository.save(user);
+
     }
 
 }

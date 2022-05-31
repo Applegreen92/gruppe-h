@@ -25,11 +25,6 @@ import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
 import java.util.*;
 
-import com.example.application.data.entity.MovieWatchedList;
-import com.vaadin.ui.CheckBoxGroup;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MultiSelect;
-import com.vaadin.ui.SingleSelect;
 
 
 @PageTitle("Movie List")
@@ -102,7 +97,7 @@ public class MovieListView extends VerticalLayout   {
         return toolbar;
     }
     public  Component saveInWatchlistButton(){
-        HashSet<Movie> movieSet = new HashSet<>();
+        Set<Movie> movieSet = new HashSet<>();
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
         grid.addSelectionListener(event -> {
@@ -111,9 +106,10 @@ public class MovieListView extends VerticalLayout   {
 
         Button button = new Button("Save in Watchlist",
                 event -> {
-                    Iterator<Movie> it= movieSet.iterator();
-                    while (it.hasNext()){
-                        System.out.println(it.next());;
+                    for (Movie movie : movieSet) {
+                        if (!getCurrentUser().getWatchList().contains(movie)) {
+                            userService.insertWatchList(getCurrentUser(), movie);
+                        }
                     }
 
 

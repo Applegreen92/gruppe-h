@@ -8,10 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -29,12 +26,12 @@ public class User {
     private String name;
 
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
+    @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "watchUserId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> watchList = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)

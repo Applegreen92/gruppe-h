@@ -5,9 +5,7 @@ import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -43,7 +41,7 @@ public class AddMovie extends Div {
 
         VerticalLayout layout = new VerticalLayout();
         //Add Textfields to the layout
-        layout.add(textFieldMovieId,
+        layout.add(
                 textFieldTitle,
                 textFieldPosterSrc,
                 textFieldreleaseDate,
@@ -128,13 +126,25 @@ public class AddMovie extends Div {
 
             Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),this.genreList,personDirector,this.authorList,this.castList);
             movieService.addNewMovie(movie);
+
+            this.textFieldTitle.clear();
+            this.textFieldPosterSrc.clear();
+            this.textFieldreleaseDate.clear();
+            this.textFieldLength.clear();
+            this.textFieldGenre.clear();
+            this.textFieldDirector.clear();
+            this.textFieldAuthor.clear();
+            this.textFieldCast.clear();
+            genreList.clear();
+            authorList.clear();
+            castList.clear();
+
             Notification.show("Movie Successfully saved");
         }
     }
 
 
     // --------------Text fields start--------------------
-    TextField textFieldMovieId = new TextField("MovieID");
     TextField textFieldTitle = new TextField("Movie Title");
     TextField textFieldPosterSrc = new TextField("Postersrc");
     TextField textFieldreleaseDate = new TextField("Release date");
