@@ -2,6 +2,7 @@ package com.example.application.data.service;
 
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
+import com.example.application.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -17,9 +18,12 @@ public class UserService {
 
     private final UserRepository repository;
 
+    private AuthenticatedUser authenticatedUser;
+
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, AuthenticatedUser authenticatedUser) {
         this.repository = repository;
+        this.authenticatedUser = authenticatedUser;
     }
 
     public Optional<User> get(UUID id) {
@@ -62,6 +66,11 @@ public class UserService {
         user.getWatchList().add(movie);
         repository.save(user);
 
+    }
+
+    public void addFriend(User user, User user2) {
+        user.getFriends().add(user2);
+        repository.save(user);
     }
 
 }

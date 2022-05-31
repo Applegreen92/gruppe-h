@@ -27,6 +27,7 @@ import java.util.*;
 
 
 
+
 @PageTitle("Movie List")
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
@@ -83,7 +84,6 @@ public class MovieListView extends VerticalLayout   {
                     userService.insertWatchedList(getCurrentUser(), Movie));
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
