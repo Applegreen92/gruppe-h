@@ -25,16 +25,7 @@ import com.example.application.views.MainLayout;
 import javax.annotation.security.PermitAll;
 import java.util.*;
 
-import com.example.application.data.entity.MovieWatchedList;
-import com.vaadin.ui.CheckBoxGroup;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MultiSelect;
-import com.vaadin.ui.SingleSelect;
 
-import com.vaadin.ui.CheckBoxGroup;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MultiSelect;
-import com.vaadin.ui.SingleSelect;
 
 
 @PageTitle("Movie List")
@@ -93,7 +84,6 @@ public class MovieListView extends VerticalLayout   {
                     userService.insertWatchedList(getCurrentUser(), Movie));
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 

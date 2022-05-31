@@ -7,6 +7,7 @@ import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
 import com.example.application.views.movielist.MovieListView;
+import com.example.application.views.watchedMoviesList.WatchedMoviesView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -91,7 +92,7 @@ public class ProfileView extends VerticalLayout {
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         //TODO switch MovieListView to WatchList and switch to personalized page
-        watchedMovies.addClickListener(e -> UI.getCurrent().navigate(MovieListView.class));
+        watchedMovies.addClickListener(e -> UI.getCurrent().navigate(WatchedMoviesView.class));
         watchList.addClickListener((e -> UI.getCurrent().navigate(Watchlist.class)));
         seeFriends.addClickListener(e -> UI.getCurrent().navigate(FriendlistView.class));
 
