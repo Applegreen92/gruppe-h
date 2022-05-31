@@ -127,6 +127,7 @@ public class AddMovie extends Div {
             Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),this.genreList,personDirector,this.authorList,this.castList);
             movieService.addNewMovie(movie);
 
+
             this.textFieldTitle.clear();
             this.textFieldPosterSrc.clear();
             this.textFieldreleaseDate.clear();
