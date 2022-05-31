@@ -29,7 +29,7 @@ public class User {
     private String name;
 
 
-    @ManyToMany
+    @ManyToMany(cascade =  {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
