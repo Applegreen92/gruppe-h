@@ -6,7 +6,6 @@ import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,10 +13,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
 import javax.annotation.security.PermitAll;
-
-
-
 import java.util.Optional;
 
 @PageTitle("Watched movies")
@@ -38,20 +35,13 @@ public class WatchedMoviesView extends VerticalLayout {
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
-        add(getToolbar(), getContent());
+        add(getToolbar(), grid);
         getWatchedMovies();
+        updateList();
 
     }
 
 
-    private Component getContent() {
-        HorizontalLayout content = new HorizontalLayout(grid);
-        content.setFlexGrow(2, grid);
-        content.setFlexGrow(1);
-        content.addClassNames("content");
-        content.setSizeFull();
-        return content;
-    }
 
     private User getCurrentUser(){
         Optional<User> maybeUser = authenticatedUser.get();
@@ -66,7 +56,6 @@ public class WatchedMoviesView extends VerticalLayout {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("title", "releaseDate");
-        grid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }

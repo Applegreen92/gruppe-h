@@ -6,7 +6,7 @@ import com.example.application.data.service.SamplePersonService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
-import com.example.application.views.movielist.MovieListView;
+import com.example.application.views.privacy.PrivacyView;
 import com.example.application.views.watchedMoviesList.WatchedMoviesView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
@@ -46,6 +46,7 @@ public class ProfileView extends VerticalLayout {
     private Button watchedMovies = new Button("See watched Movies");
     private Button watchList = new Button("See Watchlist");
     private Button seeFriends = new Button("See Friends");
+    private Button privacy = new Button("Privacy Settings");
 
 
 
@@ -90,17 +91,21 @@ public class ProfileView extends VerticalLayout {
         watchedMovies.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         watchList.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        privacy.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         //TODO switch MovieListView to WatchList and switch to personalized page
         watchedMovies.addClickListener(e -> UI.getCurrent().navigate(WatchedMoviesView.class));
         watchList.addClickListener((e -> UI.getCurrent().navigate(Watchlist.class)));
         seeFriends.addClickListener(e -> UI.getCurrent().navigate(FriendlistView.class));
+        privacy.addClickListener(e-> UI.getCurrent().navigate(PrivacyView.class));
 
         buttonLayout.add(watchedMovies);
         buttonLayout.add(watchList);
         buttonLayout.add(seeFriends);
+        buttonLayout.add(privacy);
         return buttonLayout;
     }
+
 }
 
 

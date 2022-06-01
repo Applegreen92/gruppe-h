@@ -2,13 +2,15 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -24,6 +26,10 @@ public class User {
     private String firstname;
     private String lastname;
     private String name;
+
+    private boolean friendListPrivacy = false;
+    private boolean watchListPrivacy = false;
+    private boolean watchedMoviesPrivacy = false;
 
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
@@ -141,6 +147,24 @@ public class User {
     }
     public void setWatchList(List<Movie> watchList) {
         this.watchList = watchList;
+    }
+    public boolean isFriendListPrivacy() {
+        return friendListPrivacy;
+    }
+    public void setFriendListPrivacy(boolean friendListPrivacy) {
+        this.friendListPrivacy = friendListPrivacy;
+    }
+    public boolean isWatchListPrivacy() {
+        return watchListPrivacy;
+    }
+    public void setWatchListPrivacy(boolean watchListPrivacy) {
+        this.watchListPrivacy = watchListPrivacy;
+    }
+    public boolean isWatchedMoviesPrivacy() {
+        return watchedMoviesPrivacy;
+    }
+    public void setWatchedMoviesPrivacy(boolean watchedMoviesPrivacy) {
+        this.watchedMoviesPrivacy = watchedMoviesPrivacy;
     }
 
     public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum, String email ) {

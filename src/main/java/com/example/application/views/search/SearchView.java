@@ -93,9 +93,8 @@ public class SearchView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button searchButton = new Button("Search", VaadinIcon.SEARCH.create());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, searchButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText);
         toolbar.addClassName("toolbar");
         return toolbar;
     }

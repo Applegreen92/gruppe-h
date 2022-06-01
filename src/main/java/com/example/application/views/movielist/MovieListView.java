@@ -7,6 +7,7 @@ import com.example.application.data.service.GenreService;
 import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
+import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -16,15 +17,16 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.example.application.views.MainLayout;
+
 import javax.annotation.security.PermitAll;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 
 
@@ -50,20 +52,12 @@ public class MovieListView extends VerticalLayout   {
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
-        add(getToolbar(), getContent());
+        add(getToolbar(), grid);
         updateList();
 
     }
 
 
-    private Component getContent() {
-        HorizontalLayout content = new HorizontalLayout(grid);
-        content.setFlexGrow(2, grid);
-        content.setFlexGrow(1);
-        content.addClassNames("content");
-        content.setSizeFull();
-        return content;
-    }
 
     private User getCurrentUser(){
         Optional<User> maybeUser = authenticatedUser.get();
