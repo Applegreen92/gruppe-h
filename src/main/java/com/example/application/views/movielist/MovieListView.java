@@ -110,9 +110,9 @@ public class MovieListView extends VerticalLayout   {
         Button button = new Button("Save in Watchlist",
                 event -> {
                     for (Movie movie : movieSet) {
-                        if (!getCurrentUser().getWatchList().contains(movie)) {
+
                             userService.insertWatchList(getCurrentUser(), movie);
-                        }
+
                     }
 
 

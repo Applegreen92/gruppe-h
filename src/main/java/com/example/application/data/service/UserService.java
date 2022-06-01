@@ -3,11 +3,13 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
+import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,11 +64,33 @@ public class UserService {
     }
 
     public void insertWatchList (User user, Movie movie){
+        List<Movie> watchlist = user.getWatchList();
+        List<Movie> watchedMovies = user.getWatchedMovies();
+        for (Movie movieFromWatchlist  : watchlist){
+            if(movie.getMovieID() == movieFromWatchlist.getMovieID()){
+                Notification.show("Movie is already on watchlist");
+                return;
+            }
+
+        }
+        for (Movie movieFromWatchedMovies : watchedMovies){
+            if(movie.getMovieID() == movieFromWatchedMovies.getMovieID()){
+                Notification.show("Movie is already on Films you watched");
+                return;
+            }
+        }
+
+
         user.getWatchList().add(movie);
         repository.save(user);
 
     }
 
+    public void deleteWatchlist (User user, Movie movie){
+        user.getWatchList().remove(movie);
+        repository.save(user);
+        Notification.show("Movie/s successfully deleted.");
+    }
     public void addFriend(User user, User user2) {
         user.getFriends().add(user2);
         repository.save(user);

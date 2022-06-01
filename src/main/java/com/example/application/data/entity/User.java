@@ -32,15 +32,15 @@ public class User {
     private boolean watchedMoviesPrivacy = false;
 
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "watche_User_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watch_Movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchList = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_watched_movies", joinColumns = @JoinColumn(name = "watcheed_User_ID",referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watched_movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchedMovies = new ArrayList<>();
 

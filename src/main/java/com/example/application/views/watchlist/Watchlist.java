@@ -5,6 +5,7 @@ import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.annotation.security.PermitAll;
+import java.util.HashSet;
+import java.util.Set;
 
 @PageTitle("Watchlist")
 @Route(value = "watchlist", layout = MainLayout.class)
@@ -70,12 +73,31 @@ public class Watchlist extends Div {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addMovieButton = new Button("Delete");
 
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addMovieButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, DeleteFromWatchlistButtonPlusGrid());
         toolbar.addClassName("toolbar");
         return toolbar;
+    }
+    public Component DeleteFromWatchlistButtonPlusGrid(){
+        Set<Movie> movieSet = new HashSet<>();
+
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+        grid.addSelectionListener(event -> {
+            movieSet.addAll(event.getAllSelectedItems());
+        });
+
+        Button button = new Button("Delete from Watchlist",
+                event -> {
+                    for (Movie movie : movieSet) {
+                        userService.deleteWatchlist(authenticatedUser.get().get(), movie);
+
+                    }
+
+
+                });
+
+
+        return button;
     }
 
     private void updateList() {
