@@ -30,7 +30,19 @@ public class Watchlist extends Div {
     private final AuthenticatedUser authenticatedUser;
     private final MovieService movieService;
     private final UserService userService;
+    Grid<Movie> grid = new Grid<>(Movie.class);
 
+
+
+   /* private Component getContent() {
+        HorizontalLayout content = new HorizontalLayout(grid);
+        content.setFlexGrow(2, grid);
+        content.setFlexGrow(1);
+        content.addClassNames("content");
+        content.setSizeFull();
+        return content;
+    }*/
+    TextField filterText = new TextField();
 
     @Autowired
     public Watchlist(AuthenticatedUser authenticatedUser, MovieService movieService, UserService userService) {
@@ -44,19 +56,6 @@ public class Watchlist extends Div {
         updateList();
 
     }
-
-
-
-   /* private Component getContent() {
-        HorizontalLayout content = new HorizontalLayout(grid);
-        content.setFlexGrow(2, grid);
-        content.setFlexGrow(1);
-        content.addClassNames("content");
-        content.setSizeFull();
-        return content;
-    }*/
-
-
 
     private void configureGrid() {
         grid.addClassNames("contact-grid");
@@ -78,6 +77,7 @@ public class Watchlist extends Div {
         toolbar.addClassName("toolbar");
         return toolbar;
     }
+
     public Component DeleteFromWatchlistButtonPlusGrid(){
         Set<Movie> movieSet = new HashSet<>();
 
@@ -90,11 +90,8 @@ public class Watchlist extends Div {
                 event -> {
                     for (Movie movie : movieSet) {
                         userService.deleteWatchlist(authenticatedUser.get().get(), movie);
-
                     }
-
-
-                });
+        });
 
 
         return button;
@@ -103,7 +100,4 @@ public class Watchlist extends Div {
     private void updateList() {
         grid.setItems(authenticatedUser.get().get().getWatchList());
     }
-
-    Grid<Movie> grid = new Grid<>(Movie.class);
-    TextField filterText = new TextField();
 }

@@ -87,7 +87,13 @@ public class UserService {
     }
 
     public void deleteWatchlist (User user, Movie movie){
-        user.getWatchList().remove(movie);
+        List<Movie> watchlist = user.getWatchList();
+
+        for(Movie movieToDelete : watchlist){
+            if(movieToDelete.getMovieID() == movie.getMovieID()){
+                System.out.println(movie.toString());
+            }
+        }
         repository.save(user);
         Notification.show("Movie/s successfully deleted.");
     }
