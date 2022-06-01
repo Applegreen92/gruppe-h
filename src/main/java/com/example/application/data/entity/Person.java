@@ -21,7 +21,7 @@ public class Person {
     private String firstname;
     private String lastname;
 
-    @OneToMany(mappedBy = "person",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "person")
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
     public Person() {

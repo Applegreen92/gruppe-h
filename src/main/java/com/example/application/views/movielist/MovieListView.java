@@ -4,6 +4,7 @@ import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.GenreService;
+import com.example.application.data.service.MovieRepository;
 import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
@@ -29,7 +30,6 @@ import java.util.Optional;
 import java.util.Set;
 
 
-
 @PageTitle("Movie List")
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
@@ -44,11 +44,13 @@ public class MovieListView extends VerticalLayout   {
     private final MovieService movieService;
     private final GenreService genreService;
     private final UserService userService;
-    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService) {
+    private final MovieRepository movieRepository;
+    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService, MovieRepository movieRepository) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
         this.genreService = genreService;
         this.userService = userService;
+        this.movieRepository = movieRepository;
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
@@ -71,9 +73,13 @@ public class MovieListView extends VerticalLayout   {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("title", "releaseDate", "genreList");
-        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+//        grid.setColumns("title", "releaseDate");
+//        grid.addColumn("genre");
+        grid.removeColumnByKey("movieID");
 
+        grid.setItems(movieRepository.findAll());
+        grid.addColumn(Movie::getGenres).setHeader("Genre");
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_ERROR,

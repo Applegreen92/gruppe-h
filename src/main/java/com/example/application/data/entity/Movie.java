@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -32,6 +33,21 @@ public class Movie {
     )
     private List<Genre> genreList = new ArrayList<>();
 
+    public void setGenreList(List<Genre> genreList) {
+        this.genreList = genreList;
+    }
+
+    @Transient
+    private String genre = genreList.stream().map(Genre::toString).collect(Collectors.joining(", "));
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        genre = genre;
+    }
+
     @Transient
     String personDirector;
     @Transient
@@ -41,7 +57,7 @@ public class Movie {
     @Transient
     ArrayList<Person> personCastList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie",cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "movie")
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
     @ManyToMany(mappedBy = "watchedMovies", cascade = {CascadeType.MERGE})
@@ -49,7 +65,6 @@ public class Movie {
 
     @ManyToMany(mappedBy = "watchList", cascade = {CascadeType.MERGE})
     public List<User> usersWatch = new ArrayList<>();
-
 
     public Movie() {
     }
@@ -73,11 +88,23 @@ public class Movie {
         this.personDirector = personDirector;
         this.personAuthorList = personAuthorList;
         this.personCastList = personCastList;
+//        for(Genre genre: genreList){
+//            this.genre+=genre.getGenre();
+//        }
     }
     //todo erase
     public Movie(String title, String toString, int parseInt, int convertLength, ArrayList tempWriterArray, ArrayList tempCastArray) {
     }
 
+    public String getGenres() {
+        StringBuffer sb = new StringBuffer();
+        for (Genre genre: genreArrayList) {
+            sb.append(genre.getGenre());
+            sb.append(", ");
+        }
+        String str = sb.toString();
+        return str;
+    }
 
     public List<Genre> getGenreList() {
         return genreList;

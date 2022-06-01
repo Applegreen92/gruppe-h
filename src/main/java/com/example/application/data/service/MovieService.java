@@ -1,23 +1,25 @@
 package com.example.application.data.service;
 
+import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MovieService  {
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
 
 
     @Autowired
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Movie> getMovie(){
@@ -63,14 +65,20 @@ public class MovieService  {
         }
     }
 
-//    public List<Movie> findAllMoviesByGenre(String genre) {
-//        if (genre == null || genre.isEmpty()) {
-//            return movieRepository.findAll();
-//        } else {
-//            movieRepository.findAllByGenre(genre);
-//        }
-//        return null;
-//    }
+    public List<Movie> findAllMoviesByGenre(String genre) {
+        if (genre == null || genre.isEmpty()) {
+            return movieRepository.findAll();
+        } else {
+//            List<Genre> genreList = new ArrayList();
+//            genreList = genreRepository.findAllByGenre(genre);
+//
+//            if(genreList.size() > 0){
+//                int selectedGenre = genreList.get(0).getGenreID();
+//            }
+//            return movieRepository.findAllByGenre(genre);
+        }
+        return null;
+    }
 
     public long countMovies() {
         return movieRepository.count();

@@ -29,7 +29,13 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("select c from Movie c " +
             "where lower(c.title) like lower(%:searchTerm%)")
     List<Movie> watched(@Param("watched") String searchTerm);*/
-//    void findAllByGenre(String genre);
+//    @Query("SELECT m from movie m" +
+//            " Where m.movieID IN " +
+//            "(SELECT mg.genre_movieID from movie_genre mg" +
+//            " Where mg.movie_genreID IN " +
+//            "(SELECT g.genreid FROM genre g" +
+//            " WHERE g.genre = 'Action'))")
+//    List<Movie> findAllByGenre(@Param("genre")String genreToFind);
 
 //    List<Movie> findByTitleIgnoreCaseContaining(String searchTerm);
 }

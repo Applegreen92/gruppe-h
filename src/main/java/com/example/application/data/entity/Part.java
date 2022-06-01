@@ -19,7 +19,7 @@ public class Part {
     private int partID;
     private String partName;
 
-    @OneToMany(mappedBy = "part",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "part")
     private Set<MoviePersonPartLink> moviePersonPartLink;
 
     public Part() {

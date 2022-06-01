@@ -54,7 +54,6 @@ public class MoviePersonPartLinkService {
                 }
             }
             movieRepository.save(movie);
-            movieRepository.save(movie);
             Person person = null;
             if (movie.getPersonDirector() != "") {
                 String name = movie.getPersonDirector();
