@@ -4,7 +4,7 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.example.application.views.movielist.MovieListView;
+import com.example.application.views.profile.ProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -74,7 +74,7 @@ public class SearchView extends VerticalLayout {
     }
 
     private void switchTo() {
-        UI.getCurrent().navigate(MovieListView.class);
+        UI.getCurrent().navigate(ProfileView.class);
     }
 
     private User getAuthUser() {

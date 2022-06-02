@@ -1,8 +1,7 @@
 package com.example.application.views.profile;
 
-import com.example.application.data.entity.SamplePerson;
 import com.example.application.data.entity.User;
-import com.example.application.data.service.SamplePersonService;
+import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
@@ -23,8 +22,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 
 import javax.annotation.security.PermitAll;
 
@@ -35,7 +33,9 @@ import javax.annotation.security.PermitAll;
 @Uses(Icon.class)
 
 public class ProfileView extends VerticalLayout {
-    private AuthenticatedUser authenticatedUser;
+
+    private final AuthenticatedUser authenticatedUser;
+    private UserService userService;
 
     Grid<User> grid = new Grid<>(User.class);
 
@@ -52,9 +52,10 @@ public class ProfileView extends VerticalLayout {
 
 
 
-    private Binder<SamplePerson> binder = new Binder<>(SamplePerson.class);
+    private Binder<User> binder = new Binder<>(User.class);
 
-    public ProfileView(SamplePersonService personService, AuthenticatedUser authenticatedUser) {
+    public ProfileView(UserService userService, AuthenticatedUser authenticatedUser) {
+        this.userService = userService;
         this.authenticatedUser = authenticatedUser;
         addClassName("profile-view");
 
@@ -72,7 +73,7 @@ public class ProfileView extends VerticalLayout {
     }
 
     private void clearForm() {
-        binder.setBean(new SamplePerson());
+        binder.setBean(new User());
     }
 
     private Component createTitle() {

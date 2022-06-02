@@ -27,9 +27,10 @@ public class User {
     private String lastname;
     private String name;
 
-    private boolean friendListPrivacy = false;
-    private boolean watchListPrivacy = false;
-    private boolean watchedMoviesPrivacy = false;
+
+    private int friendListPrivacy; // public = 1, onlyFriends = 2, private = 3
+    private int watchListPrivacy; // public = 1, onlyFriends = 2, private = 3
+    private int watchedMoviesPrivacy; // public = 1, onlyFriends = 2, private = 3
 
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
@@ -148,22 +149,28 @@ public class User {
     public void setWatchList(List<Movie> watchList) {
         this.watchList = watchList;
     }
-    public boolean isFriendListPrivacy() {
+
+    public int getFriendListPrivacy() {
         return friendListPrivacy;
     }
-    public void setFriendListPrivacy(boolean friendListPrivacy) {
+
+    public void setFriendListPrivacy(int friendListPrivacy) {
         this.friendListPrivacy = friendListPrivacy;
     }
-    public boolean isWatchListPrivacy() {
+
+    public int getWatchListPrivacy() {
         return watchListPrivacy;
     }
-    public void setWatchListPrivacy(boolean watchListPrivacy) {
+
+    public void setWatchListPrivacy(int watchListPrivacy) {
         this.watchListPrivacy = watchListPrivacy;
     }
-    public boolean isWatchedMoviesPrivacy() {
+
+    public int getWatchedMoviesPrivacy() {
         return watchedMoviesPrivacy;
     }
-    public void setWatchedMoviesPrivacy(boolean watchedMoviesPrivacy) {
+
+    public void setWatchedMoviesPrivacy(int watchedMoviesPrivacy) {
         this.watchedMoviesPrivacy = watchedMoviesPrivacy;
     }
 
