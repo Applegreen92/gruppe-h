@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
+import com.vaadin.ui.Notification;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,6 +101,66 @@ public class UserService {
     public void addFriend(User user, User user2) {
         user.getFriends().add(user2);
         repository.save(user);
+    }
+    public void changePrivacyFriends(User user2, Integer integer) {
+        if(user2.getFriendListPrivacy()==0) {
+            user2.setFriendListPrivacy(integer);
+            repository.save(user2);
+
+        }
+        else if(user2.getFriendListPrivacy()==1 && integer != 1) {
+            user2.setFriendListPrivacy(integer);
+            repository.save(user2);
+
+        }
+        else if (user2.getFriendListPrivacy()==2 && integer != 2){
+            user2.setFriendListPrivacy(integer);
+            repository.save(user2);
+
+        }
+        else if(user2.getFriendListPrivacy()==3 && integer != 3) {
+            user2.setFriendListPrivacy(integer);
+            repository.save(user2);
+
+        }
+    }
+    public void changePrivacyWatchList(User user3, Integer integer) {
+        if(user3.getWatchListPrivacy()==0) {
+            user3.setWatchListPrivacy(integer);
+            repository.save(user3);
+        }
+        else if(user3.getWatchListPrivacy()==1 && integer != 1) {
+            user3.setWatchListPrivacy(integer);
+            repository.save(user3);
+        }
+        else if (user3.getWatchListPrivacy()==2 && integer != 2){
+            user3.setWatchListPrivacy(integer);
+            repository.save(user3);
+        }
+        else if(user3.getWatchListPrivacy()==3 && integer != 3) {
+            user3.setWatchListPrivacy(integer);
+            repository.save(user3);
+        }
+        else Notification.show("No changes done");
+    }
+    public void changePrivacyWatched(User user4, Integer integer) {
+        if(user4.getWatchedMoviesPrivacy()==0) {
+            user4.setWatchedMoviesPrivacy(integer);
+            repository.save(user4);
+        }
+        else if(user4.getWatchedMoviesPrivacy() ==1 && integer !=1) {
+            user4.setWatchedMoviesPrivacy(integer);
+            repository.save(user4);
+        }
+        else if (user4.getWatchedMoviesPrivacy()==2 && integer != 2){
+            user4.setWatchedMoviesPrivacy(integer);
+            repository.save(user4);
+        }
+        else if(user4.getWatchedMoviesPrivacy()==3 && integer != 3) {
+            user4.setWatchedMoviesPrivacy(integer);
+            repository.save(user4);
+        }
+        else Notification.show("No changes done");
     }
 
 }

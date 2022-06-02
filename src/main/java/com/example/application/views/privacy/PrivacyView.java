@@ -4,8 +4,6 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.example.application.views.movielist.MovieListView;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
@@ -18,7 +16,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
-import java.util.Optional;
 
     @PageTitle("Privacy Settings")
     @Route(value ="PrivacySettings" , layout = MainLayout.class)
@@ -47,17 +44,15 @@ import java.util.Optional;
             updateList();
         }
 
-
-
         private void configureFriendGrid() {
             friendGrid.addClassNames("privacy-grid");
             friendGrid.setColumns("friendListPrivacy");
             friendGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, UI) -> {
+                    new ComponentRenderer<>(Button::new, (button, User) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e -> System.out.println("PU"));
+                        button.addClickListener(e -> userService.changePrivacyFriends(User,1));
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
                     })).setHeader("PUBLIC");
 
@@ -66,7 +61,7 @@ import java.util.Optional;
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("O"));
+                        button.addClickListener(e-> userService.changePrivacyFriends(User,2));
                         button.setIcon(new Icon(VaadinIcon.USERS));
                     })).setHeader("ONLY FRIENDS");
 
@@ -75,11 +70,10 @@ import java.util.Optional;
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("PR"));
+                        button.addClickListener(e-> userService.changePrivacyFriends(User,3));
                         button.setIcon(new Icon(VaadinIcon.LOCK));
                     })).setHeader("PRIVATE");
 
-            // grid.addColumn(user -> user.getStatus().getName()).setHeader("Status"); // für den Status später
             friendGrid.getColumns().forEach(col -> col.setAutoWidth(true));
             friendGrid.setAllRowsVisible(true);
         }
@@ -88,33 +82,32 @@ import java.util.Optional;
             watchListGrid.addClassNames("watchlist-grid");
             watchListGrid.setColumns("watchListPrivacy");
             watchListGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, UI) -> {
+                    new ComponentRenderer<>(Button::new, (button, User2) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e -> System.out.println("PU"));
+                        button.addClickListener(e -> userService.changePrivacyWatchList(User2,1));
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
                     })).setHeader("PUBLIC");
 
             watchListGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                    new ComponentRenderer<>(Button::new, (button, User2) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("O"));
+                        button.addClickListener(e-> userService.changePrivacyWatchList(User2,2));
                         button.setIcon(new Icon(VaadinIcon.USERS));
                     })).setHeader("ONLY FRIENDS");
 
             watchListGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                    new ComponentRenderer<>(Button::new, (button, User2) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("PR"));
+                        button.addClickListener(e-> userService.changePrivacyWatchList(User2,3));
                         button.setIcon(new Icon(VaadinIcon.LOCK));
                     })).setHeader("PRIVATE");
 
-            // grid.addColumn(user -> user.getStatus().getName()).setHeader("Status"); // für den Status später
             watchListGrid.getColumns().forEach(col -> col.setAutoWidth(true));
             watchListGrid.setAllRowsVisible(true);
         }
@@ -123,52 +116,35 @@ import java.util.Optional;
             watchedMoviesGrid.addClassNames("watched-grid");
             watchedMoviesGrid.setColumns("watchedMoviesPrivacy");
             watchedMoviesGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, UI) -> {
+                    new ComponentRenderer<>(Button::new, (button, User3) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e -> System.out.println("PU"));
+                        button.addClickListener(e -> userService.changePrivacyWatched(User3,1));
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
                     })).setHeader("PUBLIC");
 
             watchedMoviesGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                    new ComponentRenderer<>(Button::new, (button, User3) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("O"));
+                        button.addClickListener(e-> userService.changePrivacyWatched(User3,2));
                         button.setIcon(new Icon(VaadinIcon.USERS));
                     })).setHeader("ONLY FRIENDS");
 
             watchedMoviesGrid.addColumn(
-                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                    new ComponentRenderer<>(Button::new, (button, User3) -> {
                         button.addThemeVariants(ButtonVariant.LUMO_ICON,
                                 ButtonVariant.LUMO_ERROR,
                                 ButtonVariant.LUMO_TERTIARY);
-                        button.addClickListener(e-> System.out.println("PR"));
+                        button.addClickListener(e-> userService.changePrivacyWatched(User3,3));
                         button.setIcon(new Icon(VaadinIcon.LOCK));
                     })).setHeader("PRIVATE");
 
-            // grid.addColumn(user -> user.getStatus().getName()).setHeader("Status"); // für den Status später
             watchedMoviesGrid.getColumns().forEach(col -> col.setAutoWidth(true));
             watchedMoviesGrid.setAllRowsVisible(true);
         }
-
-
-        private void switchTo() {
-            UI.getCurrent().navigate(MovieListView.class);
-        }
-
-        private User getAuthUser() {
-            Optional<User> maybeUser = authenticatedUser.get();
-            if (maybeUser.isPresent()) {
-                User user = maybeUser.get();
-                return user;
-            }
-            return null;
-        }
-
-
 
         private void updateList() {
             friendGrid.setItems(authenticatedUser.get().get());
