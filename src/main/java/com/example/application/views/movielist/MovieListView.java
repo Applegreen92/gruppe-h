@@ -34,7 +34,7 @@ import java.util.Set;
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
 
-public class MovieListView extends VerticalLayout   {
+public class    MovieListView extends VerticalLayout   {
     private AuthenticatedUser authenticatedUser;
 
     Grid<Movie> grid = new Grid<>(Movie.class);
