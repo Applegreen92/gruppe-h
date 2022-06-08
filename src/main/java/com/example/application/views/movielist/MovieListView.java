@@ -14,6 +14,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -23,19 +24,22 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.server.Page;
+import com.vaadin.flow.component.notification.Notification;
 
 import javax.annotation.security.PermitAll;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 
-@PageTitle("Movie List")
+@PageTitle("MovieList")
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
 
-public class    MovieListView extends VerticalLayout   {
-    private AuthenticatedUser authenticatedUser;
+public class    MovieListView extends Div {
+    private final AuthenticatedUser authenticatedUser;
 
     Grid<Movie> grid = new Grid<>(Movie.class);
     TextField filterText = new TextField();
@@ -116,8 +120,9 @@ public class    MovieListView extends VerticalLayout   {
         Button button = new Button("Save in Watchlist",
                 event -> {
                     for (Movie movie : movieSet) {
-
-                            userService.insertWatchList(getCurrentUser(), movie);
+                            String response = userService.insertWatchList(Objects.requireNonNull(getCurrentUser()), movie);
+                            Notification.show(response);
+                            grid.deselectAll();
 
                     }
 
