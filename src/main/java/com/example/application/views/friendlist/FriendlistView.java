@@ -2,12 +2,15 @@ package com.example.application.views.friendlist;
 
 import com.example.application.data.entity.Person;
 import com.example.application.data.entity.User;
+import com.example.application.data.service.UserService;
+import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.chat.ChatView;
 import com.example.application.views.privacy.PrivacyView;
 import com.example.application.views.profile.ProfileView;
 import com.example.application.views.search.SearchView;
 import com.example.application.views.watchedMoviesList.WatchedMoviesView;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.avatar.AvatarVariant;
@@ -27,6 +30,7 @@ import com.vaadin.flow.router.Route;
 
 
 import javax.annotation.security.PermitAll;
+import java.awt.*;
 
 @PageTitle("Friend List")
 @Route(value = "FriendList", layout = MainLayout.class)
@@ -34,8 +38,10 @@ import javax.annotation.security.PermitAll;
 
 public class FriendlistView extends VerticalLayout {
 
+    private final AuthenticatedUser authenticatedUser;
 
-    public FriendlistView() {
+    public FriendlistView(AuthenticatedUser authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
         setHeightFull();
         setWidth("600px");
 
@@ -46,9 +52,10 @@ public class FriendlistView extends VerticalLayout {
         last.addClickListener(e -> UI.getCurrent().navigate(SearchView.class));
         requests.addClickListener(e -> UI.getCurrent().navigate(FriendRequestsView.class));
 
-    Avatar avatarName = new Avatar("TEST");
+    Avatar avatarName = new Avatar(authenticatedUser.get().get().getName());
     avatarName.addThemeVariants(AvatarVariant.LUMO_XLARGE);
-    var header = new HorizontalLayout(avatarName,createButton("User"),requests,last);
+        Text userField = new Text(authenticatedUser.get().get().getUsername());
+    var header = new HorizontalLayout(avatarName,userField,requests,last);
     header.setWidthFull();
     last.getStyle().set("margin-left","auto");
     header.setAlignItems(Alignment.BASELINE);
@@ -85,7 +92,7 @@ public class FriendlistView extends VerticalLayout {
 
 
 
-            //List<User> friends = DataService.getPeople();
+            //List<User> friends =
             //grid.setItems(friends);
 
             //add(grid);
