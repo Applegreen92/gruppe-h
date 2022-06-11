@@ -28,11 +28,7 @@ import com.vaadin.server.Page;
 import com.vaadin.flow.component.notification.Notification;
 
 import javax.annotation.security.PermitAll;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @PageTitle("MovieList")
@@ -118,21 +114,22 @@ public class    MovieListView extends Div {
         return toolbar;
     }
     public  Component saveInWatchlistButton(){
-        Set<Movie> movieSet = new HashSet<>();
+        List<Movie> movieSet = new ArrayList<>();
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-        grid.addSelectionListener(event -> {
-            movieSet.addAll(event.getAllSelectedItems());
-        });
+//        grid.addSelectionListener(event -> {
+//            movieSet.clear();
+//            movieSet.addAll(event.getAllSelectedItems().stream().toList());
+//        });
+
 
         Button button = new Button("Save in Watchlist",
                 event -> {
-                    for (Movie movie : movieSet) {
-                            String response = userService.insertWatchList(Objects.requireNonNull(getCurrentUser()), movie);
-                            Notification.show(response);
-                            grid.deselectAll();
-
-                    }
+                    movieSet.addAll(grid.getSelectedItems());
+                    String response = userService.insertWatchList(movieSet);
+                    Notification.show(response);
+                    movieSet.clear();
+                    grid.deselectAll();
 
 
                 });

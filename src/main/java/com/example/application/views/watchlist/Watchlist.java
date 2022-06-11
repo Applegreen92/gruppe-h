@@ -83,18 +83,14 @@ public class Watchlist extends Div {
         List<Movie> movieSet = new ArrayList<>();
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-        grid.addSelectionListener(event -> {
-            movieSet.addAll(event.getAllSelectedItems());
-        });
+
 
         Button button = new Button("Delete from Watchlist",
                 event -> {
 
+                    movieSet.addAll(grid.getSelectedItems());
+                    userService.deleteWatchlist(authenticatedUser.get().get(), movieSet);
 
-                    for(int i = 0, size = movieSet.size() ; i < size ; i++) {
-
-                        userService.deleteWatchlist(authenticatedUser.get().get(),movieSet.get(i));
-                    }
                     grid.setItems(movieSet);
                     Notification.show("Movie/s successfully deleted.");
         });

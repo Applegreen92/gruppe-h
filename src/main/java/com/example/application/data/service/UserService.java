@@ -9,7 +9,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 
 import com.example.application.security.email.EmailSenderService;
-import com.vaadin.ui.Notification;
+
 //import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -77,36 +77,45 @@ public class UserService {
         }
     }
 
-    public String insertWatchList (User user, Movie movie){
+    public String insertWatchList (List<Movie> movieList){
+        User user = authenticatedUser.get().get();
         List<Movie> watchlist = user.getWatchList();
         List<Movie> watchedMovies = user.getWatchedMovies();
         for (Movie movieFromWatchlist  : watchlist){
-            if(movie.getMovieID() == movieFromWatchlist.getMovieID()){
-                return "Movie is already on watchlist";
+            for(Movie newMovie : movieList) {
+                if (newMovie.getMovieID() == movieFromWatchlist.getMovieID()) {
+                    break;
+                }
             }
 
         }
         for (Movie movieFromWatchedMovies : watchedMovies){
-            if(movie.getMovieID() == movieFromWatchedMovies.getMovieID()){
-                return "Movie is already on Films you watched";
+            for(Movie newMovie : movieList) {
+                if (newMovie.getMovieID() == movieFromWatchedMovies.getMovieID()) {
+                    break;
+                }
             }
         }
 
-
-        user.getWatchList().add(movie);
-        repository.save(user);
+        watchlist.addAll(movieList);
+        user.setWatchList(watchlist);
+        repository.saveAndFlush(user);
         return "Movie saved in Watchlist";
     }
 
-    public void deleteWatchlist (User user, Movie movie) throws ConcurrentModificationException {
+    public void deleteWatchlist(User user, List<Movie> movieSet) throws ConcurrentModificationException {
         List<Movie> watchlist = user.getWatchList();
-        if(watchlist.isEmpty()){
+        if (watchlist.isEmpty()) {
             return;
         }
-        for(int i = 0, size = watchlist.size()  ; size>i; i++){
-            Movie movieToDelete = watchlist.get(i);
-            if(movieToDelete.getMovieID() == movie.getMovieID()){
-                watchlist.remove(movieToDelete);
+        for (int i = 0, sizei = movieSet.size(); sizei > i; i++) {
+            Movie movieToDelete = movieSet.get(i);
+            for (int j = 0, sizej = watchlist.size(); sizej > j; j++) {
+                if (movieToDelete.getMovieID() == watchlist.get(j).getMovieID()) {
+                    watchlist.remove(j);
+                    j--;
+                    sizej--;
+                }
             }
         }
         user.setWatchList(watchlist);
