@@ -37,9 +37,9 @@ public class LoginView extends LoginOverlay {
         setOpened(true);
 
         //Change LoginConfirmCode.class to MovieListView.class
-        //addLoginListener(loginEvent -> UI.getCurrent().navigate(MovieListView.class));
+        addLoginListener(loginEvent -> UI.getCurrent().navigate(MovieListView.class));
 
-        addLoginListener(loginEvent -> UI.getCurrent().navigate(loginConfirmCode.class));
+        //addLoginListener(loginEvent -> UI.getCurrent().navigate(loginConfirmCode.class));
 
         //ChangeLoginConfirmCode.class to MovieListView.class
         //addLoginListener(loginEvent -> UI.getCurrent().navigate(MovieListView.class));

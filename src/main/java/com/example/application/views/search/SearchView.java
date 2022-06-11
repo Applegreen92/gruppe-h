@@ -60,7 +60,8 @@ public class SearchView extends VerticalLayout {
                             ButtonVariant.LUMO_ERROR,
                             ButtonVariant.LUMO_TERTIARY);
                     //TODO get UserId from User in Column
-                    button.addClickListener(e -> UI.getCurrent().navigate(site));
+                    String adressPostFix = "profileView/" + User.getUsername();
+                    button.addClickListener(e -> UI.getCurrent().navigate(adressPostFix));
                     button.setIcon(new Icon(VaadinIcon.USER_CARD));
                 })).setHeader("View profile");
 

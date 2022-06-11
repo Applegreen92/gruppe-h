@@ -4,6 +4,7 @@ import com.example.application.data.Role;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
+import com.example.application.security.email.EmailSenderService;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,6 +63,13 @@ public class UserService {
             return authenticatedUser.get().get();
         }
         else return repository.findById(id);
+    }
+
+    public  User findByUsername(String username) {
+        if (username.isEmpty()) {
+            return authenticatedUser.get().get();
+        }
+        else return repository.findByUsername(username);
     }
     public void registerUser(User user){
         repository.save(user);

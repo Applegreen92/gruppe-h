@@ -28,17 +28,16 @@ import javax.annotation.security.PermitAll;
 
 
 
-@Route(value = "profileView/:userID?", layout = MainLayout.class)
+@Route(value = "profileView", layout = MainLayout.class)
 @PageTitle("Profile Page")
 @PermitAll
 @Uses(Icon.class)
-public class ProfileView extends VerticalLayout implements BeforeEnterObserver  {
+public class ProfileView extends VerticalLayout implements HasUrlParameter<String>  {
 
     private String userID;
 
     private final AuthenticatedUser authenticatedUser;
     private User user;
-    private User dummy;
     private UserService userService;
 
     Grid<User> grid = new Grid<>(User.class);
@@ -51,18 +50,15 @@ public class ProfileView extends VerticalLayout implements BeforeEnterObserver  
     private Button watchList = new Button("See Watchlist");
     private Button seeFriends = new Button("See Friends");
 
-
-
-
-
-
     private Binder<User> binder = new Binder<>(User.class);
 
 
+
+    //Warning USERNAME has to be UNIQUE
     public ProfileView(UserService userService, AuthenticatedUser authenticatedUser) {
         this.userService = userService;
         this.authenticatedUser = authenticatedUser;
-        this.user = user;
+
 
         addClassName("profile-view");
         add(createTitle());
@@ -70,11 +66,19 @@ public class ProfileView extends VerticalLayout implements BeforeEnterObserver  
         add(createButtonLayout());
         binder.bindInstanceFields(this);
         clearForm();
-
-        firstName.setValue(authenticatedUser.get().get().getFirstname());
-        lastName.setValue(authenticatedUser.get().get().getLastname());
-        email.setValue(authenticatedUser.get().get().getEmail());
+        if(this.user == null){
+            firstName.setValue(authenticatedUser.get().get().getFirstname());
+            lastName.setValue(authenticatedUser.get().get().getLastname());
+            email.setValue(authenticatedUser.get().get().getEmail());
+        }else {
+            firstName.setValue(user.getFirstname());
+            lastName.setValue(user.getLastname());
+            email.setValue(user.getEmail());
+        }
     }
+
+
+
 
     private void clearForm() {
         binder.setBean(new User());
@@ -82,6 +86,10 @@ public class ProfileView extends VerticalLayout implements BeforeEnterObserver  
 
     private Component createTitle() {
         return new H3("Personal information of " + authenticatedUser.get().get().getFirstname());
+    }
+
+    private Component updateTitle(User user) {
+        return new H3("Personal information of " + user.getFirstname());
     }
 
     private Component createFormLayout() {
@@ -110,9 +118,16 @@ public class ProfileView extends VerticalLayout implements BeforeEnterObserver  
 
 
     @Override
-    public void beforeEnter(BeforeEnterEvent event) {
-        userID = event.getRouteParameters().get("userID").
-                orElse(String.valueOf(authenticatedUser.get().get().getId()));
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String userName) {
+        if(userName == null) {
+        }
+        else {
+             this.user =userService.findByUsername(userName);
+             firstName.setValue(user.getFirstname());
+             lastName.setValue(user.getLastname());
+             email.setValue(user.getEmail());
+             updateTitle(user);
+        }
     }
 }
 
