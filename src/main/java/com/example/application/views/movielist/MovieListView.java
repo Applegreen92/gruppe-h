@@ -61,7 +61,6 @@ public class    MovieListView extends Div {
         configureGrid();
         add(getToolbar(), grid);
         updateList();
-
     }
 
 

@@ -5,7 +5,6 @@ import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
-import com.example.application.views.privacy.PrivacyView;
 import com.example.application.views.watchedMoviesList.WatchedMoviesView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
@@ -24,17 +23,22 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
 
+
 import javax.annotation.security.PermitAll;
 
 
-@Route(value = "profileView", layout = MainLayout.class)
+
+@Route(value = "profileView/:userID?", layout = MainLayout.class)
 @PageTitle("Profile Page")
 @PermitAll
 @Uses(Icon.class)
+public class ProfileView extends VerticalLayout implements BeforeEnterObserver  {
 
-public class ProfileView extends VerticalLayout {
+    private String userID;
 
     private final AuthenticatedUser authenticatedUser;
+    private User user;
+    private User dummy;
     private UserService userService;
 
     Grid<User> grid = new Grid<>(User.class);
@@ -46,7 +50,7 @@ public class ProfileView extends VerticalLayout {
     private Button watchedMovies = new Button("See watched Movies");
     private Button watchList = new Button("See Watchlist");
     private Button seeFriends = new Button("See Friends");
-    private Button privacy = new Button("Privacy Settings");
+
 
 
 
@@ -54,22 +58,22 @@ public class ProfileView extends VerticalLayout {
 
     private Binder<User> binder = new Binder<>(User.class);
 
+
     public ProfileView(UserService userService, AuthenticatedUser authenticatedUser) {
         this.userService = userService;
         this.authenticatedUser = authenticatedUser;
-        addClassName("profile-view");
+        this.user = user;
 
+        addClassName("profile-view");
         add(createTitle());
         add(createFormLayout());
         add(createButtonLayout());
-
         binder.bindInstanceFields(this);
         clearForm();
 
-       firstName.setValue(authenticatedUser.get().get().getFirstname());
-       lastName.setValue(authenticatedUser.get().get().getLastname());
-       email.setValue(authenticatedUser.get().get().getEmail());
-
+        firstName.setValue(authenticatedUser.get().get().getFirstname());
+        lastName.setValue(authenticatedUser.get().get().getLastname());
+        email.setValue(authenticatedUser.get().get().getEmail());
     }
 
     private void clearForm() {
@@ -92,21 +96,24 @@ public class ProfileView extends VerticalLayout {
         watchedMovies.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         watchList.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        privacy.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         //TODO switch MovieListView to WatchList and switch to personalized page
         watchedMovies.addClickListener(e -> UI.getCurrent().navigate(WatchedMoviesView.class));
         watchList.addClickListener((e -> UI.getCurrent().navigate(Watchlist.class)));
         seeFriends.addClickListener(e -> UI.getCurrent().navigate(FriendlistView.class));
-        privacy.addClickListener(e-> UI.getCurrent().navigate(PrivacyView.class));
 
         buttonLayout.add(watchedMovies);
         buttonLayout.add(watchList);
         buttonLayout.add(seeFriends);
-        buttonLayout.add(privacy);
         return buttonLayout;
     }
 
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        userID = event.getRouteParameters().get("userID").
+                orElse(String.valueOf(authenticatedUser.get().get().getId()));
+    }
 }
 
 

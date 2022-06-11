@@ -4,13 +4,7 @@ import com.example.application.data.Role;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
-import com.example.application.views.watchlist.Watchlist;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
-
-import com.example.application.security.email.EmailSenderService;
-import com.vaadin.ui.Notification;
-//import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +19,7 @@ public class UserService {
     private final EmailSenderService senderService;
 
     private AuthenticatedUser authenticatedUser;
+    private User user;
 
     @Autowired
     public UserService(UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser) {
@@ -59,6 +54,14 @@ public class UserService {
 
         }
         else return repository.search(stringFilter);
+    }
+
+    //Test for Routing
+    public  User findById(long id) {
+        if (id == 0 ) {
+            return authenticatedUser.get().get();
+        }
+        else return repository.findById(id);
     }
     public void registerUser(User user){
         repository.save(user);
