@@ -4,6 +4,7 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.profile.ProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -34,6 +35,9 @@ public class SearchView extends VerticalLayout {
     private final UserService userService;
     private AuthenticatedUser authenticatedUser;
 
+    String site = "http://localhost:8080/";
+
+
     public SearchView(UserService userService, AuthenticatedUser authenticatedUser) {
         this.userService = userService;
         this.authenticatedUser = authenticatedUser;
@@ -51,11 +55,12 @@ public class SearchView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("username", "name");
         grid.addColumn(
-                new ComponentRenderer<>(Button::new, (button, UI) -> {
+                new ComponentRenderer<>(Button::new, (button, User) -> {
                     button.addThemeVariants(ButtonVariant.LUMO_ICON,
                             ButtonVariant.LUMO_ERROR,
                             ButtonVariant.LUMO_TERTIARY);
-                    button.addClickListener(e -> switchTo());
+                    //TODO get UserId from User in Column
+                    button.addClickListener(e -> UI.getCurrent().navigate(site));
                     button.setIcon(new Icon(VaadinIcon.USER_CARD));
                 })).setHeader("View profile");
 
@@ -97,6 +102,11 @@ public class SearchView extends VerticalLayout {
         HorizontalLayout toolbar = new HorizontalLayout(filterText);
         toolbar.addClassName("toolbar");
         return toolbar;
+    }
+
+    public String returnURl(User user){
+        String pageExtension = user.getUsername();
+        return site+pageExtension;
     }
 
     private void updateList() {
