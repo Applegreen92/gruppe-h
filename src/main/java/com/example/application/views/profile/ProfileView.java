@@ -46,9 +46,13 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
     private TextField lastName = new TextField("Last name");
     private EmailField email = new EmailField("Email address");
 
+    private TextField userNameField = new TextField("User name");
+
     private Button watchedMovies = new Button("See watched Movies");
     private Button watchList = new Button("See Watchlist");
     private Button seeFriends = new Button("See Friends");
+
+    String siteRef = "http://localhost:8080/watchedMovies/";
 
     private Binder<User> binder = new Binder<>(User.class);
 
@@ -58,6 +62,7 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
     public ProfileView(UserService userService, AuthenticatedUser authenticatedUser) {
         this.userService = userService;
         this.authenticatedUser = authenticatedUser;
+        user = authenticatedUser.get().get();
 
 
         addClassName("profile-view");
@@ -70,10 +75,12 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
             firstName.setValue(authenticatedUser.get().get().getFirstname());
             lastName.setValue(authenticatedUser.get().get().getLastname());
             email.setValue(authenticatedUser.get().get().getEmail());
+            userNameField.setValue(authenticatedUser.get().get().getUsername());
         }else {
             firstName.setValue(user.getFirstname());
             lastName.setValue(user.getLastname());
             email.setValue(user.getEmail());
+            userNameField.setValue(user.getUsername());
         }
     }
 
@@ -85,16 +92,13 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     private Component createTitle() {
-        return new H3("Personal information of " + authenticatedUser.get().get().getFirstname());
+        return new H3("Personal information");
     }
 
-    private Component updateTitle(User user) {
-        return new H3("Personal information of " + user.getFirstname());
-    }
 
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
-        formLayout.add(firstName, lastName, email);
+        formLayout.add(firstName, lastName, email, userNameField);
         return formLayout;
     }
 
@@ -106,7 +110,10 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         //TODO switch MovieListView to WatchList and switch to personalized page
-        watchedMovies.addClickListener(e -> UI.getCurrent().navigate(WatchedMoviesView.class));
+
+        String siteComp = siteRef + user.getUsername();
+        watchedMovies.addClickListener(e -> UI.getCurrent().navigate(siteComp));
+        //TODO add watchlist and seeFriends URl
         watchList.addClickListener((e -> UI.getCurrent().navigate(Watchlist.class)));
         seeFriends.addClickListener(e -> UI.getCurrent().navigate(FriendlistView.class));
 
@@ -120,13 +127,15 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String userName) {
         if(userName == null) {
+            user = authenticatedUser.get().get();
         }
         else {
-             this.user =userService.findByUsername(userName);
+             user =userService.findByUsername(userName);
+             add(createButtonLayout());
              firstName.setValue(user.getFirstname());
              lastName.setValue(user.getLastname());
              email.setValue(user.getEmail());
-             updateTitle(user);
+             userNameField.setValue(user.getUsername());
         }
     }
 }

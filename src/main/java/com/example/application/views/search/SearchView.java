@@ -33,9 +33,12 @@ public class SearchView extends VerticalLayout {
     TextField filterText = new TextField();
 
     private final UserService userService;
+    private User user;
     private AuthenticatedUser authenticatedUser;
 
     String site = "http://localhost:8080/";
+
+
 
 
     public SearchView(UserService userService, AuthenticatedUser authenticatedUser) {
