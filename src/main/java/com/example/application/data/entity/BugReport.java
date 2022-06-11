@@ -29,6 +29,10 @@ public class BugReport {
         this.description = description;
     }
 
+    public BugReport(String test_description) {
+        this.description = test_description;
+    }
+
     public int getBugID() {
         return bugID;
     }

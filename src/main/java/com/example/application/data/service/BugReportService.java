@@ -5,16 +5,17 @@ import com.example.application.security.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class BugReportService {
 @Autowired
 private final EmailSenderService emailSenderService;
+
+        private  final UserService userService;
     public final BugReportRepository bugReportRepository;
     @Autowired
-    public BugReportService(EmailSenderService emailSenderService, BugReportRepository bugReportRepository) {
+    public BugReportService(EmailSenderService emailSenderService, UserService userService, BugReportRepository bugReportRepository) {
         this.emailSenderService = emailSenderService;
+        this.userService = userService;
         this.bugReportRepository = bugReportRepository;
     }
     public boolean insertBug(BugReport bugReport){
@@ -22,7 +23,7 @@ private final EmailSenderService emailSenderService;
             bugReportRepository.save(bugReport);
         }
         if(bugReport.getBugID() != 0){
-            //sendMailsToAdmin();
+            userService.sendAdminMail(bugReport.getDescription());
             return true;
         }else {
             return false;

@@ -1,5 +1,6 @@
 package com.example.application.data.service;
 
+import com.example.application.data.Role;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
@@ -7,6 +8,9 @@ import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 
+import com.example.application.security.email.EmailSenderService;
+import com.vaadin.ui.Notification;
+//import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +22,14 @@ import java.util.*;
 public class UserService {
 
     private final UserRepository repository;
+    private final EmailSenderService senderService;
 
     private AuthenticatedUser authenticatedUser;
 
     @Autowired
-    public UserService(UserRepository repository, AuthenticatedUser authenticatedUser) {
+    public UserService(UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser) {
         this.repository = repository;
+        this.senderService = senderService;
         this.authenticatedUser = authenticatedUser;
     }
 
@@ -61,6 +67,14 @@ public class UserService {
     public void insertWatchedList(User user, Movie movie){
         user.getWatchedMovies().add(movie);
         repository.save(user);
+    }
+
+    public void sendAdminMail(String bug) {
+        for (User user: findAllUsers(null)) {
+            if (user.getRoles().contains(Role.ADMIN) && user.getEmail() != null) {
+                senderService.sendEmail(user.getEmail(),"Bug Report", bug);
+            }
+        }
     }
 
     public String insertWatchList (User user, Movie movie){

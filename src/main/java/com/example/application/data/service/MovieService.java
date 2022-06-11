@@ -65,19 +65,19 @@ public class MovieService  {
         }
     }
 
-    public List<Movie> findAllMoviesByGenre(String genre) {
-        if (genre == null || genre.isEmpty()) {
+    public List<Movie> findAllMoviesByGenre(Genre genre) {
+        if (genre.getGenre() == null || genre.getGenre().isEmpty()) {
             return movieRepository.findAll();
         } else {
-//            List<Genre> genreList = new ArrayList();
-//            genreList = genreRepository.findAllByGenre(genre);
-//
-//            if(genreList.size() > 0){
-//                int selectedGenre = genreList.get(0).getGenreID();
-//            }
-//            return movieRepository.findAllByGenre(genre);
+            List<Genre> genreList = new ArrayList();
+            genreList = genreRepository.findAllByGenre(genre.getGenre());
+
+            if(genreList.size() > 0){
+                int selectedGenre = genreList.get(0).getGenreID();
+            }
+            return movieRepository.findAllMoviesByGenreList(genre);
         }
-        return null;
+        //return null;
     }
 
     public long countMovies() {

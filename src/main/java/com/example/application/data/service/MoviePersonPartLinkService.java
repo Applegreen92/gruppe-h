@@ -42,7 +42,7 @@ public class MoviePersonPartLinkService {
         // director = 1
         // Author = 2
         // Cast = 3
-        for(int x = 0; x < MovieList.size()-1; x++) {
+        for(int x = 0; x <= MovieList.size()-1; x++) {
             Movie movie = MovieList.get(x);
             for (int i = 0; i < movie.getGenreArrayList().size(); i++) {
                 if (genreRepository.findAllByGenre(movie.getGenreArrayList().get(i).getGenre()).isEmpty()) {

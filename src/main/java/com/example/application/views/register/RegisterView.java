@@ -1,8 +1,10 @@
 package com.example.application.views.register;
 
 import com.example.application.security.UserDetailsServiceImpl;
+import com.example.application.views.login.LoginView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.H2;
@@ -64,7 +66,8 @@ public class RegisterView extends Composite {
             Notification.show("Passwords don't match!");
         } else {
             authService.register(username, password1, vorname, nachname, geburtsdatum, email);
-            Notification.show("Registration successfull LOL ALS OB");
+            Notification.show("Registration successfull");
+            UI.getCurrent().navigate(LoginView.class);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.application.data.service;
 
+import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,8 +35,10 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 //            "(SELECT mg.genre_movieID from movie_genre mg" +
 //            " Where mg.movie_genreID IN " +
 //            "(SELECT g.genreid FROM genre g" +
-//            " WHERE g.genre = 'Action'))")
+//            " WHERE g.genre = :genreToFind))")
 //    List<Movie> findAllByGenre(@Param("genre")String genreToFind);
+
+    List<Movie> findAllMoviesByGenreList(Genre genre);
 
 //    List<Movie> findByTitleIgnoreCaseContaining(String searchTerm);
 }

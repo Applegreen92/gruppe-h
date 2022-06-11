@@ -30,6 +30,7 @@ import com.vaadin.flow.component.notification.Notification;
 import javax.annotation.security.PermitAll;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -77,12 +78,19 @@ public class    MovieListView extends Div {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-//        grid.setColumns("title", "releaseDate");
+        grid.setColumns("title", "releaseDate");
 //        grid.addColumn("genre");
-        grid.removeColumnByKey("movieID");
+//        grid.removeColumnByKey("movieID");
 
-        grid.setItems(movieRepository.findAll());
-        grid.addColumn(Movie::getGenres).setHeader("Genre");
+        //grid.setItems(movieRepository.findAll());
+        //grid.addColumn(Movie::getTitle).setHeader("Title");
+        //grid.addColumn(Movie::getReleaseDate).setHeader("Release Date");
+        grid.addColumn(Movie::getLength).setHeader("Length");
+        grid.addColumn(Movie::getGenreList).setHeader("Genre");
+//        grid.addColumn(Movie::getGenres).setHeader("Genre");
+
+        //grid.setItems(movieRepository.findAll());
+
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
@@ -136,6 +144,8 @@ public class    MovieListView extends Div {
         grid.setItems(movieService.findAllMoviesByTitle(filterText.getValue()));
     }
     private void updateListByGenre() {
-//         grid.setItems(movieService.findAllMoviesByGenre(String.valueOf(selectGenre.getValue())));
+        System.out.println(selectGenre.getValue().getGenre());
+
+         grid.setItems(movieService.findAllMoviesByGenre(selectGenre.getValue()));
     }
 }

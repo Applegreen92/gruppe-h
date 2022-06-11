@@ -126,7 +126,7 @@ public class Crawler {
                             Document focusMovie = Jsoup.connect(movieUrl).get();
 
                             //getting the Header Element f the Movies contains title, length, release
-                            Elements movieHeader = focusMovie.select("div.sc-94726ce4-1");
+                            Elements movieHeader = focusMovie.select("div.sc-94726ce4-2");
 
                             Elements movieHeaderList = movieHeader.select("ul.ipc-inline-list");
                             int countLiElement = 1;

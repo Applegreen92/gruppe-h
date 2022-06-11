@@ -1,6 +1,7 @@
 package com.example.application.views.addMovie;
 import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
+import com.example.application.data.service.MoviePersonPartLinkService;
 import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -17,6 +18,7 @@ import com.vaadin.flow.router.Route;
 import javax.annotation.security.PermitAll;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @PageTitle("AddMovie")
@@ -24,12 +26,15 @@ import java.util.ArrayList;
 @PermitAll
 public class AddMovie extends Div {
 
-    public AddMovie(MovieService movieService){
+    public AddMovie(MovieService movieService, MoviePersonPartLinkService moviePersonPartLinkService){
+        this.moviePersonPartLinkService = moviePersonPartLinkService;
         add(saveMovieLayout());
         this.movieService = movieService;
     }
 
     private final MovieService movieService;
+
+    private final MoviePersonPartLinkService moviePersonPartLinkService;
 
     private final ArrayList<Genre> genreList= new ArrayList();
     private final ArrayList<String> authorList= new ArrayList();
@@ -125,7 +130,9 @@ public class AddMovie extends Div {
         }else{
 
             Movie movie = new Movie(title,posterSrc,Integer.valueOf(releaseDate),Integer.valueOf(length),this.genreList,personDirector,this.authorList,this.castList);
-            movieService.addNewMovie(movie);
+            ArrayList<Movie> movieList = new ArrayList<>();
+            movieList.add(movie);
+            moviePersonPartLinkService.addNewMovie(movieList);
 
 
             this.textFieldTitle.clear();

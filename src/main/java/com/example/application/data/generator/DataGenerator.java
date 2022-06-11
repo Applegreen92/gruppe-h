@@ -64,6 +64,7 @@ public class DataGenerator {
             admin.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             admin.setRoles(Set.of(Role.USER, Role.ADMIN));
+            admin.setEmail("Felix.Bernardi@web.de");
             userRepository.save(admin);
             User test = new User();
             test.setName("Tester Testing");

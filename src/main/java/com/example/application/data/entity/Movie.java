@@ -38,17 +38,6 @@ public class Movie {
     }
 
     @Transient
-    private String genre = genreList.stream().map(Genre::toString).collect(Collectors.joining(", "));
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        genre = genre;
-    }
-
-    @Transient
     String personDirector;
     @Transient
     ArrayList<Genre> genreArrayList = new ArrayList<>();
