@@ -133,9 +133,24 @@ public class UserService {
         repository.save(user);
     }
     public void addFriend(User user, User user2) {
-        user.getFriends().add(user2);
-        repository.save(user);
+        if(user.getFriends().contains(user2)) {
+            return;
+        } else {
+            user.getFriends().add(user2);
+            repository.save(user);
+        }
     }
+
+    public boolean isFriend(User user, User user2) {
+        if (user.getFriends().contains(user2) && user2.getFriends().contains(user)) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void changePrivacyFriends(User user2, Integer integer) {
         if(user2.getFriendListPrivacy()==0) {
             user2.setFriendListPrivacy(integer);

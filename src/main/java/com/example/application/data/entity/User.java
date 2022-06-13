@@ -2,7 +2,6 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -34,7 +33,7 @@ public class User {
     private int watchedMoviesPrivacy; // public = 1, onlyFriends = 2, private = 3
 
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 

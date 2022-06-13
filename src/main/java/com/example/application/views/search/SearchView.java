@@ -4,7 +4,6 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.profile.ProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
