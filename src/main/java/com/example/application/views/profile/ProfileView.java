@@ -76,14 +76,9 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
             firstName.setValue(authenticatedUser.get().get().getFirstname());
             lastName.setValue(authenticatedUser.get().get().getLastname());
             email.setValue(authenticatedUser.get().get().getEmail());
-<<<<<<< Updated upstream
+
             userNameField.setValue(authenticatedUser.get().get().getUsername());
-        }else {
-||||||| ancestor
-        }else {
-=======
-        } else {
->>>>>>> Stashed changes
+        } else{
             firstName.setValue(user.getFirstname());
             lastName.setValue(user.getLastname());
             email.setValue(user.getEmail());
@@ -135,54 +130,55 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String userName) {
-<<<<<<< Updated upstream
-        if(userName == null) {
-            user = authenticatedUser.get().get();
-        }
-        else {
-             user =userService.findByUsername(userName);
-             add(createButtonLayout());
-             firstName.setValue(user.getFirstname());
-             lastName.setValue(user.getLastname());
-             email.setValue(user.getEmail());
-             userNameField.setValue(user.getUsername());
-||||||| ancestor
-        if(userName == null) {
-        }
-        else {
-             this.user =userService.findByUsername(userName);
-             firstName.setValue(user.getFirstname());
-             lastName.setValue(user.getLastname());
-             email.setValue(user.getEmail());
-             updateTitle(user);
-=======
+
         if (userName == null) {
+            user = authenticatedUser.get().get();
         } else {
-            this.user = userService.findByUsername(userName);
+            user = userService.findByUsername(userName);
+            add(createButtonLayout());
             firstName.setValue(user.getFirstname());
             lastName.setValue(user.getLastname());
             email.setValue(user.getEmail());
-            updateTitle(user);
-            //System.out.println((userService.isFriend(authenticatedUser.get().get(), user)));
-            for(User user : user.getFriends()){
-                System.out.println(user.getUsername());
-            }
-            for(User user: authenticatedUser.get().get().getFriends()){
-                System.out.println(user.getUsername());
-            }
-            if (user.getWatchedMoviesPrivacy() == 3) {
-                watchList.setVisible(false);
-            }
-            if (user.getWatchedMoviesPrivacy() == 2 && userService.isFriend(authenticatedUser.get().get(), user) == false) {
-                System.out.println("Not friends");
-                watchList.setVisible(false);
+            userNameField.setValue(user.getUsername());
+
+            if (userName == null) {
             } else {
-                watchList.setVisible(true);
+                this.user = userService.findByUsername(userName);
+                firstName.setValue(user.getFirstname());
+                lastName.setValue(user.getLastname());
+                email.setValue(user.getEmail());
+                updateTitle(user);
+
+                if (userName == null) {
+                } else {
+                    this.user = userService.findByUsername(userName);
+                    firstName.setValue(user.getFirstname());
+                    lastName.setValue(user.getLastname());
+                    email.setValue(user.getEmail());
+                    updateTitle(user);
+                    //System.out.println((userService.isFriend(authenticatedUser.get().get(), user)));
+                    for (User user : user.getFriends()) {
+                        System.out.println(user.getUsername());
+                    }
+                    for (User user : authenticatedUser.get().get().getFriends()) {
+                        System.out.println(user.getUsername());
+                    }
+                    if (user.getWatchedMoviesPrivacy() == 3) {
+                        watchList.setVisible(false);
+                    }
+                    if (user.getWatchedMoviesPrivacy() == 2 && userService.isFriend(authenticatedUser.get().get(), user) == false) {
+                        System.out.println("Not friends");
+                        watchList.setVisible(false);
+                    } else {
+                        watchList.setVisible(true);
+                    }
+                }
+
             }
->>>>>>> Stashed changes
         }
     }
 }
+
 
 
 
