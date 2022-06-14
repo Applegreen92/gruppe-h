@@ -113,21 +113,16 @@ public class    MovieListView extends Div {
         return toolbar;
     }
     public  Component saveInWatchlistButton(){
-        List<Movie> movieSet = new ArrayList<>();
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-//        grid.addSelectionListener(event -> {
-//            movieSet.clear();
-//            movieSet.addAll(event.getAllSelectedItems().stream().toList());
-//        });
 
 
         Button button = new Button("Save in Watchlist",
                 event -> {
+                    List<Movie> movieSet = new ArrayList<>();
                     movieSet.addAll(grid.getSelectedItems());
-                    String response = userService.insertWatchList(movieSet);
+                    String response = userService.insertWatchList(authenticatedUser.get().get(), movieSet);
                     Notification.show(response);
-                    movieSet.clear();
                     grid.deselectAll();
 
 

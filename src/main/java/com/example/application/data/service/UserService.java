@@ -88,8 +88,8 @@ public class UserService {
         }
     }
 
-    public String insertWatchList (List<Movie> movieList){
-        User user = authenticatedUser.get().get();
+    public String insertWatchList (User user, List<Movie> movieList){
+
         List<Movie> watchlist = user.getWatchList();
         List<Movie> watchedMovies = user.getWatchedMovies();
         for (Movie movieFromWatchlist  : watchlist){
@@ -109,10 +109,19 @@ public class UserService {
         }
 
         watchlist.addAll(movieList);
+
+        user.setWatchList(new ArrayList<>());
+        repository.save(user);
         user.setWatchList(watchlist);
-        repository.saveAndFlush(user);
-        return "Movie saved in Watchlist";
+        try {
+            repository.save(user).setWatchList(watchlist);
+            return "Movie saved in Watchlist";
+        }catch(Exception e){
+            e.getSuppressed();
+        }
+        return "This is fine";
     }
+
 
     public void deleteWatchlist(User user, List<Movie> movieSet) throws ConcurrentModificationException {
         List<Movie> watchlist = user.getWatchList();
