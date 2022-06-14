@@ -37,7 +37,7 @@ public class User {
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "watche_User_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watch_Movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchList = new ArrayList<>();
 

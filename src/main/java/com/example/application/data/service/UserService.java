@@ -30,15 +30,15 @@ public class UserService {
         this.authenticatedUser = authenticatedUser;
     }
 
-        public Optional<User> get(UUID id) {
-            return repository.findById(id);
-        }
+    public Optional<User> get(UUID id) {
+        return repository.findById(id);
+    }
 
-        public User update(User entity) {
-            return repository.save(entity);
-        }
+    public User update(User entity) {
+        return repository.save(entity);
+    }
 
-        public void delete(UUID id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
     }
 
@@ -54,38 +54,36 @@ public class UserService {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return repository.findAll();
 
-        }
-        else return repository.search(stringFilter);
+        } else return repository.search(stringFilter);
     }
 
     //Test for Routing
-    public  User findById(long id) {
-        if (id == 0 ) {
+    public User findById(long id) {
+        if (id == 0) {
             return authenticatedUser.get().get();
-        }
-        else return repository.findById(id);
+        } else return repository.findById(id);
     }
 
-    public  User findByUsername(String username) {
+    public User findByUsername(String username) {
         if (username.isEmpty()) {
             return authenticatedUser.get().get();
-        }
-        else return repository.findByUsername(username);
+        } else return repository.findByUsername(username);
     }
-    public void registerUser(User user){
+
+    public void registerUser(User user) {
         repository.save(user);
     }
 
-    public boolean insertWatchedList(User user, Movie movie){
+    public boolean insertWatchedList(User user, Movie movie) {
         boolean movieDoesExists = false;
-        for(Movie movie2: user.getWatchedMovies()) {
-            if(movie.getMovieID() != movie2.getMovieID()){
+        for (Movie movie2 : user.getWatchedMovies()) {
+            if (movie.getMovieID() != movie2.getMovieID()) {
 
-            }else{
+            } else {
                 movieDoesExists = true;
             }
         }
-        if(movieDoesExists == false) {
+        if (movieDoesExists == false) {
             user.getWatchedMovies().add(movie);
             repository.save(user);
             return true;
@@ -94,28 +92,27 @@ public class UserService {
     }
 
     public void sendAdminMail(String bug) {
-        for (User user: findAllUsers(null)) {
+        for (User user : findAllUsers(null)) {
             if (user.getRoles().contains(Role.ADMIN) && user.getEmail() != null) {
-                senderService.sendEmail(user.getEmail(),"Bug Report", bug);
+                senderService.sendEmail(user.getEmail(), "Bug Report", bug);
             }
         }
     }
 
-    public String insertWatchList (User user, List<Movie> movieList){
+    public String insertWatchList(User user, List<Movie> movieList) {
 
         List<Movie> watchlist = user.getWatchList();
         List<Movie> watchedMovies = user.getWatchedMovies();
-        for (Movie movieFromWatchlist  : watchlist){
-            for(Movie newMovie : movieList) {
-                if (newMovie.getMovieID() == movieFromWatchlist.getMovieID()) {
-                    break;
-                }
-            }
 
-        }
-        for (Movie movieFromWatchedMovies : watchedMovies){
-            for(Movie newMovie : movieList) {
-                if (newMovie.getMovieID() == movieFromWatchedMovies.getMovieID()) {
+
+        for (int i = 0, iSize = movieList.size(); i < iSize; i++) {
+            Movie newMovie = movieList.get(i);
+            for (int j = 0, jSize = watchlist.size(); j < jSize; j++) {
+                Movie movieWatchlist = watchlist.get(j);
+                if (newMovie.getMovieID() == movieWatchlist.getMovieID()) {
+                    movieList.remove(i);
+                    i--;
+                    iSize--;
                     break;
                 }
             }
@@ -123,16 +120,10 @@ public class UserService {
 
         watchlist.addAll(movieList);
 
-        user.setWatchList(new ArrayList<>());
-        repository.save(user);
         user.setWatchList(watchlist);
-        try {
-            repository.save(user).setWatchList(watchlist);
-            return "Movie saved in Watchlist";
-        }catch(Exception e){
-            e.getSuppressed();
-        }
-        return "This is fine";
+        repository.save(user);
+        return "Movie/s Saved on Watchlist";
+
     }
 
 
