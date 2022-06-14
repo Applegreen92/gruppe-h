@@ -85,11 +85,9 @@ public class MovieService  {
     }
 
 
-    /*public List<Movie> findWatchedMovies(String stringFilter){
-
-
-       return movieRepository.watched(stringFilter);
-    }*/
+//    public List<Movie> findWatchedMovies(String stringFilter){
+//       return movieRepository.watched(stringFilter);
+//    }
 
 
 }

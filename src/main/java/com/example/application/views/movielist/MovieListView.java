@@ -74,17 +74,10 @@ public class    MovieListView extends Div {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("title", "releaseDate");
-//        grid.addColumn("genre");
-//        grid.removeColumnByKey("movieID");
 
-        //grid.setItems(movieRepository.findAll());
-        //grid.addColumn(Movie::getTitle).setHeader("Title");
-        //grid.addColumn(Movie::getReleaseDate).setHeader("Release Date");
         grid.addColumn(Movie::getLength).setHeader("Length");
         grid.addColumn(Movie::getGenreList).setHeader("Genre");
-//        grid.addColumn(Movie::getGenres).setHeader("Genre");
 
-        //grid.setItems(movieRepository.findAll());
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {

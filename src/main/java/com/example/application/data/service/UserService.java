@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 
 @Service
@@ -29,15 +30,15 @@ public class UserService {
         this.authenticatedUser = authenticatedUser;
     }
 
-    public Optional<User> get(UUID id) {
-        return repository.findById(id);
-    }
+        public Optional<User> get(UUID id) {
+            return repository.findById(id);
+        }
 
-    public User update(User entity) {
-        return repository.save(entity);
-    }
+        public User update(User entity) {
+            return repository.save(entity);
+        }
 
-    public void delete(UUID id) {
+        public void delete(UUID id) {
         repository.deleteById(id);
     }
 
@@ -75,9 +76,21 @@ public class UserService {
         repository.save(user);
     }
 
-    public void insertWatchedList(User user, Movie movie){
-        user.getWatchedMovies().add(movie);
-        repository.save(user);
+    public boolean insertWatchedList(User user, Movie movie){
+        boolean movieDoesExists = false;
+        for(Movie movie2: user.getWatchedMovies()) {
+            if(movie.getMovieID() != movie2.getMovieID()){
+
+            }else{
+                movieDoesExists = true;
+            }
+        }
+        if(movieDoesExists == false) {
+            user.getWatchedMovies().add(movie);
+            repository.save(user);
+            return true;
+        }
+        return false;
     }
 
     public void sendAdminMail(String bug) {

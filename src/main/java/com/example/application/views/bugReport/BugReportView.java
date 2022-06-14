@@ -63,15 +63,15 @@ public class BugReportView extends Div{
         VerticalLayout layout = new VerticalLayout();
         layout.add(Topic);
         layout.add(Description);
-        Topic.setMaxLength(255);
+        Topic.setMaxLength(250);
         Topic.setValueChangeMode(ValueChangeMode.EAGER);
         Topic.addValueChangeListener(e -> {
-            e.getSource().setHelperText(e.getValue().length() + "/" + 255);
+            e.getSource().setHelperText(e.getValue().length() + "/" + 250);
         });
-        Description.setMaxLength(1000);
+        Description.setMaxLength(999);
         Description.setValueChangeMode(ValueChangeMode.EAGER);
         Description.addValueChangeListener(e -> {
-            e.getSource().setHelperText(e.getValue().length() + "/" + 1000);
+            e.getSource().setHelperText(e.getValue().length() + "/" + 999);
         });
         Description.setWidthFull();
         layout.setPadding(true);

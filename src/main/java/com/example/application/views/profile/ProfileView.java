@@ -147,7 +147,7 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
                 firstName.setValue(user.getFirstname());
                 lastName.setValue(user.getLastname());
                 email.setValue(user.getEmail());
-                updateTitle(user);
+                //updateTitle(user);
 
                 if (userName == null) {
                 } else {
@@ -155,7 +155,7 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
                     firstName.setValue(user.getFirstname());
                     lastName.setValue(user.getLastname());
                     email.setValue(user.getEmail());
-                    updateTitle(user);
+                    //updateTitle(user);
                     //System.out.println((userService.isFriend(authenticatedUser.get().get(), user)));
                     for (User user : user.getFriends()) {
                         System.out.println(user.getUsername());
