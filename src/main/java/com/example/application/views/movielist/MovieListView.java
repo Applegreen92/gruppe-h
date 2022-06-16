@@ -2,6 +2,7 @@ package com.example.application.views.movielist;
 
 import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.Review;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.GenreService;
 import com.example.application.data.service.MovieRepository;
@@ -9,7 +10,9 @@ import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.example.application.views.reviews.GiveReviewView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -88,6 +91,18 @@ public class    MovieListView extends Div {
                     userService.insertWatchedList(getCurrentUser(), Movie));
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
+
+        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
+            button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                    ButtonVariant.LUMO_TERTIARY);
+            button.addClickListener(e->{
+                UI.getCurrent().navigate(GiveReviewView.class);
+            });
+            button.setIcon(new Icon(VaadinIcon.EDIT));
+        })).setHeader("review");
+
+
+
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -124,6 +139,16 @@ public class    MovieListView extends Div {
 
     return button;
     }
+    public Component goToReview(){
+
+
+
+        return null;
+    }
+
+
+
+
         private void updateList() {
         grid.setItems(movieService.findAllMoviesByTitle(filterText.getValue()));
     }

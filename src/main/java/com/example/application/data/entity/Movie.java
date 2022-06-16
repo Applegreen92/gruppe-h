@@ -2,10 +2,8 @@ package com.example.application.data.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -33,12 +31,19 @@ public class Movie {
     )
     private List<Genre> genreList = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "movie_reviews")
-    List<Bewertung> reviewList = new ArrayList<>();
+
+
 
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 
     @Transient
@@ -49,6 +54,9 @@ public class Movie {
     ArrayList<Person> personAuthorList = new ArrayList<>();
     @Transient
     ArrayList<Person> personCastList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "movie", orphanRemoval = true)
+    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "movie")
     private Set<MoviePersonPartLink> moviePersonPartLink;
