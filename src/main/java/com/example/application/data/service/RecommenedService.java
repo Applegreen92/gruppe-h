@@ -45,11 +45,18 @@ public class RecommenedService {
         int[] genreCounts =new int[genreList.size()];
         int mostViewedGenreInt = 0;
         int mostviewedGenreIndex = 0;
-        copyWatchedList = this.authenticatedUser.get().get().getWatchedMovies();
+        if(authenticatedUser.get().get().getRecommandedMoviesPrivacy() == 0){
+          copyWatchedList = this.authenticatedUser.get().get().getWatchedMovies();
+        }else {
+            for(int i = 0; i < this.authenticatedUser.get().get().getFriends().size(); i++){
+                copyWatchedList.addAll(this.authenticatedUser.get().get().getFriends().get(i).getWatchedMovies());
+            }
+        }
+
         for (Movie movie: copyWatchedList) {
-            for (Genre genre: movie.getGenreArrayList()) {
+            for (Genre genre: movie.getGenreList()) {
                 for(int i= 0; i<genreList.size(); i++) {
-                    if(genre == genreList.get(i)) {
+                    if(genre.getGenre().equals(genreList.get(i).getGenre())) {
                         genreCounts[i]++;
                     };
                 }
@@ -63,4 +70,33 @@ public class RecommenedService {
         }
         return genreList.get(mostviewedGenreIndex);
     }
+
+//    private Genre genreCountByFriends() {
+//        List<Movie> copyWatchedList = new ArrayList<>();
+//        List<Genre> genreList = genreRepository.findAll();
+//        int[] genreCounts =new int[genreList.size()];
+//        int mostViewedGenreInt = 0;
+//        int mostviewedGenreIndex = 0;
+//
+//        for(int i = 0; i < this.authenticatedUser.get().get().getFriends().size(); i++){
+//            copyWatchedList.addAll(this.authenticatedUser.get().get().getFriends().get(i).getWatchedMovies());
+//        }
+//
+//        for (Movie movie: copyWatchedList) {
+//            for (Genre genre: movie.getGenreArrayList()) {
+//                for(int i= 0; i<genreList.size(); i++) {
+//                    if(genre == genreList.get(i)) {
+//                        genreCounts[i]++;
+//                    };
+//                }
+//            }
+//        }
+//        for(int i= 0; i<genreCounts.length; i++) {
+//            if (genreCounts[i] > mostViewedGenreInt) {
+//                mostViewedGenreInt = genreCounts[i];
+//                mostviewedGenreIndex = i;
+//            }
+//        }
+//        return genreList.get(mostviewedGenreIndex);
+//    }
 }

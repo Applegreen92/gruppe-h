@@ -48,21 +48,21 @@ public class RecommendedView extends Main implements HasComponents, HasStyle {
         container.addClassNames("items-center", "justify-between");
 
         VerticalLayout headerContainer = new VerticalLayout();
-        H2 header = new H2("Beautiful photos");
-        header.addClassNames("mb-0", "mt-xl", "text-3xl");
-        Paragraph description = new Paragraph("Royalty free photos and pictures, courtesy of Unsplash");
-        description.addClassNames("mb-xl", "mt-0", "text-secondary");
-        headerContainer.add(header, description);
+        //H2 header = new H2("Beautiful photos");
+//        header.addClassNames("mb-0", "mt-xl", "text-3xl");
+//        Paragraph description = new Paragraph("Royalty free photos and pictures, courtesy of Unsplash");
+//        description.addClassNames("mb-xl", "mt-0", "text-secondary");
+        //headerContainer.add(header, description);
 
-        Select<String> sortBy = new Select<>();
-        sortBy.setLabel("Sort by");
-        sortBy.setItems("Popularity", "Newest first", "Oldest first");
-        sortBy.setValue("Popularity");
+//        Select<String> sortBy = new Select<>();
+//        sortBy.setLabel("Sort by");
+//        sortBy.setItems("Popularity", "Newest first", "Oldest first");
+//        sortBy.setValue("Popularity");
 
         imageContainer = new OrderedList();
         imageContainer.addClassNames("gap-m", "grid", "list-none", "m-0", "p-0");
 
-        container.add(header, sortBy);
+        //container.add(header, sortBy);
         add(container, imageContainer);
 
     }

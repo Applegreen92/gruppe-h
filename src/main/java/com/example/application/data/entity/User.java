@@ -32,6 +32,16 @@ public class User {
     private int watchListPrivacy; // public = 1, onlyFriends = 2, private = 3
     private int watchedMoviesPrivacy; // public = 1, onlyFriends = 2, private = 3
 
+    public int getRecommandedMoviesPrivacy() {
+        return recommandedMoviesPrivacy;
+    }
+
+    public void setRecommandedMoviesPrivacy(int recommandedMoviesPrivacy) {
+        this.recommandedMoviesPrivacy = recommandedMoviesPrivacy;
+    }
+
+    private int recommandedMoviesPrivacy; // myWatchedMovies = 0, FriendsWatchedMovies = 1
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
@@ -190,22 +200,22 @@ public class User {
 
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", name='" + name + '\'' +
-                ", friends=" + friends +
-                ", watchList=" + watchList +
-                ", watchedMovies=" + watchedMovies +
-                ", email='" + email + '\'' +
-                ", geburtsdatum=" + geburtsdatum +
-                ", hashedPassword='" + hashedPassword + '\'' +
-                ", roles=" + roles +
-                ", profilePictureUrl='" + profilePictureUrl + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", name='" + name + '\'' +
+//                ", friends=" + friends +
+//                ", watchList=" + watchList +
+//                ", watchedMovies=" + watchedMovies +
+//                ", email='" + email + '\'' +
+//                ", geburtsdatum=" + geburtsdatum +
+//                ", hashedPassword='" + hashedPassword + '\'' +
+//                ", roles=" + roles +
+//                ", profilePictureUrl='" + profilePictureUrl + '\'' +
+//                '}';
+//    }
 }

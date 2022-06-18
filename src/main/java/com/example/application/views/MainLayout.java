@@ -2,6 +2,7 @@ package com.example.application.views;
 
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
+import com.example.application.views.RecommendedView.RecommendedView;
 import com.example.application.views.addMovie.AddMovie;
 import com.example.application.views.bugReport.BugReportView;
 import com.example.application.views.chat.ChatView;
@@ -162,6 +163,8 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Watchlist", "la la-eye", Watchlist.class), //
 
                 new MenuItemInfo("Friend List","la la-users", FriendlistView.class),
+
+                new MenuItemInfo("Recommended Movies","la la-th-list", RecommendedView.class),
 
         };
     }

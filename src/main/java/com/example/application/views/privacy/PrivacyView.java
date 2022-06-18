@@ -26,6 +26,8 @@ import javax.annotation.security.PermitAll;
         Grid<User> watchListGrid = new Grid<>(User.class,false);
         Grid<User> watchedMoviesGrid = new Grid<>(User.class,false);
 
+        Grid<User> recommandedMoviesGrid = new Grid<>(User.class,false);
+
 
         private final UserService userService;
         private final AuthenticatedUser authenticatedUser;
@@ -37,10 +39,12 @@ import javax.annotation.security.PermitAll;
             configureFriendGrid();
             configureWatchListGrid();
             configureWatchedGrid();
+            configureRecommandedMoviesGrid();
 
             add(friendGrid);
             add(watchListGrid);
             add(watchedMoviesGrid);
+            add(recommandedMoviesGrid);
             updateList();
         }
 
@@ -145,10 +149,35 @@ import javax.annotation.security.PermitAll;
             watchedMoviesGrid.getColumns().forEach(col -> col.setAutoWidth(true));
             watchedMoviesGrid.setAllRowsVisible(true);
         }
+        private void configureRecommandedMoviesGrid() {
+            recommandedMoviesGrid.addClassNames("privacy-grid");
+            recommandedMoviesGrid.setColumns("recommandedMoviesPrivacy");
+            recommandedMoviesGrid.addColumn(
+                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                        button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                                ButtonVariant.LUMO_ERROR,
+                                ButtonVariant.LUMO_TERTIARY);
+                        button.addClickListener(e -> userService.changePrivacyRecommandedMovies(User,0));
+                        button.setIcon(new Icon(VaadinIcon.LOCK));
+                    })).setHeader("My Watched Movies");
+
+            recommandedMoviesGrid.addColumn(
+                    new ComponentRenderer<>(Button::new, (button, User) -> {
+                        button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                                ButtonVariant.LUMO_ERROR,
+                                ButtonVariant.LUMO_TERTIARY);
+                        button.addClickListener(e-> userService.changePrivacyRecommandedMovies(User,1));
+                        button.setIcon(new Icon(VaadinIcon.GLOBE));
+                    })).setHeader("Friends Watches Movies");
+
+            recommandedMoviesGrid.getColumns().forEach(col -> col.setAutoWidth(true));
+            recommandedMoviesGrid.setAllRowsVisible(true);
+        }
 
         private void updateList() {
             friendGrid.setItems(authenticatedUser.get().get());
             watchListGrid.setItems(authenticatedUser.get().get());
             watchedMoviesGrid.setItems(authenticatedUser.get().get());
+            recommandedMoviesGrid.setItems(authenticatedUser.get().get());
         }
 }

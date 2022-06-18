@@ -186,6 +186,18 @@ public class UserService {
 
         }
     }
+    public void changePrivacyRecommandedMovies(User user2, Integer integer) {
+        if(user2.getRecommandedMoviesPrivacy()==0) {
+            user2.setRecommandedMoviesPrivacy(integer);
+            repository.save(user2);
+
+        }
+        else if(user2.getRecommandedMoviesPrivacy()==1 && integer != 1) {
+            user2.setRecommandedMoviesPrivacy(integer);
+            repository.save(user2);
+        }
+        else Notification.show("No changes done");
+    }
     public void changePrivacyWatchList(User user3, Integer integer) {
         if(user3.getWatchListPrivacy()==0) {
             user3.setWatchListPrivacy(integer);
@@ -224,15 +236,4 @@ public class UserService {
         }
         else Notification.show("No changes done");
     }
-
-    public void sendAdminMail(String bug) {
-        for (User user: findAllUsers(null)) {
-            if (user.getRoles().contains(Role.ADMIN) && user.getEmail() != null) {
-                senderService.sendEmail(user.getEmail(),"Bug Report", bug);
-            }
-        }
-    }
-
-
-
 }

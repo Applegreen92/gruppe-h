@@ -23,6 +23,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.PermitAll;
 
@@ -59,6 +60,7 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
 
 
     //Warning USERNAME has to be UNIQUE
+    @Autowired
     public ProfileView(UserService userService, AuthenticatedUser authenticatedUser) {
         this.userService = userService;
         this.authenticatedUser = authenticatedUser;
