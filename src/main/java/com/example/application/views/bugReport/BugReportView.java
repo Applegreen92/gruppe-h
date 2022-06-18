@@ -2,7 +2,6 @@ package com.example.application.views.bugReport;
 
 import com.example.application.data.entity.BugReport;
 import com.example.application.data.service.BugReportService;
-import com.example.application.security.email.EmailSenderService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -15,7 +14,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.PermitAll;
 
@@ -78,4 +76,6 @@ public class BugReportView extends Div{
         layout.add(createExecButton());
         return layout;
     }
+
+
 }

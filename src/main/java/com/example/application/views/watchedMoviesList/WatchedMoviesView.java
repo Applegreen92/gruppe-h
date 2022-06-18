@@ -44,7 +44,7 @@ public class WatchedMoviesView extends VerticalLayout implements HasUrlParameter
     }
 
 
-
+    //todo check for necessity of this
     private User getCurrentUser(){
         Optional<User> maybeUser = authenticatedUser.get();
         if (maybeUser.isPresent()) {

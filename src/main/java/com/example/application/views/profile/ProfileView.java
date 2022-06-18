@@ -6,7 +6,6 @@ import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
 import com.example.application.views.privacy.PrivacyView;
-import com.example.application.views.watchedMoviesList.WatchedMoviesView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -67,6 +66,8 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
 
 
         addClassName("profile-view");
+
+
         add(createTitle());
         add(createFormLayout());
         add(createButtonLayout());
@@ -85,7 +86,24 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
             userNameField.setValue(user.getUsername());
         }
     }
+    public ProfileView(UserService userService, AuthenticatedUser authenticatedUser, String username) {
+        this.userService = userService;
+        this.authenticatedUser = authenticatedUser;
+        addClassName("profile-view");
 
+
+        add(createTitle());
+        add(createFormLayout());
+        add(createButtonLayout());
+
+        binder.bindInstanceFields(this);
+        clearForm();
+
+        firstName.setValue(authenticatedUser.get().get().getFirstname());
+        lastName.setValue(authenticatedUser.get().get().getLastname());
+        email.setValue(authenticatedUser.get().get().getEmail());
+
+    }
 
     private void clearForm() {
         binder.setBean(new User());
