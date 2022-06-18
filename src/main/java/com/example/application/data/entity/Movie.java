@@ -1,5 +1,7 @@
 package com.example.application.data.entity;
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

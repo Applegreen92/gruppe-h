@@ -38,7 +38,7 @@ import java.util.*;
 @Route(value ="" , layout = MainLayout.class)
 @PermitAll
 
-public class    MovieListView extends Div {
+public class MovieListView extends Div {
     private final AuthenticatedUser authenticatedUser;
 
     Grid<Movie> grid = new Grid<>(Movie.class);
@@ -92,11 +92,13 @@ public class    MovieListView extends Div {
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
 
-        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
+        grid.addColumn(new ComponentRenderer<>(Button::new, (button, movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e->{
-                UI.getCurrent().navigate(GiveReviewView.class);
+
+                UI.getCurrent().navigate(GiveReviewView.class,movie.getMovieID());
+
             });
             button.setIcon(new Icon(VaadinIcon.EDIT));
         })).setHeader("review");
@@ -139,12 +141,7 @@ public class    MovieListView extends Div {
 
     return button;
     }
-    public Component goToReview(){
 
-
-
-        return null;
-    }
 
 
 

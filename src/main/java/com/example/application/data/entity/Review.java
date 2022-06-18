@@ -8,7 +8,7 @@ public class Review {
 
 
 
-    public Review( String userReview, int starReviewOntToFive) {
+    public Review( String userReview, int starReviewOntToFive ) {
         this.starReviewOntToFive = starReviewOntToFive;
         this.userReview = userReview;
 
@@ -28,7 +28,7 @@ public class Review {
             generator = "Bewertung_Sequenz"
     )
     private int ID;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "movie_ID")
     private Movie movie;
 
