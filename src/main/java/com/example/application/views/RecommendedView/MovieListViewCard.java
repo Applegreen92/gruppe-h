@@ -1,4 +1,4 @@
-package com.example.application.views.movielist;
+package com.example.application.views.RecommendedView;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;

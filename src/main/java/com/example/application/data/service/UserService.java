@@ -225,4 +225,14 @@ public class UserService {
         else Notification.show("No changes done");
     }
 
+    public void sendAdminMail(String bug) {
+        for (User user: findAllUsers(null)) {
+            if (user.getRoles().contains(Role.ADMIN) && user.getEmail() != null) {
+                senderService.sendEmail(user.getEmail(),"Bug Report", bug);
+            }
+        }
+    }
+
+
+
 }
