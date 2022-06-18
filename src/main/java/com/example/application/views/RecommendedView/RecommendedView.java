@@ -1,9 +1,7 @@
 package com.example.application.views.RecommendedView;
 
 import com.example.application.data.entity.Movie;
-import com.example.application.data.service.MovieService;
 import com.example.application.data.service.RecommenedService;
-import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasStyle;
@@ -17,21 +15,24 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("RecommendedMovies")
-@Route(value = "image-list", layout = MainLayout.class)
+@Route(value = "recommendedmovies", layout = MainLayout.class)
+@PermitAll
 public class RecommendedView extends Main implements HasComponents, HasStyle {
 
     private OrderedList imageContainer;
     private final RecommenedService recommenedService;
 
 
-    public RecommendedView(RecommenedService recommenedService, MovieService movieService, AuthenticatedUser authenticatedUser) {
+    public RecommendedView(RecommenedService recommenedService) {
 
         this.recommenedService = recommenedService;
         constructUI();
 
         for(Movie movie: recommenedService.getRecommendedMovies()) {
-            imageContainer.add(new MovieListViewCard(movie.getTitle(),
+            imageContainer.add(new MovieListViewCard(movie.getTitle(),movie.getReleaseDate(),
                     movie.getPosterSrc(), movie.getGenreList().toString()));
         }
 
