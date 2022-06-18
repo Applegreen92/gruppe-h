@@ -97,12 +97,22 @@ public class MovieListView extends Div {
                     ButtonVariant.LUMO_ERROR,
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e->{
-
                 UI.getCurrent().navigate(GiveReviewView.class,movie.getMovieID());
-
             });
             button.setIcon(new Icon(VaadinIcon.EDIT));
         })).setHeader("review");
+
+
+        //Button navigates to MovieView
+        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
+            button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                    ButtonVariant.LUMO_ERROR,
+                    ButtonVariant.LUMO_TERTIARY);
+            button.addClickListener(e->
+                    UI.getCurrent().navigate(siteRef + Movie.getMovieID()));
+            button.setIcon(new Icon(VaadinIcon.ARROW_RIGHT));
+        })).setHeader("See details");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
 
 
