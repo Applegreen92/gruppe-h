@@ -62,8 +62,8 @@ public class SearchView extends VerticalLayout {
                             ButtonVariant.LUMO_ERROR,
                             ButtonVariant.LUMO_TERTIARY);
                     //TODO get UserId from User in Column
-                    String adressPostFix = "profileView/" + User.getUsername();
-                    button.addClickListener(e -> UI.getCurrent().navigate(adressPostFix));
+                    String addressPostFix = "profileView/" + User.getUsername();
+                    button.addClickListener(e -> UI.getCurrent().navigate(addressPostFix));
                     button.setIcon(new Icon(VaadinIcon.USER_CARD));
                 })).setHeader("View profile");
 
@@ -106,7 +106,7 @@ public class SearchView extends VerticalLayout {
         toolbar.addClassName("toolbar");
         return toolbar;
     }
-
+    //todo figure out if this has to be used
     public String returnURl(User user){
         String pageExtension = user.getUsername();
         return site+pageExtension;

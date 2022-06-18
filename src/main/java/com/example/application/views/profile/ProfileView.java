@@ -6,7 +6,6 @@ import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.friendlist.FriendlistView;
 import com.example.application.views.privacy.PrivacyView;
-import com.example.application.views.watchedMoviesList.WatchedMoviesView;
 import com.example.application.views.watchlist.Watchlist;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;

@@ -65,6 +65,19 @@ public class MovieService  {
         }
     }
 
+    public Movie findByTitle(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return null;
+        } else {
+            if(movieRepository.title(stringFilter).size()>0){
+                System.out.println(movieRepository.title(stringFilter).get(0).getTitle());
+            }
+            return movieRepository.title(stringFilter).get(0);
+        }
+    }
+
+
+
     public List<Movie> findAllMoviesByGenre(Genre genre) {
         if (genre.getGenre() == null || genre.getGenre().isEmpty()) {
             return movieRepository.findAll();

@@ -31,6 +31,9 @@ public class Movie {
     )
     private List<Genre> genreList = new ArrayList<>();
 
+   /* @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "movie_reviews")
+    List<Bewertung> reviewList = new ArrayList<>();*/
 
 
 
@@ -165,6 +168,8 @@ public class Movie {
     public int getLength() {
         return length;
     }
+
+
 
     public void setMovieID(int movieID) {
         this.movieID = movieID;

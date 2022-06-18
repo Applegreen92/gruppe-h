@@ -35,7 +35,7 @@ import java.util.*;
 
 
 @PageTitle("MovieList")
-@Route(value ="" , layout = MainLayout.class)
+@Route(value ="movieList" , layout = MainLayout.class)
 @PermitAll
 
 public class    MovieListView extends Div {
@@ -48,13 +48,14 @@ public class    MovieListView extends Div {
     private final MovieService movieService;
     private final GenreService genreService;
     private final UserService userService;
-    private final MovieRepository movieRepository;
+
+
+    String siteRef = "http://localhost:8080/movieView/";
     public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService, MovieRepository movieRepository) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
         this.genreService = genreService;
         this.userService = userService;
-        this.movieRepository = movieRepository;
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
@@ -77,12 +78,11 @@ public class    MovieListView extends Div {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
         grid.setColumns("title", "releaseDate");
-
         grid.addColumn(Movie::getLength).setHeader("Length");
         grid.addColumn(Movie::getGenreList).setHeader("Genre");
-
-
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
+
+        //Button, inserts movie in WatchedList
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_ERROR,
@@ -92,17 +92,16 @@ public class    MovieListView extends Div {
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Tag Movie as Watched");
 
+        //Button navigates to MovieView
+
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                    ButtonVariant.LUMO_ERROR,
                     ButtonVariant.LUMO_TERTIARY);
-            button.addClickListener(e->{
-                UI.getCurrent().navigate(GiveReviewView.class);
-            });
-            button.setIcon(new Icon(VaadinIcon.EDIT));
-        })).setHeader("review");
-
-
-
+            button.addClickListener(e->
+                    UI.getCurrent().navigate(siteRef + Movie.getMovieID()));
+            button.setIcon(new Icon(VaadinIcon.ARROW_RIGHT));
+        })).setHeader("See details");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
@@ -123,8 +122,6 @@ public class    MovieListView extends Div {
     public  Component saveInWatchlistButton(){
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
-
-
         Button button = new Button("Save in Watchlist",
                 event -> {
                     List<Movie> movieSet = new ArrayList<>();
@@ -132,11 +129,7 @@ public class    MovieListView extends Div {
                     String response = userService.insertWatchList(authenticatedUser.get().get(), movieSet);
                     Notification.show(response);
                     grid.deselectAll();
-
-
                 });
-
-
     return button;
     }
     public Component goToReview(){

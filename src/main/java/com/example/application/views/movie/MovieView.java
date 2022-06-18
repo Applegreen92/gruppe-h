@@ -3,6 +3,7 @@ package com.example.application.views.movie;
 
 import com.example.application.data.entity.Movie;
 import com.example.application.data.service.MovieRepository;
+import com.example.application.data.service.MovieService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -12,39 +13,41 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 
 import javax.annotation.security.PermitAll;
-import java.awt.*;
 
-@PageTitle("MovieView")
+
+@PageTitle("Movie View")
 @Route(value ="movieView" , layout = MainLayout.class)
 @PermitAll
-public class MovieView implements HasUrlParameter<String> {
+public class MovieView extends VerticalLayout implements HasUrlParameter<String> {
 
     private Movie displayedMovie;
     private Image poster;
-    private TextField name;
-    private TextField genre;
-    private TextField writer;
-    private TextField cast;
-    private TextField releaseDate;
-    private TextField length;
-    private TextField director;
+    private TextField name = new TextField();
+    private TextField genre = new TextField();
+    private TextField writer = new TextField();
+    private TextField cast = new TextField();
+    private TextField releaseDate = new TextField();
+    private TextField length = new TextField();
+    private TextField director = new TextField();
+
+    private final MovieService movieService;
+    private final MovieRepository movieRepository;
 
     private Button previousPage = new Button("See watched Movies");
 
 
 
-    public MovieView (MovieRepository movieRepository){
-        createTitle();
-        displayImage();
-        createFormLayout();
-        createButtonLayout();
+    public MovieView (MovieService movieService, MovieRepository movieRepository){
+
+        this.movieService = movieService;
+        this.movieRepository = movieRepository;
+
+
 
     }
 
@@ -59,21 +62,23 @@ public class MovieView implements HasUrlParameter<String> {
 
     private void fillTextFields(){
         this.name.setValue(displayedMovie.getTitle());
+        //todo genre dosnt work
         this.genre.setValue(displayedMovie.getGenres());
-        //todo check if toString() actually works----------------------------------------------------------
-        this.writer.setValue(displayedMovie.getPersonAuthorList().toString());
-        this.cast.setValue(displayedMovie.getPersonCastList().toString());
+        //todo fix this--------------------------------------------------------
+        //this.writer.setValue(displayedMovie.getPersonAuthorList().toString());
+        //this.cast.setValue(displayedMovie.getPersonCastList().toString());
+        //this.director.setValue(displayedMovie.getPersonDirector());
         //todo ------------------------------------------------------------------------------------------
-        this.director.setValue(displayedMovie.getPersonDirector());
         this.releaseDate.setValue(String.valueOf(displayedMovie.getReleaseDate()));
         this.length.setValue(String.valueOf(displayedMovie.getLength()));
+
     }
 
 
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         previousPage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        previousPage.addClickListener(e -> UI.getCurrent().navigate("http://localhost:8080/MovieList"));
+        previousPage.addClickListener(e -> UI.getCurrent().navigate("http://localhost:8080/movieList"));
         return buttonLayout;
     }
 
@@ -86,14 +91,26 @@ public class MovieView implements HasUrlParameter<String> {
 
 
     @Override
-    public void setParameter(BeforeEvent event, String parameter) {
-        if(parameter == null){
-            UI.getCurrent().navigate("http://localhost:8080/MovieList");
+    public void setParameter(BeforeEvent event, @OptionalParameter String title) {
+        if(title== null || title.isEmpty()){
+
+            this.name.setValue("Fehler");
+            this.genre.setValue("Fehler");
+            this.writer.setValue(("Fehler"));
+            this.cast.setValue(("Fehler"));
+            this.director.setValue("Fehler");
+            this.releaseDate.setValue("Fehler");
+            this.length.setValue("Fehler");
+
         }
         else{
+            this.displayedMovie = movieRepository.getById(Integer.valueOf(title));
+            add(createTitle());
+            add(createFormLayout());
+            add(createButtonLayout());
             displayImage();
             fillTextFields();
-            createFormLayout();
+
         }
     }
 }

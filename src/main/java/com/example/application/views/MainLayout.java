@@ -8,6 +8,7 @@ import com.example.application.views.chat.ChatView;
 import com.example.application.views.crawler.CrawlerView;
 import com.example.application.views.friendlist.FriendlistView;
 import com.example.application.views.login.LoginView;
+import com.example.application.views.movie.MovieView;
 import com.example.application.views.movielist.MovieListView;
 import com.example.application.views.personform.PersonFormView;
 import com.example.application.views.profile.ProfileView;
@@ -161,6 +162,7 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Watchlist", "la la-eye", Watchlist.class), //
 
                 new MenuItemInfo("Friend List","la la-users", FriendlistView.class),
+
         };
     }
 
