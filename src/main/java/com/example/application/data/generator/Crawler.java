@@ -99,7 +99,7 @@ public class Crawler {
                     //System.out.println(body);
 
                     if (!body.isEmpty()) {
-                        getPoster(body);
+                        //getPoster(body);
                         //System.out.println(posterLink.toString());
 
                         //Elements movieImage = movies.select("img.loadlate");
@@ -127,6 +127,16 @@ public class Crawler {
 
                             //getting the Header Element f the Movies contains title, length, release
                             Elements movieHeader = focusMovie.select("div.sc-94726ce4-2");
+
+                            //getting Postersrc
+                            Elements moviePoster = focusMovie.select("a.ipc-lockup-overlay");
+                            String linkHref = moviePoster.attr("href");
+                            Document focusPoster = Jsoup.connect("https://www.imdb.com" + linkHref).get();
+                            Elements moviePosterSrc = focusPoster.select("div.sc-7c0a9e7c-2");
+                            Elements moviePosterSrc2 = moviePosterSrc.select("img.sc-7c0a9e7c-0");
+                            String moviePosterSrcLink = moviePosterSrc2.attr("src");
+                            posterLink.add(moviePosterSrcLink);
+                            //getPoster(body);
 
                             Elements movieHeaderList = movieHeader.select("ul.ipc-inline-list");
                             int countLiElement = 1;
@@ -243,8 +253,8 @@ public class Crawler {
 
 
     public void getPoster(Elements body) {
-        for (Element movieImage : body.select("img.loadlate")) {
-            String moviePoster = movieImage.attr("loadlate");
+        for (Element movieImage : body.select("img.sc-7c0a9e7c-0 hXPlvk")) {
+            String moviePoster = movieImage.attr("sc-7c0a9e7c-0 hXPlvk");
             posterLink.add(moviePoster);
 
         }
