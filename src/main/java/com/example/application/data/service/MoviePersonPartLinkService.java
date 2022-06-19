@@ -26,7 +26,6 @@ public class MoviePersonPartLinkService {
     }
 
     public void addNewMovie(ArrayList<Movie> MovieList) {
-        System.out.println("Test");
         if(partRepository.findAllByPartName("director").isEmpty()){
             Part partDirector = new Part("director");
             partRepository.save(partDirector);
