@@ -26,16 +26,18 @@ public class Movie {
     private String posterSrc;
     private int releaseDate;
     private int length;
-    @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "movieGenre",
             joinColumns = @JoinColumn(name = "genre_movieID",referencedColumnName = "movieID"),
             inverseJoinColumns = @JoinColumn(name = "movie_genreID",referencedColumnName = "genreID")
     )
     private List<Genre> genreList = new ArrayList<>();
 
-   /* @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "movie_reviews")
-    List<Bewertung> reviewList = new ArrayList<>();*/
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+    @JoinTable(name = "movie_reviews",
+    joinColumns = @JoinColumn( referencedColumnName = "movieID"),
+    inverseJoinColumns = @JoinColumn(referencedColumnName = "reviewID"))
+    List<Review> reviewList = new ArrayList<>();
 
 
 
@@ -60,8 +62,6 @@ public class Movie {
     @Transient
     ArrayList<Person> personCastList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie", orphanRemoval = true)
-    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "movie")
     private Set<MoviePersonPartLink> moviePersonPartLink;

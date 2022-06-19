@@ -8,9 +8,10 @@ public class Review {
 
 
 
-    public Review( String userReview, int starReviewOntToFive ) {
+    public Review( String userReview, int starReviewOntToFive, Long userID ) {
         this.starReviewOntToFive = starReviewOntToFive;
         this.userReview = userReview;
+        this.userID = userID;
 
     }
 
@@ -27,10 +28,17 @@ public class Review {
             strategy = GenerationType.SEQUENCE,
             generator = "Bewertung_Sequenz"
     )
-    private int ID;
-    @ManyToOne()
-    @JoinColumn(name = "movie_ID")
-    private Movie movie;
+    private int reviewID;
+
+    private Long userID;
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID() {
+        this.userID = userID;
+    }
 
     private int starReviewOntToFive;
 
@@ -49,7 +57,7 @@ public class Review {
     }
 
     public int getReviewId() {
-        return ID;
+        return reviewID;
     }
 
     public int getStarReviewOntToFive() {

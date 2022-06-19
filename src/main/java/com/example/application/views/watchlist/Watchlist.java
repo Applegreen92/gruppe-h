@@ -6,6 +6,7 @@ import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -91,6 +92,8 @@ public class Watchlist extends Div {
 
                     movieSet.addAll(grid.getSelectedItems());
                     userService.deleteWatchlist(authenticatedUser.get().get(), movieSet);
+                    grid.deselectAll();
+                    UI.getCurrent().getPage().reload();
 
 
 

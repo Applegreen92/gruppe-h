@@ -29,6 +29,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.server.Page;
 import com.vaadin.flow.component.notification.Notification;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 
 import javax.annotation.security.PermitAll;
 import java.util.*;
@@ -94,7 +95,6 @@ public class MovieListView extends Div {
 
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
-                    ButtonVariant.LUMO_ERROR,
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e->{
                 UI.getCurrent().navigate(GiveReviewView.class,movie.getMovieID());
@@ -143,6 +143,7 @@ public class MovieListView extends Div {
                     String response = userService.insertWatchList(authenticatedUser.get().get(), movieSet);
                     Notification.show(response);
                     grid.deselectAll();
+
                 });
     return button;
     }
