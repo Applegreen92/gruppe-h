@@ -13,10 +13,13 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.server.Page;
 
 import javax.annotation.security.PermitAll;
+import java.util.concurrent.TimeUnit;
 
 @PageTitle("Privacy Settings")
     @Route(value ="PrivacySettings" , layout = MainLayout.class)
@@ -47,8 +50,6 @@ import javax.annotation.security.PermitAll;
             add(watchedMoviesGrid);
             add(recommendedMoviesGrid);
             updateList();
-            userService.updatePrivacyString(authenticatedUser.get().get());
-            userService.updateRecommendedPrivacyString(authenticatedUser.get().get());
         }
 
         private void configureFriendGrid() {
@@ -61,7 +62,9 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e -> {
                             userService.changePrivacyFriends(User,1);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
+
                             });
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
                     })).setHeader("PUBLIC");
@@ -73,7 +76,9 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyFriends(User,2);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
+
                         });
                         button.setIcon(new Icon(VaadinIcon.USERS));
                     })).setHeader("ONLY FRIENDS");
@@ -85,7 +90,9 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyFriends(User,3);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
+
                         });
                         button.setIcon(new Icon(VaadinIcon.LOCK));
                     })).setHeader("PRIVATE");
@@ -105,6 +112,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e -> {
                             userService.changePrivacyWatchList(User2,1);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
@@ -117,6 +125,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyWatchList(User2,2);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.USERS));
@@ -129,6 +138,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyWatchList(User2,3);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.LOCK));
@@ -148,6 +158,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e -> {
                             userService.changePrivacyWatched(User3,1);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
@@ -160,6 +171,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyWatched(User3,2);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.USERS));
@@ -172,6 +184,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyWatched(User3,3);
+                            userService.updatePrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.LOCK));
@@ -190,6 +203,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e -> {
                                     userService.changePrivacyRecommendedMovies(User, 0);
+                                    userService.updateRecommendedPrivacyString(authenticatedUser.get().get());
                                     UI.getCurrent().getPage().reload();
                                 });
                         button.setIcon(new Icon(VaadinIcon.LOCK));
@@ -202,6 +216,7 @@ import javax.annotation.security.PermitAll;
                                 ButtonVariant.LUMO_TERTIARY);
                         button.addClickListener(e-> {
                             userService.changePrivacyRecommendedMovies(User,1);
+                            userService.updateRecommendedPrivacyString(authenticatedUser.get().get());
                             UI.getCurrent().getPage().reload();
                         });
                         button.setIcon(new Icon(VaadinIcon.GLOBE));
