@@ -52,6 +52,11 @@ public class User {
     @JoinTable(name = "user_watched_movies", joinColumns = @JoinColumn(name = "watcheed_User_ID",referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watched_movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchedMovies = new ArrayList<>();
 
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+    @JoinTable(name = "user_recommendation",
+            joinColumns = @JoinColumn(referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "recommendationID"))
+    List<Recommendation> recommendations = new ArrayList<>();
 
 
 

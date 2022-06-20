@@ -5,6 +5,7 @@ import com.example.application.data.service.MovieService;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.example.application.views.MovieFriendRecommend.GetRecommendationFriendView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -75,8 +76,12 @@ public class Watchlist extends Div {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
+        Button button = new Button("Friend Recommendations");
+        button.addClickListener(event -> {
+           UI.getCurrent().navigate(GetRecommendationFriendView.class);
+        });
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, DeleteFromWatchlistButtonPlusGrid());
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, DeleteFromWatchlistButtonPlusGrid(),button);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
