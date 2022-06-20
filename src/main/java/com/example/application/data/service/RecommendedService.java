@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-public class RecommenedService {
+public class RecommendedService {
 
     private final MovieService movieService;
     private final AuthenticatedUser authenticatedUser;
@@ -17,7 +17,7 @@ public class RecommenedService {
     private Genre mostviewedGenre;
 
     @Autowired
-    public RecommenedService(MovieService movieService, AuthenticatedUser authenticatedUser, GenreRepository genreRepository) {
+    public RecommendedService(MovieService movieService, AuthenticatedUser authenticatedUser, GenreRepository genreRepository) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
         this.genreRepository = genreRepository;
@@ -45,7 +45,7 @@ public class RecommenedService {
         int[] genreCounts =new int[genreList.size()];
         int mostViewedGenreInt = 0;
         int mostviewedGenreIndex = 0;
-        if(authenticatedUser.get().get().getRecommandedMoviesPrivacy() == 0){
+        if(authenticatedUser.get().get().getRecommendedMoviesPrivacy() == 0){
           copyWatchedList = this.authenticatedUser.get().get().getWatchedMovies();
         }else {
             for(int i = 0; i < this.authenticatedUser.get().get().getFriends().size(); i++){

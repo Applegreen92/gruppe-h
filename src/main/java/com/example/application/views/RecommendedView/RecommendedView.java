@@ -1,7 +1,7 @@
 package com.example.application.views.RecommendedView;
 
 import com.example.application.data.entity.Movie;
-import com.example.application.data.service.RecommenedService;
+import com.example.application.data.service.RecommendedService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasStyle;
@@ -11,7 +11,6 @@ import com.vaadin.flow.component.html.OrderedList;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -25,13 +24,13 @@ import java.util.List;
 public class RecommendedView extends Main implements HasComponents, HasStyle {
 
     private OrderedList imageContainer;
-    private final RecommenedService recommenedService;
+    private final RecommendedService recommendedService;
 
-    private List<Movie> recommenedMovieList = new ArrayList<>();
+    private List<Movie> recommendedMovieList = new ArrayList<>();
 
-    public RecommendedView(RecommenedService recommenedService) {
+    public RecommendedView(RecommendedService recommendedService) {
         constructUI();
-        this.recommenedService = recommenedService;
+        this.recommendedService = recommendedService;
 
 //        recommenedMovieList.addAll(recommenedService.getRecommendedMovies());
 //        for(int i = 0; i < recommenedMovieList.size(); i++){
@@ -45,7 +44,7 @@ public class RecommendedView extends Main implements HasComponents, HasStyle {
 //                    recommenedMovieList.get(i).getPosterSrc(), recommenedMovieList.get(i).getGenreList().toString()));
 //        }
 
-        for(Movie movie: recommenedService.getRecommendedMovies()) {
+        for(Movie movie: recommendedService.getRecommendedMovies()) {
             imageContainer.add(new MovieListViewCard(movie.getTitle(),movie.getReleaseDate(),
                     movie.getPosterSrc(), movie.getGenreList().toString()));
         }

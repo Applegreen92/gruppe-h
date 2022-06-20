@@ -35,15 +35,9 @@ public class User {
     private String watchListP;
     private String watchedMoviesP;
 
-    public int getRecommandedMoviesPrivacy() {
-        return recommandedMoviesPrivacy;
-    }
 
-    public void setRecommandedMoviesPrivacy(int recommandedMoviesPrivacy) {
-        this.recommandedMoviesPrivacy = recommandedMoviesPrivacy;
-    }
-
-    private int recommandedMoviesPrivacy; // myWatchedMovies = 0, FriendsWatchedMovies = 1
+    private int recommendedMoviesPrivacy; // myWatchedMovies = 0, FriendsWatchedMovies = 1
+    private String recommendedP;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -198,6 +192,15 @@ public class User {
     public String getWatchedMoviesP() { return watchedMoviesP; }
 
     public void setWatchedMoviesP(String watchedMoviesP) { this.watchedMoviesP = watchedMoviesP; }
+
+    public int getRecommendedMoviesPrivacy() { return recommendedMoviesPrivacy; }
+
+    public void setRecommendedMoviesPrivacy(int recommendedMoviesPrivacy) { this.recommendedMoviesPrivacy = recommendedMoviesPrivacy; }
+
+    public String getRecommendedP() { return recommendedP; }
+
+    public void setRecommendedP(String recommendedP) { this.recommendedP = recommendedP; }
+
 
     public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum, String email ) {
         this.username = username;

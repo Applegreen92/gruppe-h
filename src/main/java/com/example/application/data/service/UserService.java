@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.*;
 
 @Service
@@ -220,14 +219,14 @@ public class UserService {
 
         }
     }
-    public void changePrivacyRecommandedMovies(User user2, Integer integer) {
-        if(user2.getRecommandedMoviesPrivacy()==0) {
-            user2.setRecommandedMoviesPrivacy(integer);
+    public void changePrivacyRecommendedMovies(User user2, Integer integer) {
+        if(user2.getRecommendedMoviesPrivacy()==0) {
+            user2.setRecommendedMoviesPrivacy(integer);
             repository.save(user2);
 
         }
-        else if(user2.getRecommandedMoviesPrivacy()==1 && integer != 1) {
-            user2.setRecommandedMoviesPrivacy(integer);
+        else if(user2.getRecommendedMoviesPrivacy()==1 && integer != 1) {
+            user2.setRecommendedMoviesPrivacy(integer);
             repository.save(user2);
         }
         else Notification.show("No changes done");
@@ -269,6 +268,17 @@ public class UserService {
             repository.save(user4);
         }
         else Notification.show("No changes done");
+    }
+
+    public void updateRecommendedPrivacyString(User user) {
+        if(user.getRecommendedMoviesPrivacy() == 0) {
+            user.setRecommendedP("MY WATCHED MOVIES");
+            repository.save(user);
+        }
+        else if (user.getRecommendedMoviesPrivacy() == 1) {
+            user.setRecommendedP("FRIENDS WATCHED MOVIES");
+            repository.save(user);
+        }
     }
 
     public void updatePrivacyString(User user) {
