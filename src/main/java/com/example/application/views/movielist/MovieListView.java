@@ -103,7 +103,14 @@ public class MovieListView extends Div {
             button.setIcon(new Icon(VaadinIcon.EDIT));
         })).setHeader("review");
 
-        sendMovieRecommendation();
+        grid.addColumn(new ComponentRenderer<>(Button::new, (button, movie) -> {
+            button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                    ButtonVariant.LUMO_TERTIARY);
+            button.addClickListener(e->{
+                UI.getCurrent().navigate(FriendRecommendMovieView.class,movie.getMovieID());
+            });
+            button.setIcon(new Icon(VaadinIcon.GLASSES));
+        })).setHeader("recommend to ...");
 
         //Button navigates to MovieView
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
@@ -120,28 +127,6 @@ public class MovieListView extends Div {
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
-
-    public void sendMovieRecommendation(){
-        ComboBox<User> userSelect = new ComboBox<>("User");
-        userSelect.setPlaceholder("Select user");
-        userSelect.setItems(userService.getAllUser());
-
-
-
-
-        grid.addColumn(new ComponentRenderer<>(ComboBox<User>::new, (userBox, movie) -> {
-
-
-            userBox.setPlaceholder("Choose user");
-            userBox.setItems(userService.getAllUser());
-            userBox.setItemLabelGenerator(User::getUsername);
-
-            Button button = new Button("Send");
-            grid.addColumn()
-
-    })).setHeader("Recommend to");
-    }
-
 
     private HorizontalLayout getToolbar() {
         filterText.setPlaceholder("Filter by name...");
