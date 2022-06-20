@@ -2,14 +2,11 @@ package com.example.application.views.movielist;
 
 import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
-import com.example.application.data.entity.Review;
 import com.example.application.data.entity.User;
-import com.example.application.data.service.GenreService;
-import com.example.application.data.service.MovieRepository;
-import com.example.application.data.service.MovieService;
-import com.example.application.data.service.UserService;
+import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
+import com.example.application.views.MovieFriendRecommend.FriendRecommendMovieView;
 import com.example.application.views.reviews.GiveReviewView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -20,19 +17,21 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.server.Page;
 import com.vaadin.flow.component.notification.Notification;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 
 import javax.annotation.security.PermitAll;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 @PageTitle("MovieList")
@@ -51,12 +50,14 @@ public class MovieListView extends Div {
     private final UserService userService;
 
 
+
     String siteRef = "http://localhost:8080/movieView/";
-    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService, MovieRepository movieRepository) {
+    public MovieListView(MovieService movieService, AuthenticatedUser authenticatedUser, GenreService genreService, UserService userService, MovieRepository movieRepository, UserRepository userRepository) {
         this.movieService = movieService;
         this.authenticatedUser = authenticatedUser;
         this.genreService = genreService;
         this.userService = userService;
+
         addClassName("movie-view");
         setSizeFull();
         configureGrid();
@@ -91,7 +92,7 @@ public class MovieListView extends Div {
             button.addClickListener(e->
                     userService.insertWatchedList(getCurrentUser(), Movie));
             button.setIcon(new Icon(VaadinIcon.PLUS));
-        })).setHeader("Tag Movie as Watched");
+        })).setHeader("Watched");
 
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, movie) -> {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
@@ -102,6 +103,7 @@ public class MovieListView extends Div {
             button.setIcon(new Icon(VaadinIcon.EDIT));
         })).setHeader("review");
 
+        sendMovieRecommendation();
 
         //Button navigates to MovieView
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
@@ -118,6 +120,28 @@ public class MovieListView extends Div {
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
+
+    public void sendMovieRecommendation(){
+        ComboBox<User> userSelect = new ComboBox<>("User");
+        userSelect.setPlaceholder("Select user");
+        userSelect.setItems(userService.getAllUser());
+
+
+
+
+        grid.addColumn(new ComponentRenderer<>(ComboBox<User>::new, (userBox, movie) -> {
+
+
+            userBox.setPlaceholder("Choose user");
+            userBox.setItems(userService.getAllUser());
+            userBox.setItemLabelGenerator(User::getUsername);
+
+            Button button = new Button("Send");
+            grid.addColumn()
+
+    })).setHeader("Recommend to");
+    }
+
 
     private HorizontalLayout getToolbar() {
         filterText.setPlaceholder("Filter by name...");

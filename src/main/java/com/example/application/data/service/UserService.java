@@ -327,4 +327,8 @@ public class UserService {
         }
     }
 
+
+    public List<User> getAllUser(){
+        return repository.findAll();
+    }
 }
