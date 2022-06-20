@@ -161,43 +161,58 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
             email.setValue(user.getEmail());
             userNameField.setValue(user.getUsername());
 
-            if (userName == null) {
-            } else {
-                this.user = userService.findByUsername(userName);
-                firstName.setValue(user.getFirstname());
-                lastName.setValue(user.getLastname());
-                email.setValue(user.getEmail());
 
-
-                if (userName == null) {
-                } else {
-                    this.user = userService.findByUsername(userName);
-                    firstName.setValue(user.getFirstname());
-                    lastName.setValue(user.getLastname());
-                    email.setValue(user.getEmail());
-
-                    //System.out.println((userService.isFriend(authenticatedUser.get().get(), user)));
-                    for (User user : user.getFriends()) {
-                        System.out.println(user.getUsername());
-                    }
-                    for (User user : authenticatedUser.get().get().getFriends()) {
-                        System.out.println(user.getUsername());
-                    }
-                    if (user.getWatchedMoviesPrivacy() == 3) {
-                        watchList.setVisible(false);
-                    }
-                    if (user.getWatchedMoviesPrivacy() == 2 && userService.isFriend(authenticatedUser.get().get(), user) == false) {
-                        System.out.println("Not friends");
-                        watchList.setVisible(false);
-                    } else {
-                        watchList.setVisible(true);
-                    }
-                }
-
-            }
+            updatePrivacy(user, authenticatedUser.get().get());
+            privacy.setVisible(false);
         }
     }
-}
+
+
+            public void updatePrivacy(User user, User authUser) {
+                if (user.getWatchListPrivacy() == 3) {
+                    watchList.setVisible(false);
+                }
+                else if (user.getWatchListPrivacy() == 2 && userService.isFriend(user, authUser) == false) {
+                    System.out.println("Not friends");
+                    watchList.setVisible(false);
+                }
+                else if (user.getWatchListPrivacy() == 2 && userService.isFriend(user, authUser) == true) {
+                    System.out.println("true friends");
+                    watchList.setVisible(true);
+                }
+                else if(user.getWatchListPrivacy() == 1 ) {
+                    watchList.setVisible(true);
+                }
+                if (user.getWatchedMoviesPrivacy() == 3) {
+                    watchedMovies.setVisible(false);
+                }
+                else if (user.getWatchedMoviesPrivacy() == 2 && userService.isFriend(user, authUser) == false) {
+                    System.out.println("Not friends");
+                    watchedMovies.setVisible(false);
+                }
+                else if (user.getWatchedMoviesPrivacy() == 2 && userService.isFriend(user, authUser) == true) {
+                    System.out.println("true friends");
+                    watchedMovies.setVisible(true);
+                }
+                else if(user.getWatchedMoviesPrivacy() == 1 ) {
+                    watchedMovies.setVisible(true);
+                }
+                if (user.getFriendListPrivacy() == 3) {
+                    seeFriends.setVisible(false);
+                }
+                else if (user.getFriendListPrivacy() == 2 && userService.isFriend(user, authUser) == false) {
+                    System.out.println("Not friends");
+                    seeFriends.setVisible(false);
+                }
+                else if (user.getFriendListPrivacy() == 2 && userService.isFriend(user, authUser) == true) {
+                    System.out.println("true friends");
+                    seeFriends.setVisible(true);
+                }
+                else if(user.getFriendListPrivacy() == 1 ) {
+                    seeFriends.setVisible(true);
+                }
+            }
+        }
 
 
 

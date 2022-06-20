@@ -14,9 +14,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     User findByUsername(String username);
 
-    /*@Query("select c from user_friends" + "where (c.id) like (:user))")
-    List<User> friends(@Param("user")User user);*/
-
     User findById(Long id);
 
     @Query("select c from User c " +

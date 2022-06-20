@@ -31,6 +31,9 @@ public class User {
     private int friendListPrivacy; // public = 1, onlyFriends = 2, private = 3
     private int watchListPrivacy; // public = 1, onlyFriends = 2, private = 3
     private int watchedMoviesPrivacy; // public = 1, onlyFriends = 2, private = 3
+    private String friendListP;
+    private String watchListP;
+    private String watchedMoviesP;
 
     public int getRecommandedMoviesPrivacy() {
         return recommandedMoviesPrivacy;
@@ -184,6 +187,18 @@ public class User {
         this.watchedMoviesPrivacy = watchedMoviesPrivacy;
     }
 
+    public String getFriendListP() { return friendListP; }
+
+    public void setFriendListP(String friendListP) { this.friendListP = friendListP; }
+
+    public String getWatchListP() { return watchListP; }
+
+    public void setWatchListP(String watchListP) { this.watchListP = watchListP; }
+
+    public String getWatchedMoviesP() { return watchedMoviesP; }
+
+    public void setWatchedMoviesP(String watchedMoviesP) { this.watchedMoviesP = watchedMoviesP; }
+
     public User(String username , String password1, String vorname, String nachname, LocalDate geburtsdatum, String email ) {
         this.username = username;
         this.firstname = vorname;
@@ -200,22 +215,22 @@ public class User {
 
     }
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", username='" + username + '\'' +
-//                ", firstname='" + firstname + '\'' +
-//                ", lastname='" + lastname + '\'' +
-//                ", name='" + name + '\'' +
-//                ", friends=" + friends +
-//                ", watchList=" + watchList +
-//                ", watchedMovies=" + watchedMovies +
-//                ", email='" + email + '\'' +
-//                ", geburtsdatum=" + geburtsdatum +
-//                ", hashedPassword='" + hashedPassword + '\'' +
-//                ", roles=" + roles +
-//                ", profilePictureUrl='" + profilePictureUrl + '\'' +
-//                '}';
-//    }
+    //@Override
+   /* public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", name='" + name + '\'' +
+                ", friends=" + friends +
+                ", watchList=" + watchList +
+                ", watchedMovies=" + watchedMovies +
+                ", email='" + email + '\'' +
+                ", geburtsdatum=" + geburtsdatum +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", roles=" + roles +
+                ", profilePictureUrl='" + profilePictureUrl + '\'' +
+                '}';
+    }*/
 }

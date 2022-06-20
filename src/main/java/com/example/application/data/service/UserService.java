@@ -154,12 +154,46 @@ public class UserService {
         }
     }
 
-    public boolean isFriend(User user, User user2) {
-        if (user.getFriends().contains(user2) && user2.getFriends().contains(user)) {
-
-            return true;
+    public boolean isFriendTest(User user5, User user6) {
+        boolean found = false;
+        for(User friend : user5.getFriends()) {
+            if (friend.getUsername() == user6.getUsername()) {
+                found = true;
+                break;
+            } else {
+                continue;
+            }
         }
-        else {
+            return found;
+    }
+
+    public void printFriends(User user) {
+        for(User friend : user.getFriends()) {
+            System.out.print(friend.getUsername() + " ");
+        }
+    }
+
+
+    public boolean isFriend(User user0, User user1) {
+        boolean userB = false;
+        boolean user2B = false;
+        for (User friend : user0.getFriends()) {
+            if (friend.getUsername().equals(user1.getUsername())) {
+                userB = true;
+                break;
+            } else { continue; }
+            }
+        for (User friend : user1.getFriends()) {
+            if (friend.getUsername().equals(user0.getUsername())) {
+                user2B = true;
+                break;
+            } else {
+                continue;
+            }
+        }
+        if (userB && user2B == true) {
+            return true;
+        } else {
             return false;
         }
     }
@@ -236,4 +270,51 @@ public class UserService {
         }
         else Notification.show("No changes done");
     }
+
+    public void updatePrivacyString(User user) {
+        if (user.getWatchListPrivacy() == 0) {
+            user.setWatchListP("DEFAULT");
+            repository.save(user);
+        } else if (user.getWatchListPrivacy() == 1) {
+            user.setWatchListP("PUBLIC");
+            repository.save(user);
+        } else if (user.getWatchListPrivacy() == 2) {
+            user.setWatchListP("ONLY FRIENDS");
+            repository.save(user);
+        } else if (user.getWatchListPrivacy() == 3) {
+            user.setWatchListP("PRIVATE");
+            repository.save(user);
+        }
+
+
+        if (user.getWatchedMoviesPrivacy() == 0) {
+            user.setWatchedMoviesP("DEFAULT");
+            repository.save(user);
+        } else if (user.getWatchedMoviesPrivacy() == 1) {
+            user.setWatchedMoviesP("PUBLIC");
+            repository.save(user);
+        } else if (user.getWatchedMoviesPrivacy() == 2) {
+            user.setWatchedMoviesP("ONLY FRIENDS");
+            repository.save(user);
+        } else if (user.getWatchedMoviesPrivacy() == 3) {
+            user.setWatchedMoviesP("PRIVATE");
+            repository.save(user);
+        }
+
+
+        if (user.getFriendListPrivacy() == 0) {
+            user.setFriendListP("DEFAULT");
+            repository.save(user);
+        } else if (user.getFriendListPrivacy() == 1) {
+            user.setFriendListP("PUBLIC");
+            repository.save(user);
+        } else if (user.getFriendListPrivacy() == 2) {
+            user.setFriendListP("ONLY FRIENDS");
+            repository.save(user);
+        } else if (user.getFriendListPrivacy() == 3) {
+            user.setFriendListP("PRIVATE");
+            repository.save(user);
+        }
+    }
+
 }
