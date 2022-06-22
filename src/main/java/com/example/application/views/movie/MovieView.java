@@ -16,6 +16,8 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -54,6 +56,9 @@ public class MovieView extends VerticalLayout implements HasUrlParameter<String>
     private final PartRepository partRepository;
 
     private Button previousPage = new Button("See watched Movies");
+    private Button seeAdminStats = new Button("See Stats", new Icon(VaadinIcon.LINE_BAR_CHART));
+
+    String siteRef = "http://localhost:8080/adminStats/";
 
 
 
@@ -105,8 +110,11 @@ public class MovieView extends VerticalLayout implements HasUrlParameter<String>
 
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
-        previousPage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        previousPage.addClickListener(e -> UI.getCurrent().navigate("http://localhost:8080/movieList"));
+        //previousPage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        //previousPage.addClickListener(e -> UI.getCurrent().navigate("http://localhost:8080/movieList"));
+        seeAdminStats.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        seeAdminStats.addClickListener(e -> UI.getCurrent().navigate(siteRef + displayedMovie.getMovieID()));
+        buttonLayout.add(seeAdminStats);
         return buttonLayout;
     }
 

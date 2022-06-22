@@ -16,6 +16,7 @@ import java.util.*;
 @Service
 public class UserService {
 
+    private final MovieRepository movieRepository;
     private final UserRepository repository;
     private final EmailSenderService senderService;
 
@@ -23,7 +24,8 @@ public class UserService {
     private User user;
 
     @Autowired
-    public UserService(UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser) {
+    public UserService(MovieRepository movieRepository, UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser) {
+        this.movieRepository = movieRepository;
         this.repository = repository;
         this.senderService = senderService;
         this.authenticatedUser = authenticatedUser;
@@ -84,6 +86,9 @@ public class UserService {
         }
         if (movieDoesExists == false) {
             user.getWatchedMovies().add(movie);
+            //todo: habe mir die Methode angeguckt und gesehen, dass lediglich der Movie in der Liste des Users gespeichert wird. Aber anders rum nicht
+            //todo: habe deshalb die nächste Zeile ergänzt - funktioniert aber leider nicht wie gedacht. Und mit movieRepository.save(movie) gibt es einen Konflikt von doppelter Speicherung.
+            movie.usersWatched.add(user);
             repository.save(user);
             return true;
         }
