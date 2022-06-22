@@ -2,6 +2,7 @@ package com.example.application.data.service;
 
 import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +97,23 @@ public class MovieService  {
     public long countMovies() {
         return movieRepository.count();
     }
+
+    public double averageRating(Movie movie) {
+        Integer ratingCount = movie.getReviewList().size();
+        Double sum = 0.0;
+        Double average = 0.0;
+
+        for(Review review:movie.getReviewList()) {
+            sum = sum + review.getStarReviewOntToFive();
+        }
+
+        average = sum / ratingCount;
+
+
+        return average;
+    }
+
+
 
 
 //    public List<Movie> findWatchedMovies(String stringFilter){
