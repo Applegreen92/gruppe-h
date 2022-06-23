@@ -77,6 +77,17 @@ public class MovieView extends VerticalLayout implements HasUrlParameter<String>
     private void displayImage(){
         this.poster = new Image();
         poster.setSrc(displayedMovie.getPosterSrc());
+        add(poster);
+    }
+
+    public void labelTextfields(){
+        name.setLabel("Title");
+        genre.setLabel("Genre");
+        writer.setLabel("Writer");
+        cast.setLabel("Cast");
+        releaseDate.setLabel("Release year");
+        length.setLabel("Runtime in minutes");
+        director.setLabel("Director");
     }
 
     private void fillTextFields(){
@@ -148,10 +159,11 @@ public class MovieView extends VerticalLayout implements HasUrlParameter<String>
             this.displayedPersonAuthor = moviePersonPartLinkRepository.findAllPersonsByMovieAndPart(displayedMovie,author);
             this.displayedPersonCast = moviePersonPartLinkRepository.findAllPersonsByMovieAndPart(displayedMovie,castPart);
             add(createTitle());
+            displayImage();
             add(createFormLayout());
             add(createButtonLayout());
-            displayImage();
             fillTextFields();
+            labelTextfields();
 
         }
     }
