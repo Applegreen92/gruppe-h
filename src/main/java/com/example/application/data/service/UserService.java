@@ -22,13 +22,15 @@ public class UserService {
 
     private AuthenticatedUser authenticatedUser;
     private User user;
+    private MovieService movieService;
 
     @Autowired
-    public UserService(MovieRepository movieRepository, UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser) {
+    public UserService(MovieRepository movieRepository, UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser, MovieService movieService) {
         this.movieRepository = movieRepository;
         this.repository = repository;
         this.senderService = senderService;
         this.authenticatedUser = authenticatedUser;
+        this.movieService = movieService;
     }
 
     public Optional<User> get(UUID id) {
@@ -89,6 +91,7 @@ public class UserService {
             //todo: habe mir die Methode angeguckt und gesehen, dass lediglich der Movie in der Liste des Users gespeichert wird. Aber anders rum nicht
             //todo: habe deshalb die nächste Zeile ergänzt - funktioniert aber leider nicht wie gedacht. Und mit movieRepository.save(movie) gibt es einen Konflikt von doppelter Speicherung.
             movie.usersWatched.add(user);
+            //movieService.addUserToWatched(user,movie);
             repository.save(user);
             return true;
         }

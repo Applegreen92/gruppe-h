@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Genre;
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.Review;
+import com.example.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,7 +114,20 @@ public class MovieService  {
         return average;
     }
 
+    public void deleteMovieReviews(Movie movie) {
+        movie.getReviewList().clear();
+        movieRepository.save(movie);
+    }
 
+    public Integer countViews(Movie movie) {
+
+        return 0;
+    }
+
+    public void addUserToWatched(User user, Movie movie) {
+        movie.usersWatched.add(user);
+        movieRepository.save(movie);
+    }
 
 
 //    public List<Movie> findWatchedMovies(String stringFilter){

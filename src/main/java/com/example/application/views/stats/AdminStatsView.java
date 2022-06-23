@@ -104,7 +104,10 @@ public class AdminStatsView extends VerticalLayout implements HasUrlParameter<St
         buttonLayout.addClassName("button-layout");
         resetStats.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         //todo: RESET BUTTON hat noch keine Funktion. Soll aber später die Tables die angsprochen werden clearen.
-        resetStats.addClickListener(e-> UI.getCurrent().getPage().reload());
+        resetStats.addClickListener(e-> {
+            movieService.deleteMovieReviews(displayedMovie);
+            UI.getCurrent().getPage().reload();
+                });
         buttonLayout.add(resetStats);
         return buttonLayout;
     }
