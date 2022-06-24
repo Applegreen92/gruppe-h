@@ -2,33 +2,30 @@ package com.example.application.views.MovieFriendRecommend;
 
 
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.Recommendation;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.MovieService;
+import com.example.application.data.service.RecommendationService;
 import com.example.application.data.service.UserRepository;
-import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 
+import com.example.application.views.movielist.MovieListView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.router.*;
 
 import javax.annotation.security.PermitAll;
 
-import java.awt.*;
 import java.util.List;
 
 @PageTitle("Recommend a movie")
@@ -40,7 +37,9 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
     private final AuthenticatedUser authenticatedUser;
     private final UserRepository userRepository;
     private final MovieService movieService;
+    private final RecommendationService recommendationService;
     private Movie movie;
+
 
     VerticalLayout verticalLayout = new VerticalLayout();
     TextArea textArea = new TextArea("Message");
@@ -63,6 +62,9 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
         verticalLayout.add(userBox);
         verticalLayout.add(buttons());
 
+
+
+
         add(verticalLayout);
 
     }
@@ -72,6 +74,15 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
         Button buttonSend = new Button("Send");
         Button buttonBack = new Button("Back");
 
+        buttonSend.addClickListener(event -> {
+            Recommendation recommendation = new Recommendation(authenticatedUser.get().get().getId(),userBox.getValue().getId(),movie.getMovieID(),textArea.getValue());
+            recommendationService.input(recommendation);
+            textArea.clear();
+            Notification.show("Recommendation send");
+        });
+        buttonBack.addClickListener(event -> {
+            UI.getCurrent().navigate(MovieListView.class);
+        });
 
 
 
@@ -97,15 +108,16 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
 
 
 
-    @Autowired
-    public FriendRecommendMovieView(AuthenticatedUser authenticatedUser, MovieService movieService, UserService userService, UserRepository userRepository) {
+
+    public FriendRecommendMovieView(AuthenticatedUser authenticatedUser, MovieService movieService, UserRepository userRepository, RecommendationService recommendationService) {
         this.authenticatedUser = authenticatedUser;
-        this.movieService = movieService;
         this.userRepository = userRepository;
+        this.movieService = movieService;
+        this.recommendationService = recommendationService;
     }
 
     @Override
-    public void setParameter(BeforeEvent event, Integer parameter) {
+    public void setParameter(BeforeEvent event, @OptionalParameter Integer parameter) {
 
         if(parameter == null){
             UI.getCurrent().navigate(MainLayout.class);

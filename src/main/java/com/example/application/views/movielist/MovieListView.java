@@ -7,6 +7,7 @@ import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.example.application.views.MovieFriendRecommend.FriendRecommendMovieView;
+import com.example.application.views.MovieFriendRecommend.GetRecommendationFriendView;
 import com.example.application.views.reviews.GiveReviewView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -138,7 +139,7 @@ public class MovieListView extends Div {
         selectGenre.setItemLabelGenerator(Genre::getGenre);
         selectGenre.addValueChangeListener(e -> updateListByGenre());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText,selectGenre, saveInWatchlistButton());
+        HorizontalLayout toolbar = new HorizontalLayout(filterText,selectGenre, saveInWatchlistButton(),buttonToRecommendations);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
@@ -156,6 +157,11 @@ public class MovieListView extends Div {
                 });
     return button;
     }
+    Button buttonToRecommendations = new Button("Go to Recommendations",
+            event -> {
+                UI.getCurrent().navigate(GetRecommendationFriendView.class);
+
+            });
 
 
 

@@ -2,6 +2,7 @@ package com.example.application.data.service;
 
 import com.example.application.data.Role;
 import com.example.application.data.entity.Movie;
+import com.example.application.data.entity.Recommendation;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.security.email.EmailSenderService;
@@ -334,6 +335,8 @@ public class UserService {
             repository.save(user);
         }
     }
+
+
 
 
     public List<User> getAllUser(){
