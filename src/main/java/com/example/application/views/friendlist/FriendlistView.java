@@ -84,7 +84,7 @@ public class FriendlistView extends VerticalLayout {
         //add(grid);
         //configureGrid();
         // bottom bar
-        var bottom1 = createButton("Profile");
+        var bottom1 = createButton("Profil");
         Button bottom2 = new Button   ("Privacy Settings",new Icon(VaadinIcon.COG));
         bottom1.addClickListener(e -> UI.getCurrent().navigate(ProfileView.class));
         bottom2.addClickListener(e-> UI.getCurrent().navigate(PrivacyView.class));
