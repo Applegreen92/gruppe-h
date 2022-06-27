@@ -119,11 +119,6 @@ public class MovieService  {
         movieRepository.save(movie);
     }
 
-    public Integer countViews(Movie movie) {
-
-        return 0;
-    }
-
     public void addUserToWatched(User user, Movie movie) {
         movie.usersWatched.add(user);
         movieRepository.save(movie);

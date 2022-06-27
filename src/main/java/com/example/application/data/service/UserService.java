@@ -91,7 +91,7 @@ public class UserService {
             user.getWatchedMovies().add(movie);
             //todo: habe mir die Methode angeguckt und gesehen, dass lediglich der Movie in der Liste des Users gespeichert wird. Aber anders rum nicht
             //todo: habe deshalb die nächste Zeile ergänzt - funktioniert aber leider nicht wie gedacht. Und mit movieRepository.save(movie) gibt es einen Konflikt von doppelter Speicherung.
-            movie.usersWatched.add(user);
+
             //movieService.addUserToWatched(user,movie);
             repository.save(user);
             return true;
@@ -153,13 +153,34 @@ public class UserService {
         user.setWatchList(watchlist);
         repository.save(user);
     }
+
+    public void deleteMovieFromAllUserWatchedLists(Movie movie) throws ConcurrentModificationException {
+        for (User user : findAllUsers(null)) {
+            if (user.getWatchedMovies().isEmpty()) {
+                continue;
+            } else {
+                for (Movie currentMovie : user.getWatchedMovies()) {
+                    if (currentMovie.getMovieID() == movie.getMovieID()) {
+                        user.getWatchedMovies().remove(currentMovie);
+                        repository.save(user);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     public void addFriend(User user, User user2) {
-        if(user.getFriends().contains(user2)) {
-            return;
-        } else {
+        for (User currentUser: user.getFriends()) {
+            if (currentUser.getId() == user2.getId()) {
+                System.out.println("Schon geadded");
+                return;
+            }
+        }
             user.getFriends().add(user2);
             repository.save(user);
-        }
+            System.out.println("Friend added");
+
     }
 
     public boolean isFriendTest(User user5, User user6) {

@@ -1,10 +1,8 @@
 package com.example.application.views.stats;
 
 import com.example.application.data.entity.Movie;
-import com.example.application.data.service.MoviePersonPartLinkRepository;
-import com.example.application.data.service.MovieRepository;
-import com.example.application.data.service.MovieService;
-import com.example.application.data.service.PartRepository;
+import com.example.application.data.entity.User;
+import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -38,21 +36,27 @@ public class AdminStatsView extends VerticalLayout implements HasUrlParameter<St
     private Integer watchedCount;
 
 
-    private TextField averageT = new TextField("Average Rating");
+    private TextField averageT = new TextField("Average rating");
     private TextField ratingCountT = new TextField("Number of ratings");
     private TextField watchedCountT = new TextField("Number of views");
 
     private Button resetStats = new Button("Reset Stats", new Icon(VaadinIcon.REFRESH));
 
+
+    private final UserService userService;
+    private final UserRepository userRepository;
     private MovieService movieService;
     private MovieRepository movieRepository;
     private MoviePersonPartLinkRepository moviePersonPartLinkRepository;
     private PartRepository partRepository;
 
 
-    public AdminStatsView(AuthenticatedUser authenticatedUser, MovieService movieService, MovieRepository movieRepository, MoviePersonPartLinkRepository moviePersonPartLinkRepository, PartRepository partRepository){
+    public AdminStatsView(AuthenticatedUser authenticatedUser, UserService userService, UserRepository userRepository, MovieService movieService, MovieRepository movieRepository, MoviePersonPartLinkRepository moviePersonPartLinkRepository, PartRepository partRepository){
 
         this.authenticatedUser = authenticatedUser;
+        this.userService = userService;
+        this.userRepository = userRepository;
+
         this.movieService = movieService;
         this.movieRepository = movieRepository;
         this.moviePersonPartLinkRepository = moviePersonPartLinkRepository;
@@ -76,10 +80,7 @@ public class AdminStatsView extends VerticalLayout implements HasUrlParameter<St
     private void fillTextFields(){
         ratingCount = displayedMovie.getReviewList().size();
         averageRating = movieService.averageRating(displayedMovie);
-
-        //todo: watchedmovie Liste funktioniert noch gar nicht aus der Movie Sicht, nur aus der User Sicht.
-        //todo: heißt also, es die usersWatched Liste wird noch nicht befüllt. Nur so kann man aber die Views für einen Film zählen.
-        watchedCount = displayedMovie.usersWatched.size();
+        watchedCount = getWatchedCount();
 
         if(ratingCount == 0) {
             this.ratingCountT.setValue("No ratings yet");
@@ -95,22 +96,36 @@ public class AdminStatsView extends VerticalLayout implements HasUrlParameter<St
         else {
             this.watchedCountT.setValue(String.valueOf(watchedCount));
         }
-        System.out.println(displayedMovie.usersWatched.size());
+    }
 
+    private Integer getWatchedCount() {
+        int count = 0;
+        for (User user: userService.findAllUsers(null)) {
+            for(Movie movie: user.getWatchedMovies()) {
+                if (movie.getMovieID() == displayedMovie.getMovieID()) {
+                    count++;
+                }
+            }
+        }
+        System.out.println("Anzahl Views: " + count);
+        return count;
 
     }
+
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
         resetStats.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        //todo: RESET BUTTON hat noch keine Funktion. Soll aber später die Tables die angsprochen werden clearen.
         resetStats.addClickListener(e-> {
             movieService.deleteMovieReviews(displayedMovie);
+            userService.deleteMovieFromAllUserWatchedLists(displayedMovie);
             UI.getCurrent().getPage().reload();
                 });
         buttonLayout.add(resetStats);
         return buttonLayout;
     }
+
+
 
 
 
