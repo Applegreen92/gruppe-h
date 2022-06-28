@@ -93,16 +93,25 @@ public class GetRecommendationFriendView extends Div {
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Accept");
 
-//        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
-//            List<Movie> moviel = new ArrayList<>();
-//            moviel.add(Movie);
-//            button.addThemeVariants(ButtonVariant.LUMO_ICON,
-//                    ButtonVariant.LUMO_ERROR,
-//                    ButtonVariant.LUMO_TERTIARY);
-//            button.addClickListener(e->
-//
-//            button.setIcon(new Icon(VaadinIcon.PLUS));
-//        })).setHeader("Decline");
+        grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
+
+            button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                    ButtonVariant.LUMO_ERROR,
+                    ButtonVariant.LUMO_TERTIARY);
+            button.addClickListener(e-> {
+                for(int i = 0, size = recoList.size() ; i < size ; i++){
+                    if(recoList.get(i).getMovieId() == Movie.getMovieID()){
+                        recommendationService.deleteRecommendationR(recoList.get(i).getMovieId(),authenticatedUser.get().get().getId());
+                        updateList();
+
+                        break;
+
+
+                    }
+                }});
+
+            button.setIcon(new Icon(VaadinIcon.PLUS));
+        })).setHeader("Decline");
     }
 
     public void updateList(){
