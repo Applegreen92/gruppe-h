@@ -15,7 +15,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 
 import com.vaadin.flow.component.notification.Notification;
@@ -31,7 +30,7 @@ import java.util.List;
 @PageTitle("Recommend a movie")
 @Route(value = "recommend",layout = MainLayout.class)
 @PermitAll
-public class FriendRecommendMovieView extends Div implements HasUrlParameter<Integer> {
+public class SendRecommendMovieView extends Div implements HasUrlParameter<Integer> {
 
 
     private final AuthenticatedUser authenticatedUser;
@@ -78,6 +77,7 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
             Recommendation recommendation = new Recommendation(authenticatedUser.get().get().getId(),userBox.getValue().getId(),movie.getMovieID(),textArea.getValue());
             recommendationService.input(recommendation);
             textArea.clear();
+            userBox.clear();
             Notification.show("Recommendation send");
         });
         buttonBack.addClickListener(event -> {
@@ -109,7 +109,7 @@ public class FriendRecommendMovieView extends Div implements HasUrlParameter<Int
 
 
 
-    public FriendRecommendMovieView(AuthenticatedUser authenticatedUser, MovieService movieService, UserRepository userRepository, RecommendationService recommendationService) {
+    public SendRecommendMovieView(AuthenticatedUser authenticatedUser, MovieService movieService, UserRepository userRepository, RecommendationService recommendationService) {
         this.authenticatedUser = authenticatedUser;
         this.userRepository = userRepository;
         this.movieService = movieService;

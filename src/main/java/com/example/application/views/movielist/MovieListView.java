@@ -6,7 +6,7 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.example.application.views.MovieFriendRecommend.FriendRecommendMovieView;
+import com.example.application.views.MovieFriendRecommend.SendRecommendMovieView;
 import com.example.application.views.MovieFriendRecommend.GetRecommendationFriendView;
 import com.example.application.views.reviews.GiveReviewView;
 import com.vaadin.flow.component.Component;
@@ -18,10 +18,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -30,7 +27,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.notification.Notification;
 
 import javax.annotation.security.PermitAll;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -108,7 +104,7 @@ public class MovieListView extends Div {
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e->{
-                UI.getCurrent().navigate(FriendRecommendMovieView.class,movie.getMovieID());
+                UI.getCurrent().navigate(SendRecommendMovieView.class,movie.getMovieID());
             });
             button.setIcon(new Icon(VaadinIcon.GLASSES));
         })).setHeader("recommend to ...");
@@ -139,7 +135,7 @@ public class MovieListView extends Div {
         selectGenre.setItemLabelGenerator(Genre::getGenre);
         selectGenre.addValueChangeListener(e -> updateListByGenre());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText,selectGenre, saveInWatchlistButton(),buttonToRecommendations);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText,selectGenre, saveInWatchlistButton());
         toolbar.addClassName("toolbar");
         return toolbar;
     }
@@ -150,8 +146,8 @@ public class MovieListView extends Div {
                 event -> {
                     List<Movie> movieSet = new ArrayList<>();
                     movieSet.addAll(grid.getSelectedItems());
-                    String response = userService.insertWatchList(authenticatedUser.get().get(), movieSet);
-                    Notification.show(response);
+                    userService.insertWatchList(authenticatedUser.get().get(), movieSet);
+
                     grid.deselectAll();
 
                 });

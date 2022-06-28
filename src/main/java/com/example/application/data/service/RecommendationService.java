@@ -2,6 +2,7 @@ package com.example.application.data.service;
 
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.Recommendation;
+import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class RecommendationService {
     }
 
 
-    public List<Recommendation> findByToUserId(long userId){
+    public List<Recommendation> findByReceiverUserId(long userId){
 
         List<Recommendation> recoList = recommendationRepository.findAll();
         List<Recommendation> selectedReco = new ArrayList<>();
@@ -36,25 +37,27 @@ public class RecommendationService {
         }
         return selectedReco;
     }
-    public List<Recommendation> findByFromUserId(long userId){
-        List<Recommendation> recoList = recommendationRepository.findAll();
-        List<Recommendation> selectedReco = new ArrayList<>();
-        for(Recommendation recommendation : recoList){
-            if(recommendation.getFromUserId() == userId){
-                selectedReco.add(recommendation);
-            }
-        }
-        return selectedReco;
-    }
-    public void deleteByMovieId(int movieId){
-        List<Recommendation> recommendations = recommendationRepository.findAll();
+
+    public void deleteRecommendationR(int movieId, long userId){
+        List<Recommendation> recommendations = findByReceiverUserId(userId);
         for(int i = 0, size = recommendations.size(); i < size; i++){
             if(recommendations.get(i).getMovieId() == movieId){
-                recommendations.remove(i);
+                recommendationRepository.deleteById(recommendations.get(i).getRecommendationId());
 
                 return;
             }
         }
+    }
+    public void insert(Recommendation recommendation, long userId){
+        List<Recommendation> recoList = findByReceiverUserId(userId);
+        for(Recommendation reco : recoList){
+            if(reco.getMovieId() == recommendation.getMovieId() && reco.getToUserId() == userId){
+                Notification.show("Allready send this Movie to this User");
+                return;
+            }
+
+        }
+
     }
 
 

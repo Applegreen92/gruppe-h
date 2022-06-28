@@ -107,8 +107,9 @@ public class UserService {
         }
     }
 
-    public String insertWatchList(User user, List<Movie> movieList) {
+    public void insertWatchList(User user, List<Movie> movieList) {
 
+        //Todo set parameter if movie already in Watchedlist
         List<Movie> watchlist = user.getWatchList();
         List<Movie> watchedMovies = user.getWatchedMovies();
 
@@ -130,11 +131,33 @@ public class UserService {
 
         user.setWatchList(watchlist);
         repository.save(user);
-        return "Movie/s Saved on Watchlist";
+        Notification.show("Movie Saved in Watchlist.");
+        return ;
 
     }
 
 
+    public void insertWatchList(User user, Movie newMovie) {
+
+        List<Movie> watchlist = user.getWatchList();
+        //Todo set parameter if movie already in Watchedlist
+        List<Movie> watchedMovies = user.getWatchedMovies();
+
+        for (int j = 0, jSize = watchlist.size(); j < jSize; j++) {
+            Movie movieWatchlist = watchlist.get(j);
+            if (newMovie.getMovieID() == movieWatchlist.getMovieID()) {
+                Notification.show("Movie is allready in Watchlist");
+                return;
+
+            }
+        }
+
+        user.getWatchList().add(newMovie);
+        repository.save(user);
+        Notification.show("Movie/s Saved on Watchlist");
+        return;
+
+    }
     public void deleteWatchlist(User user, List<Movie> movieSet) throws ConcurrentModificationException {
         List<Movie> watchlist = user.getWatchList();
         if (watchlist.isEmpty()) {

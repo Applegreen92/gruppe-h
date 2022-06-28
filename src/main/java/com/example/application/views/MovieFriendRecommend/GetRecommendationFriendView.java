@@ -74,17 +74,22 @@ public class GetRecommendationFriendView extends Div {
 
 
         grid.addColumn(new ComponentRenderer<>(Button::new, (button, Movie) -> {
-            List<Movie> moviel = new ArrayList<>();
-            moviel.add(Movie);
+
             button.addThemeVariants(ButtonVariant.LUMO_ICON,
                     ButtonVariant.LUMO_TERTIARY);
-            button.addClickListener(e->
-                    userService.insertWatchList(authenticatedUser.get().get(), moviel));
+            button.addClickListener(e-> {
+                    userService.insertWatchList(authenticatedUser.get().get(), Movie);
                     for(int i = 0, size = recoList.size() ; i < size ; i++){
-                        if(recoList.get(i).getMovieId() == moviel.get(0).getMovieID()){
-                            recommendationService.deleteByMovieId(recoList.get(i).getMovieId());
+                        if(recoList.get(i).getMovieId() == Movie.getMovieID()){
+                            recommendationService.deleteRecommendationR(recoList.get(i).getMovieId(),authenticatedUser.get().get().getId());
+                            updateList();
+
+                            break;
+
+
                         }
-                    }
+                    }});
+
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Accept");
 
@@ -101,13 +106,18 @@ public class GetRecommendationFriendView extends Div {
     }
 
     public void updateList(){
-        this.recoList = recommendationService.findByToUserId(authenticatedUser.get().get().getId());
+        recoList.clear();
+        movieList.clear();
+        this.recoList = recommendationService.findByReceiverUserId(authenticatedUser.get().get().getId());
         for (Recommendation recommendation : recoList){
             this.movieList.add(movieRepository.getById(recommendation.getMovieId()));
         }
         grid.setItems(this.movieList);
 
+
     }
+
+
 
 
 }
