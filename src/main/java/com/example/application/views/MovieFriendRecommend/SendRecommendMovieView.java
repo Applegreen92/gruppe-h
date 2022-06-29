@@ -15,6 +15,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 
 import com.vaadin.flow.component.notification.Notification;
@@ -43,6 +44,7 @@ public class SendRecommendMovieView extends Div implements HasUrlParameter<Integ
     VerticalLayout verticalLayout = new VerticalLayout();
     TextArea textArea = new TextArea("Message");
     ComboBox<User> userBox = new ComboBox<>();
+    Grid<Recommendation> grid = new Grid<>(Recommendation.class);
 
     public void createLayout(){
 
@@ -78,18 +80,17 @@ public class SendRecommendMovieView extends Div implements HasUrlParameter<Integ
             recommendationService.input(recommendation);
             textArea.clear();
             userBox.clear();
-            Notification.show("Recommendation send");
         });
         buttonBack.addClickListener(event -> {
             UI.getCurrent().navigate(MovieListView.class);
         });
 
-
-
-
-
         horizontalLayout.add(buttonSend,buttonBack);
         return horizontalLayout;
+    }
+    public void configureGrid(){
+        grid.setColumns("movieId");
+        add(grid);
     }
 
 
@@ -132,6 +133,7 @@ public class SendRecommendMovieView extends Div implements HasUrlParameter<Integ
                 }
             }
             createLayout();
+            configureGrid();
         }
     }
 }

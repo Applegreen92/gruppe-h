@@ -79,16 +79,10 @@ public class GetRecommendationFriendView extends Div {
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e-> {
                     userService.insertWatchList(authenticatedUser.get().get(), Movie);
-                    for(int i = 0, size = recoList.size() ; i < size ; i++){
-                        if(recoList.get(i).getMovieId() == Movie.getMovieID()){
-                            recommendationService.deleteRecommendationR(recoList.get(i).getMovieId(),authenticatedUser.get().get().getId());
-                            updateList();
 
-                            break;
+                    sendAnswereRecommendation(Movie, true);
 
-
-                        }
-                    }});
+            });
 
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Accept");
@@ -99,27 +93,36 @@ public class GetRecommendationFriendView extends Div {
                     ButtonVariant.LUMO_ERROR,
                     ButtonVariant.LUMO_TERTIARY);
             button.addClickListener(e-> {
-                for(int i = 0, size = recoList.size() ; i < size ; i++){
-                    if(recoList.get(i).getMovieId() == Movie.getMovieID()){
-                        recommendationService.deleteRecommendationR(recoList.get(i).getMovieId(),authenticatedUser.get().get().getId());
-                        updateList();
-
-                        break;
-
-
-                    }
-                }});
+                    sendAnswereRecommendation(Movie,false);
+            });
 
             button.setIcon(new Icon(VaadinIcon.PLUS));
         })).setHeader("Decline");
     }
 
+    private void sendAnswereRecommendation(Movie Movie, Boolean flag) {
+        for(int i = 0, size = recoList.size() ; i < size ; i++){
+            if(recoList.get(i).getMovieId() == Movie.getMovieID()){
+                recoList.get(i).setSendBack(true);
+                recoList.get(i).setAccepted(flag);
+                recommendationService.update(recoList.get(i));
+                updateList();
+
+                break;
+
+
+            }
+        }
+    }
+
     public void updateList(){
         recoList.clear();
         movieList.clear();
-        this.recoList = recommendationService.findByReceiverUserId(authenticatedUser.get().get().getId());
+        this.recoList = recommendationService.receiverRecommendations(authenticatedUser.get().get().getId());
         for (Recommendation recommendation : recoList){
-            this.movieList.add(movieRepository.getById(recommendation.getMovieId()));
+            if(!recommendation.isSendBack()) {
+                this.movieList.add(movieRepository.getById(recommendation.getMovieId()));
+            }
         }
         grid.setItems(this.movieList);
 

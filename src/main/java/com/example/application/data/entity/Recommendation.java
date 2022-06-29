@@ -20,7 +20,8 @@ public class Recommendation {
     private long fromUserId;
     private int movieId;
     private String text;
-    private boolean isAccepted = false;
+    private boolean isAccepted;
+    private boolean sendBack;
 
 
 
@@ -34,6 +35,13 @@ public class Recommendation {
 
     }
 
+    public boolean isSendBack() {
+        return sendBack;
+    }
+
+    public void setSendBack(boolean sendBack) {
+        this.sendBack = sendBack;
+    }
     public int getRecommendationId() {
         return recommendationId;
     }
