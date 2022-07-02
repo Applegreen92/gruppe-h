@@ -1,16 +1,20 @@
 package com.example.application.views.RecommendedView;
 
+import com.example.application.data.entity.Movie;
+import com.example.application.data.service.UserService;
+import com.example.application.security.AuthenticatedUser;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 
 public class MovieListViewCard extends ListItem {
+    private final UserService userService;
+    private final AuthenticatedUser authenticatedUser;
 
-    private OrderedList imageContainer;
-
-    public MovieListViewCard(String title,int year,  String Posterurl, String genreString) {
-        addClassNames("image-list-view", "max-w-screen-lg", "mx-auto", "pb-l", "px-l","bg-contrast-5", "flex", "flex-col", "items-start", "p-m", "rounded-l");
+    public MovieListViewCard(String title, int year, String Posterurl, String genreString, Movie movie, UserService userService, AuthenticatedUser authenticatedUser) {
+        this.userService = userService;
+        this.authenticatedUser = authenticatedUser;
+        addClassNames("bg-contrast-5", "flex", "flex-col", "items-start", "p-m", "rounded-l");
 
         Div div = new Div();
         div.addClassNames("bg-contrast", "flex items-center", "justify-center", "mb-m", "overflow-hidden",
@@ -38,11 +42,16 @@ public class MovieListViewCard extends ListItem {
                 genreString);
         description.addClassName("my-m");
 
-        Span badge = new Span();
-        badge.getElement().setAttribute("theme", "badge");
-        badge.setText("AddToWatchlist");
+//        Span badge = new Span();
+//        badge.getElement().setAttribute("theme", "badge");
+//        badge.setText("AddToWatchlist");
+        Button primaryButton = new Button("AddToWatchlist");
+        primaryButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        primaryButton.addClickListener(e-> {
+            userService.insertWatchList(authenticatedUser.get().get(), movie);
+        });
 
-        add(div, header, subtitle, description, badge);
+        add(div, header, subtitle, description, primaryButton);
 
     }
 }
