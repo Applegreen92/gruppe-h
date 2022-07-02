@@ -58,10 +58,10 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
 
     private Button privacy = new Button("Privacy Settings", new Icon(VaadinIcon.COG));
 
+    private Button userStats = new Button("See statistics");
+
     String siteRef = "http://localhost:8080/watchedMovies/";
-    String statsRef = "http://localhost:8080/userStats";
-
-
+    String statsRef = "http://localhost:8080/userStats/";
     private Binder<User> binder = new Binder<>(User.class);
 
 
@@ -136,9 +136,10 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
         watchList.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         privacy.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        userStats.addThemeVariants(ButtonVariant.LUMO_PRIMARY);;
 
 
-
+        //TODO switch MovieListView to WatchList and switch to personalized page
         String siteComp = siteRef + user.getUsername();
         watchedMovies.addClickListener(e -> UI.getCurrent().navigate(siteComp));
         watchList.addClickListener((e -> UI.getCurrent().navigate(Watchlist.class)));
@@ -160,14 +161,18 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
 
         if (userName == null) {
             user = authenticatedUser.get().get();
-            stats.addClickListener(e -> UI.getCurrent().navigate(statsRef + "/username=" + user.getUsername()));
-            add(stats);
+            userStats.addClickListener(e -> UI.getCurrent().navigate(statsRef + "username=" + user.getUsername()));
+            add(userStats);
+
         } else {
             user = userService.findByUsername(userName);
+            userStats.addClickListener(e -> UI.getCurrent().navigate(statsRef + "username=" + user.getUsername()));
+            add(createButtonLayout());
             firstName.setValue(user.getFirstname());
             lastName.setValue(user.getLastname());
             email.setValue(user.getEmail());
             userNameField.setValue(user.getUsername());
+            add(userStats);
 
             stats.addClickListener(e -> UI.getCurrent().navigate(statsRef + "/username=" + user.getUsername()));
             add(stats);

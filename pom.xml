@@ -12,6 +12,7 @@
     <properties>
         <java.version>17</java.version>
         <vaadin.version>23.0.9</vaadin.version>
+        <myTestSourceDirectory>${project.basedir}/src/test/java</myTestSourceDirectory>
     </properties>
 
     <parent>
@@ -165,6 +166,11 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
@@ -196,6 +202,7 @@
     </dependencies>
 
     <build>
+        <testSourceDirectory>${myTestSourceDirectory}</testSourceDirectory>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>
@@ -262,6 +269,10 @@
                     </plugin>
                 </plugins>
             </build>
+            <properties>
+                <maven.test.skip>false</maven.test.skip>
+                <myTestSourceDirectory>src/test/java</myTestSourceDirectory>
+            </properties>
         </profile>
 
         <profile>
@@ -299,9 +310,6 @@
                             <execution>
                                 <!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
                                 <id>install node and npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
                                 <!-- optional: default phase is "generate-resources" -->
                                 <phase>generate-resources</phase>
                             </execution>
@@ -314,9 +322,6 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <nodeVersion>v16.15.0</nodeVersion>
-                            <npmVersion>v7.10.0</npmVersion>
-                            <nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
                             <trimStackTrace>false</trimStackTrace>
                             <enableAssertions>true</enableAssertions>
                         </configuration>

@@ -21,6 +21,8 @@ import com.vaadin.flow.router.*;
 
 import javax.annotation.security.PermitAll;
 
+
+
 @PageTitle("Admin Stats")
 @Route(value ="adminStats" , layout = MainLayout.class)
 @PermitAll
@@ -120,7 +122,7 @@ public class AdminStatsView extends VerticalLayout implements HasUrlParameter<St
             movieService.deleteMovieReviews(displayedMovie);
             userService.deleteMovieFromAllUserWatchedLists(displayedMovie);
             UI.getCurrent().getPage().reload();
-                });
+        });
         buttonLayout.add(resetStats);
         return buttonLayout;
     }
