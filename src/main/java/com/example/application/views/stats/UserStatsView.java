@@ -77,7 +77,7 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
    public void updateData(){
        totalWatchtime.setValue((String.valueOf(getTotalWatchTime())));
        favGenre.setValue(getFavouriteGenre().getGenre());
-       //favActor.setValue(getFavouriteActor());
+       favActor.setValue(getFavouriteActor());
        favMovie.setValue(getFavouriteMovie());
 
    }
@@ -106,8 +106,6 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
             return new Genre("No favourite found");
         }
         copyWatchedList = this.user.getWatchedMovies();
-
-
         for (Movie movie: copyWatchedList) {
             for (Genre genre: movie.getGenreList()) {
                 for(int i= 0; i<genreList.size(); i++) {
@@ -136,11 +134,10 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
             return empty.getFirstname();
         }
         for(Movie movie: user.getWatchedMovies()){
-            if(!movie.getPersonCastList().isEmpty()) {
-                this.displayedPersonCast = moviePersonPartLinkRepository.findAllPersonsByMovieAndPart(movie,partRepository.getById(3));
-                for(int i = 0; i < displayedPersonCast.size(); i++) {
-                    actorList.add(displayedPersonCast.get(i).getPerson());
-                }
+            this.displayedPersonCast = moviePersonPartLinkRepository.findAllPersonsByMovieAndPart(movie,partRepository.getById(3));
+            for(int i = 0; i < displayedPersonCast.size(); i++) {
+                actorList.add(displayedPersonCast.get(i).getPerson());
+
             }
         }
         int[] actorCounts =new int[user.getWatchedMovies().size()*3];
