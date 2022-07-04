@@ -4,7 +4,6 @@ import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
-import com.example.application.views.chat.ChatView;
 import com.example.application.views.friendlist.FriendlistView;
 import com.example.application.views.privacy.PrivacyView;
 import com.example.application.views.watchlist.Watchlist;
@@ -23,7 +22,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

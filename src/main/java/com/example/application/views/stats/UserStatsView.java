@@ -5,7 +5,6 @@ import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -28,34 +27,30 @@ import java.util.List;
 @Uses(Icon.class)
 public class UserStatsView extends VerticalLayout implements HasUrlParameter<String> {
     private AuthenticatedUser authenticatedUser;
-
     private User user;
-
-    private Double averageRating;
-    private Integer ratingCount;
-    private Integer watchedCount;
-
-
     private TextField totalWatchtime = new TextField("Total Watchtime");
     private TextField favActor = new TextField("Favourite Actor");
     private TextField favMovie = new TextField("Favourite Movie");
     private TextField favGenre = new TextField("Favourite Genre");
-
     private Button resetStats = new Button("Reset Stats", new Icon(VaadinIcon.REFRESH));
-
-
     private PersonRepository personRepository;
     private UserService userService;
-
+    private List<MoviePersonPartLink> displayedPersonCast;
+    private final MovieRepository movieRepository;
+    private final MoviePersonPartLinkRepository moviePersonPartLinkRepository;
+    private final PartRepository partRepository;
     private final GenreRepository genreRepository;
 
 
-    public UserStatsView(AuthenticatedUser authenticatedUser, PersonRepository personRepository, UserService userService, GenreRepository genreRepository){
+    public UserStatsView(AuthenticatedUser authenticatedUser, PersonRepository personRepository, UserService userService, MovieRepository movieRepository, MoviePersonPartLinkRepository moviePersonPartLinkRepository, PartRepository partRepository, GenreRepository genreRepository){
 
         this.authenticatedUser = authenticatedUser;
         this.personRepository = personRepository;
         this.userService = userService;
         this.user = authenticatedUser.get().get();
+        this.movieRepository = movieRepository;
+        this.moviePersonPartLinkRepository = moviePersonPartLinkRepository;
+        this.partRepository = partRepository;
         this.genreRepository = genreRepository;
 
         updateData();
@@ -87,8 +82,6 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
 
    }
 
-
-
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
@@ -101,7 +94,6 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         */buttonLayout.add(resetStats);
         return buttonLayout;
     }
-
 
     public Genre getFavouriteGenre(){
 
@@ -134,10 +126,7 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         return genreList.get(mostviewedGenreIndex);
     }
 
-
-
     public String getFavouriteActor(){
-
         List<Movie> copyWatchedList;
         ArrayList<Person> actorList = new ArrayList<>();
 
@@ -148,10 +137,12 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         }
         for(Movie movie: user.getWatchedMovies()){
             if(!movie.getPersonCastList().isEmpty()) {
-                actorList.addAll(movie.getPersonCastList());
+                this.displayedPersonCast = moviePersonPartLinkRepository.findAllPersonsByMovieAndPart(movie,partRepository.getById(3));
+                for(int i = 0; i < displayedPersonCast.size(); i++) {
+                    actorList.add(displayedPersonCast.get(i).getPerson());
+                }
             }
         }
-
         int[] actorCounts =new int[user.getWatchedMovies().size()*3];
         int mostViewedActorInt = 0;
         int mostviewedActorIndex = 0;
@@ -174,6 +165,9 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         return actorList.get(mostviewedActorIndex).getFirstname() + " " + actorList.get(mostviewedActorIndex).getLastname();
     }
 
+
+
+
     public String getFavouriteMovie(){
 
         HashMap<Review, Movie> reviewMap = new HashMap<>();
@@ -183,8 +177,6 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         int mostViewedReviewInt = 0;
         int mostViewedReviewIndex = 0;
 
-
-        //Todo fix problem where only one movie is multiple times in reviewmap
         for(Movie movie: watchedMovies){
             reviewList.addAll(movie.getReviewList());
             for(Review review: reviewList){
@@ -208,23 +200,14 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
         return reviewMap.get(userReviewList.get(mostViewedReviewIndex)).getTitle();
     }
 
-
-
-
     @Override
     public void setParameter(BeforeEvent event,
                              @OptionalParameter String parameter) {
         String name = parameter.substring(9);
         user = userService.findByUsername(name);
-
         add(createTitle());
         add(createFormLayout());
         updateData();
+
     }
-
-
-
-
-
-
 }
