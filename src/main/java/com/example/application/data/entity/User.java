@@ -2,6 +2,8 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,22 +41,20 @@ public class User {
     private int recommendedMoviesPrivacy; // myWatchedMovies = 0, FriendsWatchedMovies = 1
     private String recommendedP;
 
+    @OneToMany(mappedBy = "userWatchedID", fetch = FetchType.LAZY)
+    private Set<WatchedMovies> watchedMovies2;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "friend_user_id"))
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_watch_list", joinColumns = @JoinColumn(name = "watche_User_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watch_Movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchList = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_watched_movies", joinColumns = @JoinColumn(name = "watcheed_User_ID",referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "watched_movie_id",referencedColumnName = "movieID"))
     private List<Movie> watchedMovies = new ArrayList<>();
-
-
-
-
 
     private String email;
 

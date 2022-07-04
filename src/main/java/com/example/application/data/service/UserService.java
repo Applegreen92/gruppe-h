@@ -2,8 +2,8 @@ package com.example.application.data.service;
 
 import com.example.application.data.Role;
 import com.example.application.data.entity.Movie;
-import com.example.application.data.entity.Recommendation;
 import com.example.application.data.entity.User;
+import com.example.application.data.entity.WatchedMovies;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.security.email.EmailSenderService;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -20,16 +21,18 @@ public class UserService {
     private final MovieRepository movieRepository;
     private final UserRepository repository;
     private final EmailSenderService senderService;
+    private  final WatchedMoviesService watchedMoviesService;
 
     private AuthenticatedUser authenticatedUser;
     private User user;
     private MovieService movieService;
 
     @Autowired
-    public UserService(MovieRepository movieRepository, UserRepository repository, EmailSenderService senderService, AuthenticatedUser authenticatedUser, MovieService movieService) {
+    public UserService(MovieRepository movieRepository, UserRepository repository, EmailSenderService senderService, WatchedMoviesService watchedMoviesService, AuthenticatedUser authenticatedUser, MovieService movieService) {
         this.movieRepository = movieRepository;
         this.repository = repository;
         this.senderService = senderService;
+        this.watchedMoviesService = watchedMoviesService;
         this.authenticatedUser = authenticatedUser;
         this.movieService = movieService;
     }
@@ -89,6 +92,10 @@ public class UserService {
         }
         if (movieDoesExists == false) {
             user.getWatchedMovies().add(movie);
+            WatchedMovies watchedMovies = new WatchedMovies(movie,user, new Date());
+
+            watchedMoviesService.insertWatched(watchedMovies);
+
             //todo: habe mir die Methode angeguckt und gesehen, dass lediglich der Movie in der Liste des Users gespeichert wird. Aber anders rum nicht
             //todo: habe deshalb die nächste Zeile ergänzt - funktioniert aber leider nicht wie gedacht. Und mit movieRepository.save(movie) gibt es einen Konflikt von doppelter Speicherung.
 

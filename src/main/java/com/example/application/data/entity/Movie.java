@@ -1,5 +1,7 @@
 package com.example.application.data.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
@@ -33,7 +35,7 @@ public class Movie {
     )
     private List<Genre> genreList = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
     @JoinTable(name = "movie_reviews",
     joinColumns = @JoinColumn( referencedColumnName = "movieID"),
     inverseJoinColumns = @JoinColumn(referencedColumnName = "reviewID"))
@@ -74,6 +76,9 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private Set<MoviePersonPartLink> moviePersonPartLink;
+
+    @OneToMany(mappedBy = "movieUserWatched", fetch = FetchType.LAZY)
+    private Set<WatchedMovies> watchedMovies;
 
     @ManyToMany(mappedBy = "watchedMovies", cascade = {CascadeType.MERGE})
     public List<User> usersWatched = new ArrayList<>();
