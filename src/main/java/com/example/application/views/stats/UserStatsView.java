@@ -1,10 +1,11 @@
 package com.example.application.views.stats;
 
-import com.example.application.data.entity.User;
+import com.example.application.data.entity.*;
 import com.example.application.data.service.*;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -17,8 +18,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 
 import javax.annotation.security.PermitAll;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @PageTitle("User Stats")
 @Route(value ="userStats" , layout = MainLayout.class)
@@ -41,24 +43,22 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
 
     private Button resetStats = new Button("Reset Stats", new Icon(VaadinIcon.REFRESH));
 
-    private MovieService movieService;
-    private MovieRepository movieRepository;
-    private MoviePersonPartLinkRepository moviePersonPartLinkRepository;
-    private PartRepository partRepository;
 
-    private UserService usersevice;
+    private PersonRepository personRepository;
+    private UserService userService;
+
+    private final GenreRepository genreRepository;
 
 
-    public UserStatsView(AuthenticatedUser authenticatedUser, MovieService movieService, MovieRepository movieRepository, MoviePersonPartLinkRepository moviePersonPartLinkRepository, PartRepository partRepository, UserService usersevice){
+    public UserStatsView(AuthenticatedUser authenticatedUser, PersonRepository personRepository, UserService userService, GenreRepository genreRepository){
 
         this.authenticatedUser = authenticatedUser;
-        this.movieService = movieService;
-        this.movieRepository = movieRepository;
-        this.moviePersonPartLinkRepository = moviePersonPartLinkRepository;
-        this.partRepository = partRepository;
-        this.usersevice = usersevice;
+        this.personRepository = personRepository;
+        this.userService = userService;
         this.user = authenticatedUser.get().get();
-        createTitle();
+        this.genreRepository = genreRepository;
+
+        updateData();
     }
 
     private Component createTitle() {
@@ -67,17 +67,28 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
 
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
-        formLayout.add(totalWatchtime, favActor, favMovie);
+        formLayout.add(totalWatchtime, favActor, favMovie, favGenre);
         return formLayout;
     }
 
-    private void fillTextFields(){
+   public int getTotalWatchTime(){
+        int watchTime = 0;
+        for(Movie movie: this.user.getWatchedMovies()){
+            watchTime += movie.getLength();
+        }
+        return watchTime;
+   }
+
+   public void updateData(){
+       totalWatchtime.setValue((String.valueOf(getTotalWatchTime())));
+       favGenre.setValue(getFavouriteGenre().getGenre());
+       //favActor.setValue(getFavouriteActor());
+       favMovie.setValue(getFavouriteMovie());
+
+   }
 
 
-        //todo: watchedmovie Liste funktioniert noch gar nicht aus der Movie Sicht, nur aus der User Sicht.
-        //todo: heißt also, es die usersWatched Liste wird noch nicht befüllt. Nur so kann man aber die Views für einen Film zählen.
 
-    }
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
@@ -92,16 +103,123 @@ public class UserStatsView extends VerticalLayout implements HasUrlParameter<Str
     }
 
 
+    public Genre getFavouriteGenre(){
+
+        List<Movie> copyWatchedList;
+        List<Genre> genreList = genreRepository.findAll();
+        int[] genreCounts =new int[genreList.size()];
+        int mostViewedGenreInt = 0;
+        int mostviewedGenreIndex = 0;
+        if(this.user.getWatchedMovies().isEmpty()){
+            return new Genre("No favourite found");
+        }
+        copyWatchedList = this.user.getWatchedMovies();
+
+
+        for (Movie movie: copyWatchedList) {
+            for (Genre genre: movie.getGenreList()) {
+                for(int i= 0; i<genreList.size(); i++) {
+                    if(genre.getGenre().equals(genreList.get(i).getGenre())) {
+                        genreCounts[i]++;
+                    };
+                }
+            }
+        }
+        for(int i= 0; i<genreCounts.length; i++) {
+            if (genreCounts[i] > mostViewedGenreInt) {
+                mostViewedGenreInt = genreCounts[i];
+                mostviewedGenreIndex = i;
+            }
+        }
+        return genreList.get(mostviewedGenreIndex);
+    }
+
+
+
+    public String getFavouriteActor(){
+
+        List<Movie> copyWatchedList;
+        ArrayList<Person> actorList = new ArrayList<>();
+
+        if(this.user.getWatchedMovies().isEmpty()){
+            Person empty = new Person();
+            empty.setFirstname("No Favourite found");
+            return empty.getFirstname();
+        }
+        for(Movie movie: user.getWatchedMovies()){
+            if(!movie.getPersonCastList().isEmpty()) {
+                actorList.addAll(movie.getPersonCastList());
+            }
+        }
+
+        int[] actorCounts =new int[user.getWatchedMovies().size()*3];
+        int mostViewedActorInt = 0;
+        int mostviewedActorIndex = 0;
+        copyWatchedList = this.user.getWatchedMovies();
+        for (Movie movie: copyWatchedList) {
+            for (Person person: movie.getPersonCastList()) {
+                for(int i= 0; i < actorList.size(); i++) {
+                    if((person.getFirstname().equals(actorList.get(i).getFirstname())) && person.getLastname().equals(actorList.get(i).getLastname())) {
+                        actorCounts[i]++;
+                    };
+                }
+            }
+        }
+        for(int i= 0; i<actorCounts.length; i++) {
+            if (actorCounts[i] > mostViewedActorInt) {
+                mostViewedActorInt = actorCounts[i];
+                mostviewedActorIndex = i;
+            }
+        }
+        return actorList.get(mostviewedActorIndex).getFirstname() + " " + actorList.get(mostviewedActorIndex).getLastname();
+    }
+
+    public String getFavouriteMovie(){
+
+        HashMap<Review, Movie> reviewMap = new HashMap<>();
+        List<Movie> watchedMovies = user.getWatchedMovies();
+        List<Review> reviewList = new ArrayList<>();
+        List<Review> userReviewList = new ArrayList<>();
+        int mostViewedReviewInt = 0;
+        int mostViewedReviewIndex = 0;
+
+
+        //Todo fix problem where only one movie is multiple times in reviewmap
+        for(Movie movie: watchedMovies){
+            reviewList.addAll(movie.getReviewList());
+            for(Review review: reviewList){
+                if(review.getUserID() == this.user.getId()){
+                    if(!userReviewList.contains(review)) {
+                        userReviewList.add(review);
+                        reviewMap.put(review, movie);
+                    }
+                }
+            }
+        }
+        if(userReviewList.size() == 0){
+            return "No data available";
+        }
+        for(int i= 0; i <userReviewList.size(); i++) {
+            if (userReviewList.get(i).getStarReviewOntToFive() > mostViewedReviewInt) {
+                mostViewedReviewInt = userReviewList.get(i).getStarReviewOntToFive();
+                mostViewedReviewIndex = i;
+            }
+        }
+        return reviewMap.get(userReviewList.get(mostViewedReviewIndex)).getTitle();
+    }
+
+
 
 
     @Override
     public void setParameter(BeforeEvent event,
                              @OptionalParameter String parameter) {
         String name = parameter.substring(9);
-        System.out.println(name);
-        user = usersevice.findByUsername(name);
+        user = userService.findByUsername(name);
 
-
+        add(createTitle());
+        add(createFormLayout());
+        updateData();
     }
 
 

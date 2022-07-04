@@ -54,7 +54,7 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
     private Button watchedMovies = new Button("See watched Movies");
     private Button watchList = new Button("See Watchlist");
     private Button seeFriends = new Button("See Friends");
-    private Button stats = new Button("See Statistics");
+
 
     private Button privacy = new Button("Privacy Settings", new Icon(VaadinIcon.COG));
 
@@ -136,7 +136,6 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
         watchList.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         seeFriends.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         privacy.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        userStats.addThemeVariants(ButtonVariant.LUMO_PRIMARY);;
 
 
         //TODO switch MovieListView to WatchList and switch to personalized page
@@ -173,9 +172,6 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
             email.setValue(user.getEmail());
             userNameField.setValue(user.getUsername());
             add(userStats);
-
-            stats.addClickListener(e -> UI.getCurrent().navigate(statsRef + "/username=" + user.getUsername()));
-            add(stats);
 
 
 
