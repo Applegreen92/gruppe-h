@@ -1,6 +1,10 @@
 package com.example.application.data.entity;
 
+import com.example.application.data.service.RecommendationService;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 
@@ -31,9 +35,11 @@ public class Recommendation {
         this.fromUserId = fromUserId;
         this.text = text;
     }
+
     public Recommendation() {
 
     }
+
 
     public boolean isSendBack() {
         return sendBack;
@@ -88,4 +94,8 @@ public class Recommendation {
     public void setAccepted(boolean accepted) {
         isAccepted = accepted;
     }
+
+
+
+
 }

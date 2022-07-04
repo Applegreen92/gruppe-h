@@ -107,8 +107,9 @@ public class MovieService  {
         for(Review review:movie.getReviewList()) {
             sum = sum + review.getStarReviewOntToFive();
         }
-
-        average = sum / ratingCount;
+        if(!movie.getReviewList().isEmpty()){
+            average = sum / ratingCount;
+        }
 
 
         return average;

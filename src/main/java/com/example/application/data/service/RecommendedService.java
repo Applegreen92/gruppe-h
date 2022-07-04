@@ -6,8 +6,8 @@ import com.example.application.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class RecommendedService {
 
@@ -25,8 +25,20 @@ public class RecommendedService {
 
     public List<Movie> getRecommendedMovies() {
         this.mostviewedGenre = genreCount();
+        List<Movie> preSelectedMovieList = new ArrayList<>();
         List<Movie> recommendedMovieList = new ArrayList<>();
-        for (Movie movie:movieService.findAllMoviesByGenre(mostviewedGenre)) {
+        preSelectedMovieList = movieService.findAllMoviesByGenre(mostviewedGenre);
+        for(Movie movie: preSelectedMovieList){
+            movie.setAverageRating(movieService.averageRating(movie));
+        }
+
+        Comparator<Movie> comparator = Comparator.comparing(movie -> movie.getAverageRating(), Collections.reverseOrder());
+        comparator = comparator.thenComparing(Comparator.comparing(movie -> movie.getTitle()));
+        preSelectedMovieList.sort(comparator);
+
+
+
+        for (Movie movie:preSelectedMovieList) {
             if(this.authenticatedUser.get().get().getWatchedMovies().contains(movie)) {
 
             } else {
@@ -52,16 +64,33 @@ public class RecommendedService {
                 copyWatchedList.addAll(this.authenticatedUser.get().get().getFriends().get(i).getWatchedMovies());
             }
         }
-
-        for (Movie movie: copyWatchedList) {
-            for (Genre genre: movie.getGenreList()) {
-                for(int i= 0; i<genreList.size(); i++) {
-                    if(genre.getGenre().equals(genreList.get(i).getGenre())) {
-                        genreCounts[i]++;
-                    };
+        if(copyWatchedList.size()>=10) {
+            for (int i = 0; i < copyWatchedList.size(); i++) {
+                if (i == 0) {
+                    i = copyWatchedList.size() - 10;
                 }
+                for (Genre genre : copyWatchedList.get(i).getGenreList()) {
+                    for (int x = 0; i < genreList.size(); x++) {
+                        if (genre.getGenre().equals(genreList.get(x).getGenre())) {
+                            genreCounts[x]++;
+                        }
+                        ;
+                    }
+                }
+            }
+        }else{
+            for (Movie movie: copyWatchedList) {
+                for (Genre genre: movie.getGenreList()) {
+                    for(int i= 0; i<genreList.size(); i++) {
+                        if(genre.getGenre().equals(genreList.get(i).getGenre())) {
+                            genreCounts[i]++;
+                        };
+                    }
+                }
+            }
         }
-        }
+
+
         for(int i= 0; i<genreCounts.length; i++) {
             if (genreCounts[i] > mostViewedGenreInt) {
                 mostViewedGenreInt = genreCounts[i];

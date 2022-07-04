@@ -39,7 +39,16 @@ public class Movie {
     inverseJoinColumns = @JoinColumn(referencedColumnName = "reviewID"))
     List<Review> reviewList = new ArrayList<>();
 
+    public double getAverageRating() {
+        return averageRating;
+    }
 
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    @Transient
+    double averageRating;
 
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;

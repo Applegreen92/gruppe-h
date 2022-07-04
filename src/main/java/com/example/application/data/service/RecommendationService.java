@@ -2,21 +2,25 @@ package com.example.application.data.service;
 
 import com.example.application.data.entity.Movie;
 import com.example.application.data.entity.Recommendation;
+import com.example.application.data.entity.User;
 import com.vaadin.flow.component.notification.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RecommendationService {
 
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
     private final RecommendationRepository recommendationRepository;
 
     @Autowired
-    public RecommendationService(RecommendationRepository recommendationRepository) {
+    public RecommendationService(MovieRepository movieRepository, UserRepository userRepository, RecommendationRepository recommendationRepository) {
+        this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
         this.recommendationRepository = recommendationRepository;
     }
     public List<Recommendation> getAll(){
@@ -78,6 +82,21 @@ public class RecommendationService {
 
 
     }
+    public User getUser(long userId){
+        return userRepository.findById(userId);
+    }
+
+    public Movie getMovie(int movieId){
+        List<Movie> movieList = new ArrayList<>();
+        movieList.addAll(movieRepository.findAll());
+        for ( Movie movie : movieList){
+            if(movie.getMovieID() == movieId){
+                return movie;
+            }
+        }
+        return null;
+    }
+
 
 
 }

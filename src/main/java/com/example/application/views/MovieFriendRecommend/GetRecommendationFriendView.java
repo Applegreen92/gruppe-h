@@ -51,6 +51,7 @@ public class GetRecommendationFriendView extends Div {
         configureGrid();
         add(getToolbar(), grid);
         updateList();
+        checkIfAccepted();
 
     }
     private HorizontalLayout getToolbar() {
@@ -67,7 +68,7 @@ public class GetRecommendationFriendView extends Div {
 
     private void configureGrid() {
 
-        grid.setSizeFull();
+        grid.setWidthFull();
         grid.setColumns("title", "releaseDate");
         grid.addColumn(Movie::getLength).setHeader("Length");
         grid.addColumn(Movie::getGenreList).setHeader("Genre");
@@ -125,8 +126,37 @@ public class GetRecommendationFriendView extends Div {
             }
         }
         grid.setItems(this.movieList);
-
-
+    }
+    public void checkIfAccepted(){
+        List<Recommendation> isAcceptedList = recommendationService.senderRecommendations(authenticatedUser.get().get().getId());
+        for(int i = 0, size = isAcceptedList.size(); i < size ; i++){
+            Recommendation reco = isAcceptedList.get(i);
+            if(reco.isSendBack() && reco.isAccepted()){
+               TextField textField = new TextField();
+               textField.setReadOnly(true);
+               textField.setWidth("600px");
+               textField.setValue("User "
+                               + recommendationService.getUser(reco.getToUserId()).getUsername()
+                               +" Accepted your movie invitation for the movie "
+                               +recommendationService.getMovie(reco.getMovieId()).getTitle());
+               add(textField);
+               recommendationService.deleteRecommendationR(reco.getMovieId(),authenticatedUser.get().get().getId());
+                return;
+            }else if(reco.isSendBack() && !reco.isAccepted()){
+                TextField textField = new TextField();
+                textField.setReadOnly(true);
+                textField.setWidth("600px");
+                textField.setValue("User "
+                        + recommendationService.getUser(reco.getToUserId()).getUsername()
+                        +" Declined your movie invitation for the movie "
+                        +recommendationService.getMovie(reco.getMovieId()).getTitle());
+                add(textField);
+                recommendationService.deleteRecommendationR(reco.getMovieId(),authenticatedUser.get().get().getId());
+                return;
+            }else{
+                System.out.println("Something went wrong!");
+            }
+        }
     }
 
 
